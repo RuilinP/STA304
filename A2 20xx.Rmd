@@ -1,0 +1,417 @@
+---
+title: "ADD A DESCRIPTIVE TITLE"
+author: "GROUP NUMBER: ADD YOUR NAMES HERE"
+subtitle: "STA304 - Fall 2023 -Assignment 2"
+date: "Insert Date Here"
+output:
+  pdf_document: default
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(openintro)
+library(tidyverse)
+library(knitr)
+```
+
+
+
+## Introduction
+
+<Here you should have a few paragraphs of text introducing the problem, getting the reader interested/ready for the rest of the report.>
+
+<Introduce terminology.>
+
+<Highlight hypotheses.>
+
+<Optional: You can also include a description of each section of this report as a last paragraph.>
+
+
+## Data
+
+<Type here a paragraph introducing the data, its context and as much info about the data collection process that you know.>
+
+
+```{r, include = FALSE}
+
+# Here you can load in and clean the census data (you may need to do the cleaning in a separate R script). 
+
+census_data <- read_csv("gss_clean.csv")
+
+# You may need additional chunks, in case you want to include some of the cleaning output.
+
+```
+
+
+<Type here a summary of the cleaning process (**only add in stuff beyond my original gss_cleaning.R code**). You only need to describe additional cleaning that you and your group did.> ] You will need to describe the cleaning you do to the survey data as well. 
+
+
+```{r, include = FALSE}
+
+# Here you can load in and clean the survey data. 
+# All cleaning must be done in the same Rmd file as your final report. 
+# All cleaning must not be shown in the submitted pdf. 
+# Setting the cleaning chunk to include = FALSE will allow for this. 
+
+load('ces2021.RData')
+
+## The data dictionary is found in '2021 Canadian Election Study Codebook.pdf'
+## In the data dictionary you can find the survey questions/responses corresponding to the column names in survey_data. 
+## For example 
+
+# cps21_age: Respondent age in years. Calculated from cps21_yob.
+## cps21_votechoice: "Which party do you think you will vote for? - Selected Choice"
+
+## Furthermore, when you select a variable in the survey_data, you will also see a description of the variable!. 
+## If it's a categorical variable, you'll also see how it's coded! 
+## For example: 
+
+# suvey_data$cps21_votechoice
+# attr(,"label")
+# [1] "Which party do you think you will vote for? - Selected Choice"
+# attr(,"format.stata")
+# [1] "%32.0g"
+# attr(,"class")
+# [1] "haven_labelled"
+# attr(,"labels")
+#                    Liberal Party               Conservative Party                              ndp 
+#                                1                                2                                3 
+#                   Bloc Québécois                      Green Party   Another party (please specify) 
+#                                4                                5                                6 
+# Don't know/ Prefer not to answer 
+#                                7 
+
+
+
+```
+
+
+
+```{r, include = FALSE}
+
+#### You will need to update/clean the code below based off the variables you want to use in your poststratification.
+
+survey_data <- 
+  survey_data %>% 
+  mutate(age = cps21_age,
+         vote_Conservatives = ifelse(cps21_votechoice==2, 1, 0),
+         gender = case_when(cps21_genderid == 1 ~ "Male",
+                            cps21_genderid == 2 ~ "Female", 
+                            cps21_genderid == 3 ~ "Non-binary",
+                            TRUE ~"Other"), # this is "otherwise" option, or you can include 4 as other.
+          working = case_when(cps21_employment %in% c(1,2,3,9,10,11) ~ "Yes", # Do NOT copy!!!!
+                             cps21_employment %in% c(4,5,6,7,8) ~ "No", # Do NOT copy!!!!
+                             cps21_employment %in% c(-8,-9) ~ "Don't know") #, 
+         # other options will became NA
+         #province = case_when(q4 == 1 ~ "Newfoundland and Labrador", 
+         #                     q4 == 2 ~ "Prince Edward Island",
+         #                     q4 == 3 ~ "Nova Scotia",
+         #                     q4 == 4 ~ "New Brunswick",
+         #                     q4 == 5 ~ "Quebec",
+         #                     q4 == 6 ~ "Ontario",
+         #                     q4 == 7 ~ "Manitoba",
+         #                     q4 == 8 ~ "Saskatchewan",
+         #                     q4 == 9 ~ "Alberta",
+         #                     q4 == 10 ~ "British Columbia"),
+         #place_birth_canada = case_when(q64 %in% c(1,2) ~ "Born in Canada",
+         #                    q64 %in% c(3:13) ~ "Born outside Canada",
+         #                    q64 %in% c(-8,-9) ~ "Don't know"),
+         #hh_size = q71) %>% 
+  ) %>%
+  # filter(working != "Don't know") %>% # optional
+  select(age,vote_Conservatives,gender, working) %>% #, province, place_birth_canada,hh_size 
+
+  ################################################################
+  filter(age >= 18) %>%  # and other criteria for voting!!!
+   ################################################################
+  na.omit()    # This might not be the correct thing to do. 
+
+census_data <- census_data %>% 
+  mutate(age=round(age))  %>% #copy from prof.
+  rename(gender = sex,
+         working = worked_last_week # working last week 
+  # (should be dicussed in the limition OR dont use it)
+  ) %>%
+  filter(working != "Don't know") %>%   # optional
+  select(age, gender, 
+         working, province, place_birth_canada,hh_size) %>%   ################################################################
+  filter(age >= 18) 
+   ################################################################
+ 
+
+```
+
+
+<Remember, you may want to use multiple datasets here, if you do end up using multiple data sets, or merging the data, be sure to describe this in the cleaning process and be sure to discuss important aspects of all the data that you used.>
+
+<Include a description of the important variables.> 
+
+```{r, include=FALSE}
+
+# Use this to calculate some summary measures. 
+summary_table <- survey_data %>% summarise(
+                                  min = min(age),
+                                  Q1 = quantile(age,0.25),
+                                  median = median(age),
+                                  Q3 = quantile(age,0.75),
+                                  max = max(age),
+                                  IQR = Q3 - Q1,
+                                  mean = mean(age), 
+                                  sd = sd(age)) 
+# change their orders, add or remove some of them
+# whichever the value you present, you MUST interprete them
+# refer your A1
+kable(summary_table)
+
+
+summary_table2 <- survey_data %>% summarise(prop.yes = mean(vote_Conservatives == 1, na.rm = T),
+                 prop.no = mean(vote_Conservatives == 0, na.rm = T)) # data summary of categorical
+kable(summary_table2, caption = "ABC")
+```
+
+
+<Include a description of the numerical summaries. Remember you can use `r ` to use inline R code.>
+
+
+```{r, echo = FALSE}
+
+# Use this to create some plots. Should probably describe both the sample and population.
+survey <- survey_data %>% ggplot(aes(x = age)) + geom_histogram(fill = "blue", color = "black", bins = 18) + theme_classic()+
+  labs(x = "Age ...", y = "Frequency", title = "Histogram of ...")
+
+census <- census_data %>% ggplot(aes(x = age)) + geom_histogram(fill = "blue", color = "black", bins = 18) + theme_classic()+
+  labs(x = "Age ...", y = "Frequency", title = "Histogram of ...")
+
+library(patchwork)
+survey | census
+
+```
+
+
+<Include a clear description of the plot(s). I would recommend one paragraph for each plot.> 
+
+- Shape (left or right skewed)
+- Center (median)
+- Spread (IQR)
+
+highlight the difference
+
+```{r, echo = FALSE}
+
+survey_data %>% ggplot(aes(x = vote_Conservatives, fill = gender)) + 
+  geom_bar() + theme_classic()+
+  labs(x = "Working or not ...", y = "Frequency", title = "Barplot of ...")
+```
+
+
+## Methods
+
+<Include some text introducing the methodology, maybe restating the problem/goal of this analysis.>
+
+See package for more information
+
+### Model Specifics
+The research will be using a logistic regression model to model the proportion of voters who will vote for ... since the predicted outcome is a binary response variable. The model outcome is the log of odds for  will using age, which is recorded as a numeric variable, to model the probability of voting for .... The logistic linear regression model I am using is:
+
+$$ log(\frac{p}{1-p}) = \beta_0+\beta_1  x_{age} + \beta_2x_{Male} + \beta_3x_{Working} $$
+
+
+
+Where:\
+- $p$ represents is the probability of the event of interest occurring (vote for...). 
+- $\beta_0$ represents the intercept of the model, and is the log of odds of voting for ... when the individual is at a certain age . 
+- $\beta_1$ represents the slope of age in the model... So, for everyone one unit increase in age, we expect a $\beta_1$ increase log odds of voting for ....
+- $\beta_2$ represents the avereage difference in log odds of voting for .... between two groups (Male and Female) for a certain age and working status.
+
+
+```{r, include=FALSE}
+
+model <- glm(vote_Conservatives ~ age + gender + working , 
+            data=survey_data, family="binomial")
+
+
+# Model Results (to Report in Results section)
+# summary(model)
+# OR
+# broom::tidy(model)
+
+### Don't show the results/output here...
+
+```
+
+
+## Post-Stratification 
+
+<Here you should explain the poststratification process>
+
+<In order to estimate the proportion of voters.....>
+
+<To put math/LaTeX inline just use one set of dollar signs. Example: $\hat{y}^{PS}$ >
+
+<To put math on its own line use two sets of dollar signs:>
+
+
+
+In order to estimate the proportion of voters who will vote for ... I need to perform a post-stratification analysis. Here I create cells based off different ages, gender and working status. Using the model described in the previous sub-section I will estimate the proportion of voters in each group (bin). I will then weight each proportion estimate (within each bin) by the respective population size of that bin and sum those values and divide that by the entire population size. 
+
+$$
+\hat{y}^{P S}=\frac{\sum N_{j} \widehat{y}_{j}}{\sum N_{j}}
+$$
+
+- $N_{j}$..
+- $\widehat{y}_{j}$...
+
+
+All analysis for this report was programmed using `R version 4.0.2`. 
+
+
+## Results 
+
+<Here you present your results. You may want to put them into a well formatted table. Be sure that there is some text describing the results.>
+
+```{r}
+
+
+knitr::kable(broom::tidy(model))
+  
+```
+
+
+
+
+
+
+
+$$\log(\frac{\hat{p}}{1-\hat{p}})=-2.11469603 +0.01102571 X_{age}+0.62699234 X_{Male}+ 0.09714222 X_{Working}$$
+
+if the pvalue is less than 0.05, meaning the predictor is significant (reject $H_0:\beta_= 0$)
+
+working is not a significant predictor but you do not have to remove it: the goal of this project is to predict the voting.
+
+
+```{r, message=FALSE, warning=FALSE}
+
+# Here I will perform the post-stratification calculation
+census_data_counts <- census_data %>% group_by(gender,working,age) %>% 
+  summarise(N=n())
+
+census_data_counts$estimate <-
+  model %>%
+  predict(newdata = census_data_counts, type = "response") # get proportion
+# prof's code can only provide log ratio
+
+result <- census_data_counts %>% 
+  mutate(predict_prop = estimate*N) %>% ungroup() %>% 
+  summarise(predict = sum(predict_prop)/sum(N))
+
+
+```
+
+<Note: Alternatively you can use the `knitr::kable` function to create a well formatted table from your code. See here: [https://rmarkdown.rstudio.com/lesson-7.html](https://rmarkdown.rstudio.com/lesson-7.html).>
+
+
+
+<Remember you can use `r ` to use inline R code.>
+
+THE FOLLOWING ARE JUST FOR ILLUSTRATION!!!! DO NOT USE!!!
+
+Why there is a difference between sample proportion and poststratification?
+
+```{r,message=FALSE, warning=FALSE}
+
+# sample vote proportion
+mean(survey_data$vote_Conservatives)
+
+# result through poststratification
+result
+
+first_six_row_of_census_group <- census_data %>% group_by(gender,working,age) %>% 
+  summarise(N=n(),N_prop = N/nrow(census_data)) %>% head(n = 6)
+
+
+first_six_row_of_survey_group <- survey_data %>% group_by(gender,working,age) %>% 
+  summarise(n=n(),n_prop = n/nrow(survey_data)) %>% head(n = 6)
+
+
+
+first_six_row_of_census_group
+first_six_row_of_survey_group
+```
+
+
+
+```{r, include = FALSE}
+
+# Here you can include some relevant visualizations.
+
+
+census_data_counts <- ungroup(census_data_counts)
+
+kable(head(census_data_counts, n= 6), caption = "First six groups of ...")
+
+#####################################
+# Nj and yj for each groups
+#you could put it at appendix but discuss in Result section
+
+detail_full <- census_data_counts %>% select(N, estimate)
+detail_10row <- census_data_counts %>% select(N, estimate) %>% head(n=10)
+kable(detail_10row, caption = "First ten groups of ....")
+
+```
+
+<Include an explanation/interpretation of the visualizations. Make sure to comment on the appropriateness of the assumptions/results.>
+
+## Conclusions
+
+<Here you should give a summary of the Hypotheses, Methods and Results>
+
+<Highlight Key Results.>
+
+<Talk about big picture.>
+
+<Comment on any Weaknesses.>
+
+<Comment on Future Work/Next Steps>
+
+<End with a concluding paragraph to wrap up the report.>
+
+
+## Bibliography
+
+1. Grolemund, G. (2014, July 16) *Introduction to R Markdown*. RStudio. [https://rmarkdown.rstudio.com/articles_intro.html](https://rmarkdown.rstudio.com/articles_intro.html). (Last Accessed: April 4, 1991) 
+
+2.  RStudio Team. (2020). *RStudio: Integrated Development for R*. RStudio, PBC, Boston, MA URL [http://www.rstudio.com/](http://www.rstudio.com/).
+
+3.  Allaire, J.J., et. el. *References: Introduction to R Markdown*. RStudio. [https://rmarkdown.rstudio.com/docs/](https://rmarkdown.rstudio.com/docs/). (Last Accessed: April 4, 1991) 
+
+4. OpenAI. (2023). *ChatGPT (September 13 version) [Large language model]*. [https://chat.openai.com/chat](https://chat.openai.com/chat) (Last Accessed: September 13, 2023)
+
+\newpage
+
+## Appendix
+
+## Generative AI Statement
+
+Here is where you can explain your usage of Generative AI tool(s). Be sure to reference it. For instance, including something like: 
+
+I used the following generative artificial intelligence (AI) tool: Bing AI Version 2.0 for Chrome [4]. I used the tool only in the Results section of this assignment and I gave it the following prompt of `What should I eat for breakfast?` and it gave me a list of 10 breakfast items which I then asked it to: `Please only list breakfast items that do not include eggs`. I then chose my 3 favourite items from the produced list and included those in the Results section.
+
+
+### Supplementary Materials
+
+<Here you can include any additional plots, tables, derivations, etc.>
+
+
+```{r}
+# if you have one numerical predictor + two categorical predictors (if you have more categorical predictors or you have too many levels, then the following code can NOT be used)
+total_groups<- census_data_counts %>% summarise(n=n()) 
+knitr::kable(total_groups, caption = "Total Groups")
+as.numeric(total_groups)
+
+census_data_counts %>%
+  ggplot(aes(x = age, y = estimate, color = gender,shape = working)) +
+  geom_point()  + geom_hline(aes(yintercept = as.numeric(result)),
+                             linetype="dashed",color = "red") +
+  labs(x = "Age...", y = "Prop of voting...", title = "Scattor plot for ...")
+```
+
