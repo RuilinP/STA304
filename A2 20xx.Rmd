@@ -96,9 +96,9 @@ survey_data <-
   mutate(age = cps21_age,
          vote_Conservatives = ifelse(cps21_votechoice==2, 1, 0),
          gender = case_when(cps21_genderid == 1 ~ "Male",
-                            cps21_genderid == 2 ~ "Female", 
-                            cps21_genderid == 3 ~ "Non-binary",
-                            TRUE ~"Other"), # this is "otherwise" option, or you can include 4 as other.
+                            cps21_genderid == 2 ~ "Female"), 
+                            #cps21_genderid == 3 ~ "Non-binary",
+                            #TRUE ~"Other"),  this is "otherwise" option, or you can include 4 as other.
           working = case_when(cps21_employment %in% c(1,2,3,9,10,11) ~ "Yes", # Do NOT copy!!!!
                              cps21_employment %in% c(4,5,6,7,8) ~ "No", # Do NOT copy!!!!
                              cps21_employment %in% c(-8,-9) ~ "Don't know") #, 
@@ -123,8 +123,9 @@ survey_data <-
 
   ################################################################
   filter(age >= 18) %>%  # and other criteria for voting!!!
+  filter(!is.na(gender))
    ################################################################
-  na.omit()    # This might not be the correct thing to do. 
+     # This might not be the correct thing to do. 
 
 census_data <- census_data %>% 
   mutate(age=round(age))  %>% #copy from prof.
@@ -134,7 +135,7 @@ census_data <- census_data %>%
   ) %>%
   filter(working != "Don't know") %>%   # optional
   select(age, gender, 
-         working, province, place_birth_canada,hh_size) %>%   ################################################################
+         working) %>% #, province, place_birth_canada,hh_size) %>%   ################################################################
   filter(age >= 18) 
    ################################################################
  
@@ -200,7 +201,7 @@ highlight the difference
 
 survey_data %>% ggplot(aes(x = vote_Conservatives, fill = gender)) + 
   geom_bar() + theme_classic()+
-  labs(x = "Working or not ...", y = "Frequency", title = "Barplot of ...")
+  labs(x = "Vote_Conservatrives or not ...", y = "Frequency", title = "Barplot of ...")
 ```
 
 
