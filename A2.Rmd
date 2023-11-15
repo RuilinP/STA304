@@ -194,6 +194,9 @@ $$ log(\frac{p}{1-p}) = \beta_0+\beta_1 x_{age}+\beta_2 x_{gender}+\beta_3 x_{la
 
 <Where $y$ represents the ....  $\beta_0$ represents....>
 
+
+
+
 ```{r, include=TRUE}
 
 # Creating the Model
@@ -201,7 +204,8 @@ model <- glm(vote_liberal ~ age + gender + language + quebec + income + religion
 
 #summary(model)
 
-predict(model,type = "response")
+#predict(model,type = "response")
+
 # Model Results (to Report in Results section)
 # summary(model)
 # OR
