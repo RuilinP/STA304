@@ -100,8 +100,8 @@ survey_data1 <-
          quebec = ifelse(cps21_province == 11, 1, 0),
          religion = ifelse(cps21_religion == 1, 0, 1),
          minority = ifelse(cps21_vismin_9 == 1, 1, 0),
-        income = case_when(cps21_income_cat < 1 ~ "Low",
-                            cps21_income_cat %in% c(2, 3, 4) ~ "Medium",
+        income = case_when(cps21_income_cat < 4 ~ "Low",
+                            cps21_income_cat == 4 ~ "Medium",
                             cps21_income_cat > 4 ~ "High"),
          ) %>% 
   select(age, vote_liberal, gender, language, quebec,religion,minority, income) %>% 
@@ -116,7 +116,8 @@ census_data1 <- census_data %>%
                               TRUE ~ 0),
          income = case_when(income_respondent == "Less than $25,000" ~ "Low",
                             income_respondent == "$50,000 to $74,999" ~ "Medium", 
-                            income_respondent == "$25,000 to $49,999" ~ "Medium",
+                            income_respondent == "$25,000 to $49,999" ~ "Low",
+                            
                             TRUE ~ "High"),
          religion = ifelse(religion_has_affiliation == "No religious affiliation",0,1),
          minority = ifelse(vis_minority == "Not a visible minority",0,1))%>% 
