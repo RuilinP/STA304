@@ -158,10 +158,10 @@ kable(summary_table_age)
 
 # Use this to create some plots. Should probably describe both the sample and population.
 survey_age <- survey_data1 %>% ggplot(aes(x = age)) + geom_histogram(fill = "blue", color = "black", bins = 18) + theme_classic()+
-  labs(x = "Age ...", y = "Frequency", title = "Histogram of ...")
+  labs(x = "Age survey", y = "Frequency", title = "Histogram of ...")
 
 census_age <- census_data1 %>% ggplot(aes(x = age)) + geom_histogram(fill = "blue", color = "black", bins = 18) + theme_classic()+
-  labs(x = "Age ...", y = "Frequency", title = "Histogram of ...")
+  labs(x = "Age census", y = "Frequency", title = "Histogram of ...")
 
 survey_income <- survey_data1 %>% ggplot(aes(x = income, fill = income)) + 
   geom_bar() + theme_classic()+
@@ -190,15 +190,18 @@ survey_income | census_income
 
 <I will (incorrectly) be using a linear regression model to model the proportion of voters who will vote for the liberal party. This is a naive model. I will only be using age, which is recorded as a numeric variable, to model the probability of voting for the liberal party. The simple linear regression model I am using is:> 
 
-$$ y = \beta_0+\beta_1  x_{age} + \epsilon$$
+$$ log(\frac{p}{1-p}) = \beta_0+\beta_1 x_{age}+\beta_2 x_{gender}+\beta_3 x_{language}+\beta_4 x_{quebec}+\beta5 x_{income}+\beta6 x_{religion}+\beta7 x_{minority}$$
 
 <Where $y$ represents the ....  $\beta_0$ represents....>
 
-```{r, include=FALSE}
+```{r, include=TRUE}
 
 # Creating the Model
-model <- lm(vote_liberal ~ age, gender, language, quebec, income, religion, minority, data=survey_data)
+model <- glm(vote_liberal ~ age + gender + language + quebec + income + religion + minority, data=survey_data1, family = "binomial")
 
+#summary(model)
+
+predict(model,type = "response")
 # Model Results (to Report in Results section)
 # summary(model)
 # OR
