@@ -122,7 +122,7 @@ census_data1 <- census_data %>%
          religion = ifelse(religion_has_affiliation == "No religious affiliation",0,1),
          minority = ifelse(vis_minority == "Not a visible minority",0,1))%>% 
   rename(gender = sex, )%>%
-  select(age,gender, language, quebec, income,religion, minority)%>%
+  select(age, gender, language, quebec, income, religion, minority)%>%
   filter(age >= 18) %>%
   na.omit() 
 
@@ -136,6 +136,18 @@ census_data1 <- census_data %>%
 ```{r, include=FALSE}
 
 # Use this to calculate some summary measures. 
+summary_table_age <- survey_data1 %>% summarise(
+                                  min = min(age),
+                                  Q1 = quantile(age,0.25),
+                                  median = median(age),
+                                  Q3 = quantile(age,0.75),
+                                  max = max(age),
+                                  IQR = Q3 - Q1,
+                                  mean = mean(age), 
+                                  sd = sd(age)) 
+kable(summary_table_age)
+
+
 
 ```
 
@@ -145,6 +157,23 @@ census_data1 <- census_data %>%
 ```{r, echo = TRUE}
 
 # Use this to create some plots. Should probably describe both the sample and population.
+survey_age <- survey_data1 %>% ggplot(aes(x = age)) + geom_histogram(fill = "blue", color = "black", bins = 18) + theme_classic()+
+  labs(x = "Age ...", y = "Frequency", title = "Histogram of ...")
+
+census_age <- census_data1 %>% ggplot(aes(x = age)) + geom_histogram(fill = "blue", color = "black", bins = 18) + theme_classic()+
+  labs(x = "Age ...", y = "Frequency", title = "Histogram of ...")
+
+survey_income <- survey_data1 %>% ggplot(aes(x = income, fill = income)) + 
+  geom_bar() + theme_classic()+
+  labs(x = "Income survey", y = "Frequency", title = "Histogram of ...")
+
+census_income <- census_data1 %>% ggplot(aes(x = income, fill = income)) + 
+  geom_bar() + theme_classic()+
+  labs(x = "Income census", y = "Frequency", title = "Histogram of ...")
+
+library(patchwork)
+survey_age | census_age
+survey_income | census_income
 
 ```
 
@@ -168,7 +197,7 @@ $$ y = \beta_0+\beta_1  x_{age} + \epsilon$$
 ```{r, include=FALSE}
 
 # Creating the Model
-model <- lm(vote_liberal ~ age, data=survey_data)
+model <- lm(vote_liberal ~ age, gender, language, quebec, income, religion, minority, data=survey_data)
 
 # Model Results (to Report in Results section)
 # summary(model)
