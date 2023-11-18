@@ -90,9 +90,10 @@ load('ces2021.RData')
 
 ```
 
-test
+
 
 ```{r, include = FALSE}
+
 
 #### You will need to update/clean the code below based off the variables you want to use in your poststratification.
 
@@ -105,13 +106,12 @@ survey_data1 <-
          language = case_when(UserLanguage == "FR-CA" ~ "FR",
                               UserLanguage == "EN" ~ "EN"),
          quebec = ifelse(cps21_province == 11, 1, 0),
-
          religion = ifelse(cps21_religion == 1, 0, 1), # have religion or not
          minority = ifelse(cps21_vismin_9 == 1, 1, 0), # white people or other minorities
          income = case_when(cps21_income_cat < 4 ~ "Low",
-                            cps21_income_cat == 4 ~ "Medium",
+                            cps21_income_cat >= 4 & cps21_income_cat <= 7 ~ "Medium",
                             cps21_income_cat > 4 ~ "High"),
-         ) %>% 
+  ) %>% 
   select(age, vote_liberal, gender, language, quebec,religion,minority, income) %>% 
   filter(age >= 18) %>%
   na.omit()    # This might not be the correct thing to do. 
@@ -121,10 +121,9 @@ census_data1 <- census_data %>%
          language = case_when(language_home == "French" ~ "FR",
                               language_home == "English" ~ "EN"),
          quebec = case_when(province == "Quebec" ~ 1,
-                              TRUE ~ 0),
-         income = case_when(income_respondent == "Less than $25,000" ~ "Low",
-                            income_respondent == "$50,000 to $74,999" ~ "Medium", 
-                            income_respondent == "$25,000 to $49,999" ~ "Low",
+                            TRUE ~ 0),
+         income = case_when(income_respondent %in% c("Less than $25,000", "$25,000 to $49,999") ~ "Low",
+                            income_respondent %in% c("$50,000 to $74,999", "$75,000 to $99,999", "$100,000 to $ 124,999") ~ "Medium",
                             
                             TRUE ~ "High"),
          religion = ifelse(religion_has_affiliation == "No religious affiliation",0,1),
@@ -132,7 +131,7 @@ census_data1 <- census_data %>%
   rename(gender = sex, )%>%
   select(age, gender, language, quebec, income, religion, minority)%>%
   filter(age >= 18) %>%
-  na.omit() 
+  na.omit()
 
 ```
 
