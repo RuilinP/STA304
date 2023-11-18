@@ -253,6 +253,13 @@ model <- glm(vote_liberal ~ age + gender + language + quebec + income + religion
 <To put math on its own line use two sets of dollar signs:>
 
 $$ include.your.mathematical.model.here.if.you.have.some.math.to.show $$
+In order to estimate the proportion of voters who will vote for ... I need to perform a post-stratification analysis. Here I create cells based off different ages, gender and working status. Using the model described in the previous sub-section I will estimate the proportion of voters in each group (bin). I will then weight each proportion estimate (within each bin) by the respective population size of that bin and sum those values and divide that by the entire population size. 
+
+$$
+\hat{y}^{P S}=\frac{\sum N_{j} \widehat{y}_{j}}{\sum N_{j}}
+$$
+- $N_{j}$..
+- $\widehat{y}_{j}$...
 
 
 All analysis for this report was programmed using `R version 4.0.2`. 
