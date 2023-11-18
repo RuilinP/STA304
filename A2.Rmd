@@ -171,12 +171,12 @@ census_age <- census_data1 %>% ggplot(aes(x = age)) + geom_histogram(fill = "blu
   labs(x = "Age census", y = "Frequency", title = "Histogram of ...")
 
 survey_income <- survey_data1 %>% ggplot(aes(x = income, fill = income)) + 
-  geom_bar() + theme_classic()+
-  labs(x = "Income survey", y = "Frequency", title = "Histogram of ...")
+  geom_bar() + theme_classic() + coord_flip()+
+  labs(x = "Income from survey data", y = "Frequency", title = "Histogram of ...")
 
 census_income <- census_data1 %>% ggplot(aes(x = income, fill = income)) + 
-  geom_bar() + theme_classic()+
-  labs(x = "Income census", y = "Frequency", title = "Histogram of ...")
+  geom_bar() + theme_classic() + coord_flip()+
+  labs(x = "Income from census data", y = "Frequency", title = "Histogram of ...")
 
 library(patchwork)
 survey_age | census_age
