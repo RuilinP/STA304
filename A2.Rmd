@@ -283,22 +283,26 @@ model <- lm(vote_liberal ~ age, data=survey_data1)
 # broom::tidy(model)
 ```
 
-```{r, include=FALSE}
+
+```{r}
 
 # Here I will perform the post-stratification calculation
-census_data_counts <- census_data1 %>% 
-  group_by(age) %>% 
-  summarise(n=n())
+census_data_counts <- census_data1 %>% group_by(age, gender, language, quebec, income, religion, minority) %>% 
+  summarise(N=n())
 
-# census_data_counts$estimate <-
+census_data_counts$estimate <-
   model %>%
-  predict(newdata = census_data_counts)
+  predict(newdata = census_data_counts, type = "response") # get proportion
+# prof's code can only provide log ratio
 
-census_data_counts %>% 
-  mutate(liberal_predict_prop = estimate*n) %>%
-  summarise(liberal_predict = sum(liberal_predict_prop)/sum(n))
+result <- census_data_counts %>% 
+  mutate(liberal_predict_prop = estimate*N) %>% ungroup() %>% 
+  summarise(liberal_predict = sum(liberal_predict_prop)/sum(N))
 
+kable(result)
 ```
+
+
 
 <Here you present your results. You may want to put them into a well formatted table. Be sure that there is some text describing the results.>
 
