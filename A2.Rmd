@@ -105,9 +105,15 @@ survey_data1 <-
          language = case_when(UserLanguage == "FR-CA" ~ "FR",
                               UserLanguage == "EN" ~ "EN"),
          quebec = ifelse(cps21_province == 11, 1, 0),
+<<<<<<< Updated upstream
          religion = ifelse(cps21_religion == 1, 0, 1), # have religion or not
          minority = ifelse(cps21_vismin_9 == 1, 1, 0), # white people or other minorities
         income = case_when(cps21_income_cat < 4 ~ "Low",
+=======
+         religion = ifelse(cps21_religion == 1, 0, 1),
+         minority = ifelse(cps21_vismin_9 == 1, 1, 0),
+         income = case_when(cps21_income_cat < 4 ~ "Low",
+>>>>>>> Stashed changes
                             cps21_income_cat == 4 ~ "Medium",
                             cps21_income_cat > 4 ~ "High"),
          ) %>% 
