@@ -160,6 +160,13 @@ kable(summary_table_age)
 summary_table_gender <- table(survey_data1$gender)
 kable(summary_table_gender)
 
+summary_table_language <- table(survey_data1$language)
+kable(summary_table_language)
+
+summary_table_income <- table(survey_data1$income)
+kable(summary_table_income)
+
+
 
 
 ```
@@ -185,10 +192,18 @@ census_income <- census_data1 %>% ggplot(aes(x = income, fill = income)) +
   geom_bar() + theme_classic() + coord_flip()+
   labs(x = "Income from census data", y = "Frequency", title = "Histogram of ...")
 
+survey_gender_count <- table(survey_data1$gender)
+
+library(gridExtra)
 library(patchwork)
 survey_age | census_age
 survey_income | census_income
+par(mfrow = c(1, 2))
+pie(survey_gender_count, main = "Gender Distribution in Survey", col = rainbow(length(survey_gender_count)))
 
+census_gender_count <- table(census_data1$gender)
+pie(census_gender_count, main = "Gender Distribution in Census", col = rainbow(length(census_gender_count)))
+par(mfrow = c(1, 1))
 ```
 
 <Include a clear description of the plot(s). I would recommend one paragraph for each plot.> 
