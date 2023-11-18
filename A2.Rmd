@@ -96,6 +96,8 @@ load('ces2021.RData')
 
 
 #### You will need to update/clean the code below based off the variables you want to use in your poststratification.
+survey_data <- survey_data %>% 
+  filter(cps21_citizenship == 1)
 
 survey_data1 <- 
   survey_data %>% 
@@ -141,7 +143,7 @@ census_data1 <- census_data %>%
 <Include a description of the important variables.> 
 
 ```{r, include=FALSE}
-
+library(knitr)
 # Use this to calculate some summary measures. 
 summary_table_age <- survey_data1 %>% summarise(
                                   min = min(age),
@@ -153,6 +155,8 @@ summary_table_age <- survey_data1 %>% summarise(
                                   mean = mean(age), 
                                   sd = sd(age)) 
 kable(summary_table_age)
+summary_table_gender <- table(survey_data1$gender)
+kable(summary_table_gender)
 
 
 
@@ -162,7 +166,8 @@ kable(summary_table_age)
 <Include a description of the numerical summaries. Remember you can use `r ` to use inline R code.>
 
 ```{r, echo = TRUE}
-
+survey_data1$income <- factor(survey_data1$income, levels = c("Low", "Medium", "High"))
+census_data1$income <- factor(census_data1$income, levels = c("Low", "Medium", "High"))
 # Use this to create some plots. Should probably describe both the sample and population.
 survey_age <- survey_data1 %>% ggplot(aes(x = age)) + geom_histogram(fill = "blue", color = "black", bins = 18) + theme_classic()+
   labs(x = "Age survey", y = "Frequency", title = "Histogram of ...")
@@ -270,7 +275,7 @@ All analysis for this report was programmed using `R version 4.0.2`.
 ```{r, include=FALSE}
 
 # Creating the Model
-model <- lm(vote_liberal ~ age, data=survey_data)
+model <- lm(vote_liberal ~ age, data=survey_data1)
 
 # Model Results (to Report in Results section)
 # summary(model)
@@ -281,11 +286,11 @@ model <- lm(vote_liberal ~ age, data=survey_data)
 ```{r, include=FALSE}
 
 # Here I will perform the post-stratification calculation
-census_data_counts <- census_data %>% 
+census_data_counts <- census_data1 %>% 
   group_by(age) %>% 
   summarise(n=n())
 
-census_data_counts$estimate <-
+# census_data_counts$estimate <-
   model %>%
   predict(newdata = census_data_counts)
 
