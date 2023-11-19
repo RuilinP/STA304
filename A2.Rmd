@@ -213,34 +213,34 @@ par(mfrow = c(1, 1))
 ## Methods
 
 <Include some text introducing the methodology, maybe restating the problem/goal of this analysis.>
-Our study applies the logistic regression model to estimate the probability of voting of each voter for the Liberal Party and Conservative party. Then, we use the post-stratification which divides the survey data in terms of the variables common in the census data and the survey, and yields the estimated the overall probability of voting of the Liberal Party and Conservative Party respectively. At the end, we will the compare the estimated voting probability between the two parties to decide which one is going to win over the election (i.e. the party has the higher estimated probability). In our model, to ensure the qualification of voting, we only keep the respondents that are at least 18 years old. In order to remove the influence of missing data, we delete the observations (record of respondents) which contains missing values of variables.
+Our study applies the logistic regression model to estimate the probability of voting of each voter for the Liberal Party and Conservative Party. Then, we use the post-stratification which divides the survey data in terms of the variables common in the census data and the survey, and yields the estimated overall probability of voting for the Liberal Party and Conservative Party respectively. In the end, we compare the estimated voting probability between the two parties to decide which one is going to win the election (i.e. the party has the higher estimated probability). In our model, to ensure the qualification of voting, we only keep the respondents who are at least 18 years old. In order to remove the influence of missing data, we delete the observations (record of respondents) which contain missing values of variables.
 
 ### Model Specifics
 <Here you can describe your regression model>
-Our study creates two logistic regression models to predict the proportion of voters who will vote for the Liberal Party and the Conservative Party. Some assumptions are made before constructing our logistic regression models: The voting outcome of respondents is binary, that is, the respondents either vote for the party or not, the selected categorical variables are independent in both the logistic models built for the Liberal and the Conservative. We select the following models because the variables are matched in both the census and the survey data, and the variability of the variables is similar in survey data compared to the census data as shown in the plots of Data Summary section (...). In addition, previous study by Statistics Canada proposes that the economic status, belief, and personal inborn identities are the dominant factors that potentially influence the intention of voting, so we select the following variables as predictors to investigate the probability of each voter to vote (Uppal, S.& LaRochelle-Côté S., 2012).
+Our study creates two logistic regression models to predict the proportion of voters who will vote for the Liberal Party and the Conservative Party. Some assumptions are made before constructing our logistic regression models: The voting outcome of respondents is binary, that is, the respondents either vote for the party or not, and the selected categorical variables are independent in both the logistic models built for the Liberal and the Conservative. We select the following models because the variables are matched in both the census and the survey data, and the variability of the variables is similar in survey data compared to the census data as shown in the plots of Data Summary section (...). In addition, a previous study by Statistics Canada proposes that economic status, belief, and personal inborn identities such as sex, language, and race are the dominant factors that potentially influence the intention of voting, so we select the following variables as predictors to investigate the probability of each voter to vote (Uppal, S.& LaRochelle-Côté S., 2012). In the logistic regression models for both parties, we use the same variables as predictors.
 
 $$ log(\frac{p_c}{1-p_c}) = \beta_0+\beta_1 x_{age}+\beta_2 x_{sex}+\beta_3 x_{language}+\beta_4 x_{quebec}+\beta5 x_{income}+\beta6 x_{religion}+\beta7 x_{minority}$$
 
 $$ log(\frac{p_l}{1-p_l}) = \beta_0+\beta_1 x_{age}+\beta_2 x_{gender}+\beta_3 x_{language}+\beta_4 x_{quebec}+\beta5 x_{income}+\beta6 x_{religion}+\beta7 x_{minority}$$
 
-- $p_c$ represents the probability of voting for the Conservative Party and $p_l$ represents the probability of voting for the Liberal Party. 
-- The $log(\frac{p_l}{1-p_l})$ and $log(\frac{p_c}{1-p_c})$ are the log odds in both models.
+$p_c$ represents the probability of voting for the Conservative Party and $p_l$ represents the probability of voting for the Liberal Party. 
+The $log(\frac{p_l}{1-p_l})$ and $log(\frac{p_c}{1-p_c})$ are the log odds in both models.
 
-$\beta_0$ is the intercept of the model. It represents the log odds of voting for the candidate or party when all the predictor variables are at their baseline level (e.g., the youngest age, baseline gender category, default language, etc.). It's the starting point for the model's predictions.
+$\beta_0$ is the intercept of the model. It represents the log odds of voting for the candidate or party when all the predictor variables are at their baseline level (which means that the respondent is aged at 0 years, sex category female, speaking the language of English, not living in Quebec, the default income class at low level of income, does not believe in religions, and is a minority other than the White.).
 
-$\beta_1$ represents the relationship between age and the log odds of voting for the candidate or party. For every one unit increase in age (typically one year), there is an expected $\beta_1$ change in the log odds of voting for the candidate or party, assuming all other variables are held constant.
+$\beta_1$ represents the relationship between the age of the respondent and the log odds of voting for the parties. For every one-unit increase in age (typically one year), there is an expected $\beta_1$ change in the log odds of voting for the parties, assuming all other variables are held constant.
 
-$\beta_2$ quantifies the average difference in the log odds of voting for the candidate or party between two gender groups (e.g., male and female), controlling for other factors in the model. It shows how gender influences the likelihood of voting for the candidate or party.
+$\beta_2$ quantifies the average difference in the log odds of voting for the parties between two sex groups (e.g., male and female), controlling for other factors in the model. It shows how sex influences the likelihood of voting for the candidate or party.
 
-For $\beta_3$, This coefficient measures the influence of language on the log odds of voting for the candidate or party. It reflects how changes in language proficiency or language spoken can affect voting behavior, with other factors being equal.
+For $\beta_3$, this coefficient measures the average difference in log odds of voting for the parties between respondents who speak French and English when other predictors stay the same. It reflects how changes in language proficiency between English and French can affect the voting behavior of a respondent, with other factors being equal.
 
-$\beta_4$represents the effect of being in Quebec (or not) on the log odds of voting for the candidate or party. This could reflect regional differences in voting preferences, with all other variables held constant.
+$\beta_4$ represents the average difference of being in Quebec (or not) on the log odds of voting for the candidate or party while holding other predictors constant. This could reflect regional differences in voting preferences, with all other variables held constant.
 
-For$\beta_5$, This coefficient indicates how changes in income level impact the log odds of voting for the candidate or party. It captures the relationship between economic status and voting behavior, controlling for other variables in the model.
+For$\beta_5$, This coefficient measures the average difference of log odds of voting for the respondent who possesses a low, medium, and high income level and indicates how changes in income level impact the log odds of voting for the candidate or party. It captures the relationship between economic status and voting behavior, controlling for other variables in the model.
 
-$\beta_6$ assesses the influence of religion on the log odds of voting for the candidate or party. This factor might capture how different religious affiliations or degrees of religiosity correlate with political preferences.
+$\beta_6$ assesses the average difference in the log odds of voting for the parties between the respondents who are atheists or possess religious beliefs with the other predictors fixed. This factor might capture how the difference between a religious believer and a non-religious person on voting preferences.
 
-Finally, $\beta_7$ measures the impact of belonging to a minority group on the log odds of voting for the candidate or party. This could reflect how membership in certain demographic or ethnic minorities influences voting patterns.
+Finally, $\beta_7$ measures the average difference in the log odds of voting for the parties if a respondent is identified as a minority member compared to a non-minority one. This could reflect how membership in certain demographics or ethnic minorities influences voting patterns compared to the majority component of White people in the population of Canadian citizens (Statistics Canada, 2022).
 
 
 
@@ -365,15 +365,19 @@ kable(result)
 
 4. OpenAI. (2023). *ChatGPT (September 13 version) [Large language model]*. [https://chat.openai.com/chat](https://chat.openai.com/chat) (Last Accessed: September 13, 2023)
 
-Stephenson, Laura B., Allison Harell, Daniel Rubenson and Peter John Loewen. (2021). *The 2021 Canadian Election Study*. Consortium on Electoral Democracy. [dataset]
-
 Canada Guide. (2023). *Canadian Political Parties*. https://thecanadaguide.com/government/political-parties/ (Last Accessed: November 11, 2023)
-
-Tossutti, L. & Elections Canada. (2007). *La participation électorale des membres des communautés ethnoculturelles*. Élections Canada.
 
 Simon Fraser University. (2021). *Canadian Election Results by Party 1867 to 2021*. https://www.sfu.ca/~aheard/elections/1867-present.html (Last Accessed: November 11, 2023)
 
-Uppal, S. & LaRochelle-Côté S. (February, 2012). *Factors associated with voting*. Statistics Canada. https://www150.statcan.gc.ca/n1/en/pub/75-001-x/2012001/article/11629-eng.pdf?st=nuV9FTRH
+Statistics Canada. (October, 2022). *The Canadian census-A rich portrait of the
+country's religious and ethnocultural diversity*. Statistics Canada. https://www150.statcan.gc.ca/n1/daily-quotidien/221026/dq221026b-eng.htm (Last Accessed: November 12, 2023)
+
+Stephenson, Laura B., Allison Harell, Daniel Rubenson and Peter John Loewen. (2021). *The 2021 Canadian Election Study*. Consortium on Electoral Democracy. [dataset]
+
+Uppal, S. & LaRochelle-Côté S. (February, 2012). *Factors associated with voting*. Statistics Canada. https://www150.statcan.gc.ca/n1/en/pub/75-001-x/2012001/article/11629-eng.pdf?st=nuV9FTRH (Last Accessed: November 12, 2023)
+
+Tossutti, L. & Elections Canada. (2007). *La participation électorale des membres des communautés ethnoculturelles*. Élections Canada.
+
 \newpage
 
 ## Appendix
