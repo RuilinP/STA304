@@ -112,10 +112,10 @@ survey_data1 <-
                               UserLanguage == "EN" ~ "EN"),
          quebec = ifelse(cps21_province == 11, 1, 0),
          religion = ifelse(cps21_religion == 1, 0, 1), # have religion or not
-         minority = ifelse(cps21_vismin_9 == 1, 1, 0), # white people or other minorities
+         minority = ifelse(cps21_vismin_9 == 1, 0, 1), # white people or other minorities
          income = case_when(cps21_income_cat < 4 ~ "Low",
                             cps21_income_cat >= 4 & cps21_income_cat <= 7 ~ "Medium",
-                            cps21_income_cat > 4 ~ "High"),
+                            cps21_income_cat > 7 ~ "High"),
   ) %>% 
   select(age, vote_liberal,vote_conservative, gender, language, quebec,religion,minority, income) %>% 
   filter(age >= 18) %>%
