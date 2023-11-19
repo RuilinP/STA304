@@ -1,8 +1,10 @@
 ---
 title: "A2"
+subtitle: "STA304 - Fall 2023 -Assignment 2"
 author: "Ruilin Peng"
 date: "11/7/2023"
-output: pdf_document
+output:
+  pdf_document: default
 ---
 
 
@@ -158,8 +160,13 @@ summary_table_age <- survey_data1 %>% summarise(
                                   mean = mean(age), 
                                   sd = sd(age)) 
 kable(summary_table_age)
+
 summary_table_gender <- table(survey_data1$gender)
 kable(summary_table_gender)
+
+#format in a table will look nicer
+summary_table_gender <- survey_data1 %>% select(gender) %>% group_by(gender) %>% summarise(num_sex = n(), prop_sex = n()/(554+261))
+knitr::kable(summary_table_gender, col.names = c("Sex", "Number of Voters", "Proportion"), caption = "Statistics about the frequency and proportion of male and female voters in 2021 election survey data", align = "cccc", digits = 2)
 
 summary_table_language <- table(survey_data1$language)
 kable(summary_table_language)
@@ -314,11 +321,12 @@ census_data_counts$estimate <-
   predict(newdata = census_data_counts, type = "response") # get proportion
 # prof's code can only provide log ratio
 
+#format into a kable of both the probability for Liberal and Conservative
 result_liberal <- census_data_counts %>% 
   mutate(liberal_predict_prop = estimate*N) %>% ungroup() %>% 
   summarise(liberal_predict = sum(liberal_predict_prop)/sum(N))
 
-kable(result_liberal)
+knitr::kable(result_liberal, col.names = c("Liberal"), caption = "Estimated probability of voting for the Liberal Party", align = "cccc", digits = 4)
 ```
 
 ```{r}
