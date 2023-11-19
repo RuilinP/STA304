@@ -247,8 +247,10 @@ Finally, $\beta_7$ measures the impact of belonging to a minority group on the l
 ```{r, include=TRUE}
 
 # Creating the Model
-model <- glm(vote_liberal ~ age + gender + language + quebec + income + religion + minority, data=survey_data1, family = "binomial")
+model1 <- glm(vote_liberal ~ age + gender + language + quebec + income + religion + minority, data=survey_data1, family = "binomial")
 
+
+model2 <- glm(vote_conservative ~ age + gender + language + quebec + income + religion + minority, data=survey_data1, family = "binomial")
 #summary(model)
 
 #predict(model,type = "response")
@@ -308,17 +310,33 @@ census_data_counts <- census_data1 %>% group_by(age, gender, language, quebec, i
   summarise(N=n())
 
 census_data_counts$estimate <-
-  model %>%
+  model1 %>%
   predict(newdata = census_data_counts, type = "response") # get proportion
 # prof's code can only provide log ratio
 
-result <- census_data_counts %>% 
+result_liberal <- census_data_counts %>% 
   mutate(liberal_predict_prop = estimate*N) %>% ungroup() %>% 
   summarise(liberal_predict = sum(liberal_predict_prop)/sum(N))
 
-kable(result)
+kable(result_liberal)
 ```
 
+```{r}
+# Here I will perform the post-stratification calculation
+census_data_counts <- census_data1 %>% group_by(age, gender, language, quebec, income, religion, minority) %>% 
+  summarise(N=n())
+
+census_data_counts$estimate <-
+  model2 %>%
+  predict(newdata = census_data_counts, type = "response") # get proportion
+# prof's code can only provide log ratio
+
+result_conservative <- census_data_counts %>% 
+  mutate(conservative_predict_prop = estimate*N) %>% ungroup() %>% 
+  summarise(conservative_predict = sum(conservative_predict_prop)/sum(N))
+
+kable(result_conservative)
+```
 
 
 <Here you present your results. You may want to put them into a well formatted table. Be sure that there is some text describing the results.>
