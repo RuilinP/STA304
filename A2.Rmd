@@ -113,13 +113,15 @@ survey_data1 <-
          language = case_when(UserLanguage == "FR-CA" ~ "FR",
                               UserLanguage == "EN" ~ "EN"),
          quebec = ifelse(cps21_province == 11, 1, 0),
+         west = ifelse(cps21_province == 3|cps21_province == 1|cps21_province == 12,1,0), # western provinces or not
+         
          religion = ifelse(cps21_religion == 1, 0, 1), # have religion or not
          minority = ifelse(cps21_vismin_9 == 1, 0, 1), # white people or other minorities
          income = case_when(cps21_income_cat < 4 ~ "Low",
                             cps21_income_cat >= 4 & cps21_income_cat <= 7 ~ "Medium",
                             cps21_income_cat > 7 ~ "High"),
   ) %>% 
-  select(age, vote_liberal,vote_conservative, gender, language, quebec,religion,minority, income) %>% 
+  select(age, vote_liberal,vote_conservative, gender, language, west, religion,minority, income) %>% 
   filter(age >= 18) %>%
   na.omit()    # This might not be the correct thing to do. 
 
@@ -127,7 +129,7 @@ census_data1 <- census_data %>%
   mutate(age=round(age),
          language = case_when(language_home == "French" ~ "FR",
                               language_home == "English" ~ "EN"),
-         quebec = case_when(province == "Quebec" ~ 1,
+         west = case_when(province == "Manitoba"|province == "Saskatchewan" | province == "Alberta" ~ 1,
                             TRUE ~ 0),
          income = case_when(income_respondent %in% c("Less than $25,000", "$25,000 to $49,999") ~ "Low",
                             income_respondent %in% c("$50,000 to $74,999", "$75,000 to $99,999", "$100,000 to $ 124,999") ~ "Medium",
@@ -136,7 +138,7 @@ census_data1 <- census_data %>%
          religion = ifelse(religion_has_affiliation == "No religious affiliation",0,1),
          minority = ifelse(vis_minority == "Not a visible minority",0,1))%>% 
   rename(gender = sex, )%>%
-  select(age, gender, language, quebec, income, religion, minority)%>%
+  select(age, gender, language, west, income, religion, minority)%>%
   filter(age >= 18) %>%
   na.omit()
 
@@ -226,9 +228,11 @@ Our study applies the logistic regression model to estimate the probability of v
 <Here you can describe your regression model>
 Our study creates two logistic regression models to predict the proportion of voters who will vote for the Liberal Party and the Conservative Party. Some assumptions are made before constructing our logistic regression models: The voting outcome of respondents is binary, that is, the respondents either vote for the party or not, and the selected categorical variables are independent in both the logistic models built for the Liberal and the Conservative. We select the following models because the variables are matched in both the census and the survey data, and the variability of the variables is similar in survey data compared to the census data as shown in the plots of Data Summary section (...). In addition, a previous study by Statistics Canada proposes that economic status, belief, and personal inborn identities such as sex, language, and race are the dominant factors that potentially influence the intention of voting, so we select the following variables as predictors to investigate the probability of each voter to vote (Uppal, S.& LaRochelle-Côté S., 2012). In the logistic regression models for both parties, we use the same variables as predictors.
 
-$$ log(\frac{p_c}{1-p_c}) = \beta_0+\beta_1 x_{age}+\beta_2 x_{sex}+\beta_3 x_{language}+\beta_4 x_{quebec}+\beta5 x_{income}+\beta6 x_{religion}+\beta7 x_{minority}$$
+$$ log(\frac{p_c}{1-p_c}) = \beta_0+\beta_1 x_{age}+\beta_2 x_{sex}+\beta_3 x_{French}+\beta_4 x_{west}+\beta5 x_{incomeMedium}$$
+$$+\beta6 x_{incomeHigh}+\beta7 x_{religion}+\beta8 x_{minority}$$
 
-$$ log(\frac{p_l}{1-p_l}) = \beta_0+\beta_1 x_{age}+\beta_2 x_{gender}+\beta_3 x_{language}+\beta_4 x_{quebec}+\beta5 x_{income}+\beta6 x_{religion}+\beta7 x_{minority}$$
+$$ log(\frac{p_l}{1-p_l}) = \beta_0+\beta_1 x_{age}+\beta_2 x_{sex}+\beta_3 x_{French}+\beta_4 x_{west}+\beta5 x_{incomeMedium}$$
+$$+\beta6 x_{incomeHigh}+\beta6 x_{religion}+\beta7 x_{minority}$$
 
 $p_c$ represents the probability of voting for the Conservative Party and $p_l$ represents the probability of voting for the Liberal Party. 
 The $log(\frac{p_l}{1-p_l})$ and $log(\frac{p_c}{1-p_c})$ are the log odds in both models.
@@ -241,26 +245,28 @@ $\beta_2$ quantifies the average difference in the log odds of voting for the pa
 
 For $\beta_3$, this coefficient measures the average difference in log odds of voting for the parties between respondents who speak French and English when other predictors stay the same. It reflects how changes in language proficiency between English and French can affect the voting behavior of a respondent, with other factors being equal.
 
-$\beta_4$ represents the average difference of being in Quebec (or not) on the log odds of voting for the candidate or party while holding other predictors constant. This could reflect regional differences in voting preferences, with all other variables held constant.
+$\beta_4$ represents the average difference of being in the western inland provinces (Alberta, Manitoba, Saskatchewan) or not on the log odds of voting for the candidate or party while holding other predictors constant. This could reflect regional differences in voting preferences, with all other variables held constant.
 
-For$\beta_5$, This coefficient measures the average difference of log odds of voting for the respondent who possesses a low, medium, and high income level and indicates how changes in income level impact the log odds of voting for the candidate or party. It captures the relationship between economic status and voting behavior, controlling for other variables in the model.
+For$\beta_5$, This coefficient measures the average difference of log odds of voting between the respondent who possesses a low and medium income level. Similarly, $\beta_6$ measures the average difference of log odds of voting between the respondent who possesses a low and high income level when other predictors stay the same. They indicate how changes in income level impact the log odds of voting for the candidate or party. Both coefficients capture the relationship between economic status and voting behavior, controlling for other variables in the model.
 
-$\beta_6$ assesses the average difference in the log odds of voting for the parties between the respondents who are atheists or possess religious beliefs with the other predictors fixed. This factor might capture how the difference between a religious believer and a non-religious person on voting preferences.
+$\beta_7$ assesses the average difference in the log odds of voting for the parties between the respondents who are atheists or possess religious beliefs with the other predictors fixed. This factor might capture how the difference between a religious believer and a non-religious person on voting preferences.
 
-Finally, $\beta_7$ measures the average difference in the log odds of voting for the parties if a respondent is identified as a minority member compared to a non-minority one. This could reflect how membership in certain demographics or ethnic minorities influences voting patterns compared to the majority component of White people in the population of Canadian citizens (Statistics Canada, 2022).
+Finally, $\beta_8$ measures the average difference in the log odds of voting for the parties if a respondent is identified as a minority member compared to a non-minority one. This could reflect how membership in certain demographics or ethnic minorities influences voting patterns compared to the majority component of White people in the population of Canadian citizens (Statistics Canada, 2022).
 
 
 
-```{r, include=TRUE}
+```{r, include = TRUE}
 
 # Creating the Model
-model1 <- glm(vote_liberal ~ age + gender + language + quebec + income + religion + minority, data=survey_data1, family = "binomial")
+model1 <- glm(vote_liberal ~ age + gender + language + west + income + religion + minority, data=survey_data1, family = "binomial")
 
 
-model2 <- glm(vote_conservative ~ age + gender + language + quebec + income + religion + minority, data=survey_data1, family = "binomial")
-#summary(model)
+model2 <- glm(vote_conservative ~ age + gender + language + west + income + religion + minority, data=survey_data1, family = "binomial")
 
-#predict(model,type = "response")
+summary(model1)
+summary(model2)
+
+#predict(model1,type = "response")
 
 # Model Results (to Report in Results section)
 # summary(model)
@@ -297,6 +303,12 @@ All analysis for this report was programmed using `R version 4.0.2`.
 
 
 ## Results 
+1. The following are the logistic regression model results (coefficients rounded to 3 decimals).
+$$ log(\frac{p_l}{1-p_l}) = -2.267+0.010 x_{age}-0.227x_{sex}-0.485 x_{French}-0.867 x_{west}+0.811 x_{incomeMedium}$$
+$$+0.643x_{incomeHigh}+0.152x_{religion}-0.036x_{minority}$$
+
+$$ log(\frac{p_c}{1-p_c}) = -3.358+0.017x_{age}+0.327x_{sex}-0.637 x_{French}+0.799 x_{west}+0.646 x_{incomeMedium}$$
+$$+0.356 x_{incomeHigh}+0.734 x_{religion}-0.180 x_{minority}$$
 
 ```{r, include=FALSE}
 
@@ -310,40 +322,41 @@ model <- lm(vote_liberal ~ age, data=survey_data1)
 ```
 
 
-```{r}
+```{r, echo = FALSE, warning = FALSE}
 
-# Here I will perform the post-stratification calculation
-census_data_counts <- census_data1 %>% group_by(age, gender, language, quebec, income, religion, minority) %>% 
+# Here I will perform the post-stratification calculation for Liberal
+census_data_counts <- census_data1 %>% group_by(age, gender, language, west, income, religion, minority) %>% 
   summarise(N=n())
 
-census_data_counts$estimate <-
+census_data_counts$estimate1 <-
   model1 %>%
   predict(newdata = census_data_counts, type = "response") # get proportion
+
 # prof's code can only provide log ratio
 
-#format into a kable of both the probability for Liberal and Conservative
 result_liberal <- census_data_counts %>% 
-  mutate(liberal_predict_prop = estimate*N) %>% ungroup() %>% 
+  mutate(liberal_predict_prop = estimate1*N) %>% ungroup() %>% 
   summarise(liberal_predict = sum(liberal_predict_prop)/sum(N))
 
-knitr::kable(result_liberal, col.names = c("Liberal"), caption = "Estimated probability of voting for the Liberal Party", align = "cccc", digits = 4)
 ```
 
 ```{r}
-# Here I will perform the post-stratification calculation
-census_data_counts <- census_data1 %>% group_by(age, gender, language, quebec, income, religion, minority) %>% 
+# Here I will perform the post-stratification calculation for Conservative
+census_data_counts <- census_data1 %>% group_by(age, gender, language, west, income, religion, minority) %>% 
   summarise(N=n())
 
-census_data_counts$estimate <-
+census_data_counts$estimate2 <-
   model2 %>%
   predict(newdata = census_data_counts, type = "response") # get proportion
 # prof's code can only provide log ratio
 
 result_conservative <- census_data_counts %>% 
-  mutate(conservative_predict_prop = estimate*N) %>% ungroup() %>% 
+  mutate(conservative_predict_prop = estimate2*N) %>% ungroup() %>% 
   summarise(conservative_predict = sum(conservative_predict_prop)/sum(N))
 
-kable(result_conservative)
+table <- tibble(result_liberal, result_conservative)
+
+knitr::kable(table, col.names = c("Liberal", "Conservative"), caption = "Estimated probability of voting for the Parties", align = "cccc", digits = 4)
 ```
 
 
