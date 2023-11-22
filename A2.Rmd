@@ -127,7 +127,7 @@ survey_data1 <-
   mutate(age = cps21_age,
          vote_conservative = ifelse(cps21_votechoice==2, 1, 0),
          vote_liberal = ifelse(cps21_votechoice==1, 1, 0),
-         gender = case_when(cps21_genderid == 1 ~ "Male",  # This place should change the name of "gender" to "sex"
+         sex = case_when(cps21_genderid == 1 ~ "Male",  
                             cps21_genderid == 2 ~ "Female"),
          language = case_when(UserLanguage == "FR-CA" ~ "FR",
                               UserLanguage == "EN" ~ "EN"),
@@ -140,7 +140,7 @@ survey_data1 <-
                             cps21_income_cat >= 4 & cps21_income_cat <= 7 ~ "Medium",
                             cps21_income_cat > 7 ~ "High"),
   ) %>% 
-  select(age, vote_liberal,vote_conservative, gender, language, west, religion,minority, income) %>% 
+  select(age, vote_liberal,vote_conservative, sex, language, west, religion,minority, income) %>% 
   filter(age >= 18) %>%
   na.omit()    # This might not be the correct thing to do. 
 
@@ -156,7 +156,6 @@ census_data1 <- census_data %>%
                             TRUE ~ "High"),
          religion = ifelse(religion_has_affiliation == "No religious affiliation",0,1),
          minority = ifelse(vis_minority == "Not a visible minority",0,1))%>% 
-  rename(gender = sex, )%>%
   select(age, gender, language, west, income, religion, minority)%>%
   filter(age >= 18) %>%
   na.omit()
@@ -175,7 +174,7 @@ vote_
 Independent Variables
 age: This variable represents the age of the observations. It is a numerical variable.
 
-gender: This variable represents the gender of the observations
+sex: This variable represents the sex of the observations
 
 language:
 
@@ -184,7 +183,7 @@ language:
 
 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, include = FALSE}
 library(knitr)
 # Use this to calculate some summary measures. 
 summary_table_age <- survey_data1 %>% summarise(
@@ -198,12 +197,12 @@ summary_table_age <- survey_data1 %>% summarise(
                                   sd = sd(age)) 
 kable(summary_table_age)
 
-summary_table_gender <- table(survey_data1$gender)
-kable(summary_table_gender)
+summary_table_sex <- table(survey_data1$sex)
+kable(summary_table_sex)
 
 #format in a table will look nicer
-summary_table_gender <- survey_data1 %>% select(gender) %>% group_by(gender) %>% summarise(num_sex = n(), prop_sex = n()/(554+261))
-knitr::kable(summary_table_gender, col.names = c("Sex", "Number of Voters", "Proportion"), caption = "Statistics about the frequency and proportion of male and female voters in 2021 election survey data", align = "cccc", digits = 2)
+summary_table_sex <- survey_data1 %>% select(sex) %>% group_by(sex) %>% summarise(num_sex = n(), prop_sex = n()/(554+261))
+knitr::kable(summary_table_sex, col.names = c("Sex", "Number of Voters", "Proportion"), caption = "Statistics about the frequency and proportion of male and female voters in 2021 election survey data", align = "cccc", digits = 2)
 
 summary_table_language <- table(survey_data1$language)
 kable(summary_table_language)
@@ -219,7 +218,7 @@ kable(summary_table_income)
 
 <Include a description of the numerical summaries. Remember you can use `r ` to use inline R code.>
 
-```{r, echo = TRUE, warning=FALSE}
+```{r, echo = TRUE, include = FALSE, warning=FALSE}
 survey_data1$income <- factor(survey_data1$income, levels = c("Low", "Medium", "High"))
 census_data1$income <- factor(census_data1$income, levels = c("Low", "Medium", "High"))
 # Use this to create some plots. Should probably describe both the sample and population.
@@ -237,17 +236,17 @@ census_income <- census_data1 %>% ggplot(aes(x = income, fill = income)) +
   geom_bar() + theme_classic() + coord_flip()+
   labs(x = "Income from census data", y = "Frequency", title = "Histogram of ...")
 
-survey_gender_count <- table(survey_data1$gender)
+survey_sex_count <- table(survey_data1$sex)
 
 library(gridExtra)
 library(patchwork)
 survey_age | census_age
 survey_income | census_income
 par(mfrow = c(1, 2))
-pie(survey_gender_count, main = "Gender Distribution in Survey", col = rainbow(length(survey_gender_count)))
+pie(survey_sex_count, main = "Sex Distribution in Survey", col = rainbow(length(survey_sex_count)))
 
-census_gender_count <- table(census_data1$gender)
-pie(census_gender_count, main = "Gender Distribution in Census", col = rainbow(length(census_gender_count)))
+census_sex_count <- table(census_data1$sex)
+pie(census_sex_count, main = "Sex Distribution in Census", col = rainbow(length(census_sex_count)))
 par(mfrow = c(1, 1))
 ```
 
@@ -274,7 +273,7 @@ $$+\beta6 x_{incomeHigh}+\beta6 x_{religion}+\beta7 x_{minority}$$
 $p_c$ represents the probability of voting for the Conservative Party and $p_l$ represents the probability of voting for the Liberal Party. 
 The $log(\frac{p_l}{1-p_l})$ and $log(\frac{p_c}{1-p_c})$ are the log odds in both models.
 
-$\beta_0$ is the intercept of the model. It represents the log odds of voting for the candidate or party when all the predictor variables are at their baseline level (which means that the respondent is aged at 0 years, sex category female, speaking the language of English, not living in Quebec, the default income class at low level of income, does not believe in religions, and is a minority other than the White.).
+$\beta_0=$ is the intercept of the model. It represents the log odds of voting for the candidate or party when all the predictor variables are at their baseline level (which means that the respondent is aged at 0 years, sex category female, speaking the language of English, not living in Quebec, the default income class at low level of income, does not believe in religions, and is a minority other than the White.).
 
 $\beta_1$ represents the relationship between the age of the respondent and the log odds of voting for the parties. For every one-unit increase in age (typically one year), there is an expected $\beta_1$ change in the log odds of voting for the parties, assuming all other variables are held constant.
 
@@ -295,10 +294,10 @@ Finally, $\beta_8$ measures the average difference in the log odds of voting for
 ```{r, include = FALSE}
 
 # Creating the Model
-model1 <- glm(vote_liberal ~ age + gender + language + west + income + religion + minority, data=survey_data1, family = "binomial")
+model1 <- glm(vote_liberal ~ age + sex + language + west + income + religion + minority, data=survey_data1, family = "binomial")
 
 
-model2 <- glm(vote_conservative ~ age + gender + language + west + income + religion + minority, data=survey_data1, family = "binomial")
+model2 <- glm(vote_conservative ~ age + sex + language + west + income + religion + minority, data=survey_data1, family = "binomial")
 
 summary(model1)
 summary(model2)
@@ -332,15 +331,13 @@ In order to estimate the proportion of voters who will vote for ... we will perf
 $$
 \hat{y}^{P S}=\frac{\sum N_{j} \widehat{y}_{j}}{\sum N_{j}}
 $$
-- $N_{j}$..
-- $\widehat{y}_{j}$...
+
 
 $\hat{y}$ is the estimate in each cell, and $N_j$ is the population size of the $j^{th}$ cell based on demographics. \
 The estimated ($\hat{y}$) is $\hat{p}$ that refer to the proportion of voting for... Post-stratification will conduct logistic regression in each cell and use the logistic model to estimate the $\hat{p}$ within that cell. 
 We firstly will create cells based on different ages, sex, and working status. Using the model described in the previous sub-section, we will estimate the proportion of voters in each cell. _Since there are ? categories in sex, ? in region, ? in education, and ? in religion, we will have ? cells for each age.\
 We will subsequently weight each proportion estimate within each cell by the respective population size of that cell and will then sum those values and divide that by the entire population size. 
 
-All analysis for this report was programmed using `R version 4.0.2`. 
 
 
 
@@ -351,7 +348,6 @@ $$+0.643x_{incomeHigh}+0.152x_{religion}-0.036x_{minority}$$
 According to the liberal model
 For Conservative$$ log(\frac{p_c}{1-p_c}) = -3.358+0.017x_{age}+0.327x_{sex}-0.637 x_{French}+0.799 x_{west}+0.646 x_{incomeMedium}$$
 $$+0.356 x_{incomeHigh}+0.734 x_{religion}-0.180 x_{minority}$$
-
 
 
 ```{r, echo = TRUE}
@@ -377,10 +373,11 @@ knitr::kable(summary2$coefficients, col.names = c("Estimates", "SE", "Test stati
 **Tablex** shows that .
 
 
+
 ```{r, echo = FALSE, warning = FALSE}
 
 # Here I will perform the post-stratification calculation for Liberal
-census_data_counts <- census_data1 %>% group_by(age, gender, language, west, income, religion, minority) %>% 
+census_data_counts <- census_data1 %>% group_by(age, sex, language, west, income, religion, minority) %>% 
   summarise(N=n())
 
 census_data_counts$estimate1 <-
@@ -397,7 +394,7 @@ result_liberal <- census_data_counts %>%
 
 ```{r}
 # Here I will perform the post-stratification calculation for Conservative
-census_data_counts <- census_data1 %>% group_by(age, gender, language, west, income, religion, minority) %>% 
+census_data_counts <- census_data1 %>% group_by(age, sex, language, west, income, religion, minority) %>% 
   summarise(N=n())
 
 census_data_counts$estimate2 <-
