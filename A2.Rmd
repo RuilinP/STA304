@@ -183,7 +183,7 @@ language:
 
 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, include = FALSE}
 library(knitr)
 # Use this to calculate some summary measures. 
 summary_table_age <- survey_data1 %>% summarise(
@@ -218,7 +218,7 @@ kable(summary_table_income)
 
 <Include a description of the numerical summaries. Remember you can use `r ` to use inline R code.>
 
-```{r, echo = TRUE, warning=FALSE}
+```{r, echo = TRUE, include = FALSE, warning=FALSE}
 survey_data1$income <- factor(survey_data1$income, levels = c("Low", "Medium", "High"))
 census_data1$income <- factor(census_data1$income, levels = c("Low", "Medium", "High"))
 # Use this to create some plots. Should probably describe both the sample and population.
@@ -291,7 +291,7 @@ Finally, $\beta_8$ measures the average difference in the log odds of voting for
 
 
 
-```{r, include = TRUE}
+```{r, include = FALSE}
 
 # Creating the Model
 model1 <- glm(vote_liberal ~ age + sex + language + west + income + religion + minority, data=survey_data1, family = "binomial")
@@ -331,15 +331,13 @@ In order to estimate the proportion of voters who will vote for ... we will perf
 $$
 \hat{y}^{P S}=\frac{\sum N_{j} \widehat{y}_{j}}{\sum N_{j}}
 $$
-- $N_{j}$..
-- $\widehat{y}_{j}$...
+
 
 $\hat{y}$ is the estimate in each cell, and $N_j$ is the population size of the $j^{th}$ cell based on demographics. \
 The estimated ($\hat{y}$) is $\hat{p}$ that refer to the proportion of voting for... Post-stratification will conduct logistic regression in each cell and use the logistic model to estimate the $\hat{p}$ within that cell. 
 We firstly will create cells based on different ages, sex, and working status. Using the model described in the previous sub-section, we will estimate the proportion of voters in each cell. _Since there are ? categories in sex, ? in region, ? in education, and ? in religion, we will have ? cells for each age.\
 We will subsequently weight each proportion estimate within each cell by the respective population size of that cell and will then sum those values and divide that by the entire population size. 
 
-All analysis for this report was programmed using `R version 4.0.2`. 
 
 
 
