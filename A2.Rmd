@@ -156,7 +156,7 @@ census_data1 <- census_data %>%
                             TRUE ~ "High"),
          religion = ifelse(religion_has_affiliation == "No religious affiliation",0,1),
          minority = ifelse(vis_minority == "Not a visible minority",0,1))%>% 
-  select(age, gender, language, west, income, religion, minority)%>%
+  select(age, sex, language, west, income, religion, minority)%>%
   filter(age >= 18) %>%
   na.omit()
 
@@ -223,10 +223,10 @@ survey_data1$income <- factor(survey_data1$income, levels = c("Low", "Medium", "
 census_data1$income <- factor(census_data1$income, levels = c("Low", "Medium", "High"))
 # Use this to create some plots. Should probably describe both the sample and population.
 survey_age <- survey_data1 %>% ggplot(aes(x = age)) + geom_histogram(fill = "blue", color = "black", bins = 18) + theme_classic()+
-  labs(x = "Age survey", y = "Frequency", title = "Histogram of ...")
+  labs(x = "Age of the people that participated in the election", y = "Frequency", title = "Histogram of the age of the election participants")
 
 census_age <- census_data1 %>% ggplot(aes(x = age)) + geom_histogram(fill = "blue", color = "black", bins = 18) + theme_classic()+
-  labs(x = "Age census", y = "Frequency", title = "Histogram of ...")
+  labs(x = "Age of the people that participated in the election", y = "Frequency", title = "Histogram of the age of the election participants")
 
 survey_income <- survey_data1 %>% ggplot(aes(x = income, fill = income)) + 
   geom_bar() + theme_classic() + coord_flip()+
