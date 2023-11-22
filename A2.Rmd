@@ -29,7 +29,7 @@ library(tidyverse)
 
 ## 1.1 The research question
 
-What will be the predicted outcome for the party that receive the highest-amount votes in the upcoming election 2025?
+What will be the predicted outcome for the Liberal and Conservative Parties that receive the highest-amount votes in the upcoming election 2025?
 
 ## 1.2 Importance of the research
 
@@ -292,7 +292,7 @@ Finally, $\beta_8$ measures the average difference in the log odds of voting for
 
 
 
-```{r, include = TRUE}
+```{r, include = FALSE}
 
 # Creating the Model
 model1 <- glm(vote_liberal ~ age + gender + language + west + income + religion + minority, data=survey_data1, family = "binomial")
@@ -354,17 +354,27 @@ $$+0.356 x_{incomeHigh}+0.734 x_{religion}-0.180 x_{minority}$$
 
 
 
-```{r, include=FALSE}
+```{r, echo = TRUE}
 
-# Creating the Model
-model <- lm(vote_liberal ~ age, data=survey_data1)
+# Creating the Model Summary
+model1 <- glm(vote_liberal ~ age + gender + language + west + income + religion + minority, data=survey_data1, family = "binomial")
 
+
+model2 <- glm(vote_conservative ~ age + gender + language + west + income + religion + minority, data=survey_data1, family = "binomial")
+
+summary1<-summary(model1)
+summary2<-summary(model2)
+
+
+knitr::kable(summary1$coefficients, col.names = c("Estimates", "SE", "Test statistics", "p-value"), caption = "Table x.Summary of Logistic Regression Model for Liberal", align = "cccc", digits = 4)
+
+knitr::kable(summary2$coefficients, col.names = c("Estimates", "SE", "Test statistics", "p-value"), caption = "Table x.Summary Logistic Regression Model for Conservative", align = "cccc", digits = 4)
 # Model Results (to Report in Results section)
 # summary(model)
 # OR
 # broom::tidy(model)
 ```
-
+**Tablex** shows that .
 
 
 ```{r, echo = FALSE, warning = FALSE}
@@ -401,7 +411,7 @@ result_conservative <- census_data_counts %>%
 
 table <- tibble(result_liberal, result_conservative)
 
-knitr::kable(table, col.names = c("Liberal", "Conservative"), caption = "Estimated probability of voting for the Parties", align = "cccc", digits = 4)
+knitr::kable(table, col.names = c("Liberal", "Conservative"), caption = "Table x.Estimated probability of voting for the Parties", align = "cccc", digits = 4)
 ```
 
 
