@@ -181,7 +181,7 @@ language:
 
 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, include = FALSE}
 library(knitr)
 # Use this to calculate some summary measures. 
 summary_table_age <- survey_data1 %>% summarise(
@@ -216,7 +216,7 @@ kable(summary_table_income)
 
 <Include a description of the numerical summaries. Remember you can use `r ` to use inline R code.>
 
-```{r, echo = TRUE, warning=FALSE}
+```{r, echo = TRUE, include = FALSE, warning=FALSE}
 survey_data1$income <- factor(survey_data1$income, levels = c("Low", "Medium", "High"))
 census_data1$income <- factor(census_data1$income, levels = c("Low", "Medium", "High"))
 # Use this to create some plots. Should probably describe both the sample and population.
@@ -289,7 +289,7 @@ Finally, $\beta_8$ measures the average difference in the log odds of voting for
 
 
 
-```{r, include = TRUE}
+```{r, include = FALSE}
 
 # Creating the Model
 model1 <- glm(vote_liberal ~ age + gender + language + west + income + religion + minority, data=survey_data1, family = "binomial")
