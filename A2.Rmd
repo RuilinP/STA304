@@ -218,7 +218,7 @@ kable(summary_table_income)
 
 <Include a description of the numerical summaries. Remember you can use `r ` to use inline R code.>
 
-```{r, echo = TRUE, include = FALSE, warning=FALSE}
+```{r, echo = FALSE, warning=FALSE}
 survey_data1$income <- factor(survey_data1$income, levels = c("Low", "Medium", "High"))
 census_data1$income <- factor(census_data1$income, levels = c("Low", "Medium", "High"))
 # Use this to create some plots. Should probably describe both the sample and population.
