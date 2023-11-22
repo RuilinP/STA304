@@ -29,7 +29,7 @@ library(tidyverse)
 
 ## 1.1 The research question
 
-What will be the predicted outcome for the party that receive the highest-amount votes in the upcoming election 2025?
+What will be the predicted outcome for the Liberal and Conservative Parties that receive the highest-amount votes in the upcoming election 2025?
 
 ## 1.2 Importance of the research
 
@@ -223,18 +223,18 @@ survey_data1$income <- factor(survey_data1$income, levels = c("Low", "Medium", "
 census_data1$income <- factor(census_data1$income, levels = c("Low", "Medium", "High"))
 # Use this to create some plots. Should probably describe both the sample and population.
 survey_age <- survey_data1 %>% ggplot(aes(x = age)) + geom_histogram(fill = "blue", color = "black", bins = 18) + theme_classic()+
-  labs(x = "Age survey", y = "Frequency", title = "Histogram of ...")
+  labs(x = "Age of the people that participated in the election", y = "Frequency", title = "Histogram of the age of the election participants")
 
 census_age <- census_data1 %>% ggplot(aes(x = age)) + geom_histogram(fill = "blue", color = "black", bins = 18) + theme_classic()+
-  labs(x = "Age census", y = "Frequency", title = "Histogram of ...")
+  labs(x = "Age of the people that participated in the election", y = "Frequency", title = "Histogram of the age of the election participants")
 
 survey_income <- survey_data1 %>% ggplot(aes(x = income, fill = income)) + 
-  geom_bar() + theme_classic() + coord_flip()+
-  labs(x = "Income from survey data", y = "Frequency", title = "Histogram of ...")
+  geom_bar() + theme_classic() +
+  labs(x = "Income level of the household", y = "Frequency", title = "Histogram of the level of the income (survey)")
 
 census_income <- census_data1 %>% ggplot(aes(x = income, fill = income)) + 
-  geom_bar() + theme_classic() + coord_flip()+
-  labs(x = "Income from census data", y = "Frequency", title = "Histogram of ...")
+  geom_bar() + theme_classic() +
+  labs(x = "Income level of the household", y = "Frequency", title = "Histogram of of the level of the income (census")
 
 survey_sex_count <- table(survey_data1$sex)
 
@@ -350,6 +350,29 @@ For Conservative$$ log(\frac{p_c}{1-p_c}) = -3.358+0.017x_{age}+0.327x_{sex}-0.6
 $$+0.356 x_{incomeHigh}+0.734 x_{religion}-0.180 x_{minority}$$
 
 
+```{r, echo = TRUE}
+
+# Creating the Model Summary
+model1 <- glm(vote_liberal ~ age + gender + language + west + income + religion + minority, data=survey_data1, family = "binomial")
+
+
+model2 <- glm(vote_conservative ~ age + gender + language + west + income + religion + minority, data=survey_data1, family = "binomial")
+
+summary1<-summary(model1)
+summary2<-summary(model2)
+
+
+knitr::kable(summary1$coefficients, col.names = c("Estimates", "SE", "Test statistics", "p-value"), caption = "Table x.Summary of Logistic Regression Model for Liberal", align = "cccc", digits = 4)
+
+knitr::kable(summary2$coefficients, col.names = c("Estimates", "SE", "Test statistics", "p-value"), caption = "Table x.Summary Logistic Regression Model for Conservative", align = "cccc", digits = 4)
+# Model Results (to Report in Results section)
+# summary(model)
+# OR
+# broom::tidy(model)
+```
+**Tablex** shows that .
+
+
 
 ```{r, echo = FALSE, warning = FALSE}
 
@@ -385,7 +408,7 @@ result_conservative <- census_data_counts %>%
 
 table <- tibble(result_liberal, result_conservative)
 
-knitr::kable(table, col.names = c("Liberal", "Conservative"), caption = "Estimated probability of voting for the Parties", align = "cccc", digits = 4)
+knitr::kable(table, col.names = c("Liberal", "Conservative"), caption = "Table x.Estimated probability of voting for the Parties", align = "cccc", digits = 4)
 ```
 
 
