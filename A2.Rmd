@@ -230,6 +230,9 @@ census_age <- census_data1 %>% ggplot(aes(x = age)) + geom_histogram(fill = "blu
   labs(x = "Age of the people that participated in the election", y = "Frequency", title = "Histogram of the age\n of the election participants")+
   theme(plot.title = element_text(size = 14, hjust = 0.5))
 
+
+#income_labels <- c("Low", "Medium", "High")
+
 survey_income <- survey_data1 %>% ggplot(aes(x = income, fill = income)) + 
   geom_bar() + theme_classic() +
   labs(x = "Income level of the household", y = "Frequency", title = "Histogram of the level\n of the income (survey)")+
@@ -354,7 +357,7 @@ For Conservative$$ log(\frac{p_c}{1-p_c}) = -3.358+0.017x_{age}+0.327x_{sex}-0.6
 $$+0.356 x_{incomeHigh}+0.734 x_{religion}-0.180 x_{minority}$$
 
 
-```{r, echo = TRUE}
+```{r, echo = FALSE, results = 'asis'}
 
 # Creating the Model Summary
 model1 <- glm(vote_liberal ~ age + sex + language + west + income + religion + minority, data=survey_data1, family = "binomial")
