@@ -218,7 +218,7 @@ kable(summary_table_income)
 
 <Include a description of the numerical summaries. Remember you can use `r ` to use inline R code.>
 
-```{r, echo = TRUE, include = FALSE, warning=FALSE}
+```{r, echo = FALSE, warning=FALSE}
 survey_data1$income <- factor(survey_data1$income, levels = c("Low", "Medium", "High"))
 census_data1$income <- factor(census_data1$income, levels = c("Low", "Medium", "High"))
 # Use this to create some plots. Should probably describe both the sample and population.
@@ -229,12 +229,12 @@ census_age <- census_data1 %>% ggplot(aes(x = age)) + geom_histogram(fill = "blu
   labs(x = "Age of the people that participated in the election", y = "Frequency", title = "Histogram of the age of the election participants")
 
 survey_income <- survey_data1 %>% ggplot(aes(x = income, fill = income)) + 
-  geom_bar() + theme_classic() + coord_flip()+
-  labs(x = "Income from survey data", y = "Frequency", title = "Histogram of ...")
+  geom_bar() + theme_classic() +
+  labs(x = "Income level of the household", y = "Frequency", title = "Histogram of the level of the income (survey)")
 
 census_income <- census_data1 %>% ggplot(aes(x = income, fill = income)) + 
-  geom_bar() + theme_classic() + coord_flip()+
-  labs(x = "Income from census data", y = "Frequency", title = "Histogram of ...")
+  geom_bar() + theme_classic() +
+  labs(x = "Income level of the household", y = "Frequency", title = "Histogram of of the level of the income (census")
 
 survey_sex_count <- table(survey_data1$sex)
 
