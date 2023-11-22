@@ -199,7 +199,7 @@ religion: A binary variable indicating whether individuals have a religious affi
 minority: A binary variable indicating whether individuals are part of a visible minority or not.
 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, results = 'asis'}
 library(knitr)
 # Use this to calculate some summary measures. 
 #Table 1 vote summary
@@ -210,7 +210,7 @@ knitr::kable(vote_table, caption = "Table 1.Statistics about the proportions of 
 ```
 Table 1 shows that 
 
-```{r, echo=FALSE, include = FALSE}
+```{r, echo=FALSE, results = 'asis'}
 #Table2 age summary
 summary_sur_age <- survey_data1 %>% summarise(
                                   min = min(age),
@@ -221,7 +221,7 @@ summary_sur_age <- survey_data1 %>% summarise(
                                   IQR = Q3 - Q1,
                                   mean = mean(age), 
                                   sd = sd(age)) 
-knitr::kable(summary_sur_age, caption = "Table 2.Statistics about the ages of voters in 2021 election survey data", align = "cccc", digits = 2)
+knitr::kable(summary_sur_age, caption = "Statistics about the ages of voters in 2021 election survey data", align = "cccc", digits = 2)
 
 summary_cen_age <- census_data1 %>% summarise(
                                   min = min(age),
@@ -232,29 +232,29 @@ summary_cen_age <- census_data1 %>% summarise(
                                   IQR = Q3 - Q1,
                                   mean = mean(age), 
                                   sd = sd(age))
-knitr::kable(summary_cen_age, caption = "Table 3.Statistics about the ages of voters in 2021 election census data", align = "cccc", digits = 2)
+knitr::kable(summary_cen_age, caption = "Statistics about the ages of voters in 2021 election census data", align = "cccc", digits = 2)
 
 
 ```
 Table2 & 3 show that
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, results = 'asis'}
 #format in a table will look nicer
 num_cen_sex = length(census_data1$sex)
 summary_survey_sex <- survey_data1 %>% select(sex) %>% group_by(sex) %>% summarise(num.surveySex = n(), prop.surveySex = n()/(554+261))
 summary_census_sex <- census_data1 %>% select(sex) %>% group_by (sex) %>% summarise(num.censusSex = n(), prop.censusSex = n()/num_cen_sex)
 
-knitr::kable(list(summary_survey_sex, summary_census_sex), position = c("left", "right"), caption = "Table 4.Statistics about the frequency and proportion of male and female voters in 2021 election survey and cenus data", align = "cccc", digits = 2)
+knitr::kable(list(summary_survey_sex, summary_census_sex), caption = "Statistics about the frequency and proportion of male and female voters in 2021 election survey and cenus data", align = "cccc", digits = 2)
 ```
 Table 4 shows
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, results = 'asis'}
 num_cen_language = length(census_data1$language)
 num_sur_language = length(survey_data1$language)
 summary_survey_language <- survey_data1 %>% select(language) %>% group_by(language) %>% summarise(num.surveyLanguage = n(), prop.surveyLanguage = n()/num_sur_language)
 summary_census_language <- census_data1 %>% select(language) %>% group_by (language) %>% summarise(num.censusLanguage = n(), prop.censusLanguage = n()/num_cen_language)
 
-knitr::kable(list(summary_survey_language, summary_census_language), position = c("left", "right"), caption = "Table 5.Statistics about the frequency and proportion of French and English speaking voters in 2021 election survey and cenus data", align = "cccc", digits = 2)
+knitr::kable(list(summary_survey_language, summary_census_language), position = c("left", "right"), caption = "Statistics about the frequency and proportion of French and English speaking voters in 2021 election survey and cenus data", align = "cccc", digits = 2)
 ```
 Table 5 shows
 
