@@ -332,15 +332,13 @@ In order to estimate the proportion of voters who will vote for ... we will perf
 $$
 \hat{y}^{P S}=\frac{\sum N_{j} \widehat{y}_{j}}{\sum N_{j}}
 $$
-- $N_{j}$..
-- $\widehat{y}_{j}$...
+
 
 $\hat{y}$ is the estimate in each cell, and $N_j$ is the population size of the $j^{th}$ cell based on demographics. \
 The estimated ($\hat{y}$) is $\hat{p}$ that refer to the proportion of voting for... Post-stratification will conduct logistic regression in each cell and use the logistic model to estimate the $\hat{p}$ within that cell. 
 We firstly will create cells based on different ages, sex, and working status. Using the model described in the previous sub-section, we will estimate the proportion of voters in each cell. _Since there are ? categories in sex, ? in region, ? in education, and ? in religion, we will have ? cells for each age.\
 We will subsequently weight each proportion estimate within each cell by the respective population size of that cell and will then sum those values and divide that by the entire population size. 
 
-All analysis for this report was programmed using `R version 4.0.2`. 
 
 
 
