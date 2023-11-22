@@ -350,10 +350,10 @@ We will subsequently weight each proportion estimate within each cell by the res
 
 ## 4. Results 
 1. The following are the logistic regression model results (coefficients rounded to 3 decimals).
-For Liberal$$ log(\frac{p_l}{1-p_l}) = -2.267+0.010 x_{age}-0.227x_{sex}-0.485 x_{French}-0.867 x_{west}+0.811 x_{incomeMedium}$$
+For Liberal$$ log(\frac{\hat p_l}{1-\hat p_l}) = -2.267+0.010 x_{age}-0.227x_{sex}-0.485 x_{French}-0.867 x_{west}+0.811 x_{incomeMedium}$$
 $$+0.643x_{incomeHigh}+0.152x_{religion}-0.036x_{minority}$$
 According to the liberal model
-For Conservative$$ log(\frac{p_c}{1-p_c}) = -3.358+0.017x_{age}+0.327x_{sex}-0.637 x_{French}+0.799 x_{west}+0.646 x_{incomeMedium}$$
+For Conservative$$ log(\frac{\hat p_c}{1-\hat p_c}) = -3.358+0.017x_{age}+0.327x_{sex}-0.637 x_{French}+0.799 x_{west}+0.646 x_{incomeMedium}$$
 $$+0.356 x_{incomeHigh}+0.734 x_{religion}-0.180 x_{minority}$$
 
 
@@ -370,13 +370,51 @@ summary2<-summary(model2)
 
 
 knitr::kable(summary1$coefficients, col.names = c("Estimates", "SE", "Test statistics", "p-value"), caption = "Table x.Summary of Logistic Regression Model for Liberal", align = "cccc", digits = 4)
+```
+$\hat p_c$ represents the probability of voting for the Conservative Party and $\hat p_l$ represents the probability of voting for the Liberal Party. 
 
+$\hat \beta_0=$ is the intercept of the model. It represents the log odds of voting for the candidate or party when all the predictor variables are at their baseline level (which means that the respondent is aged at 0 years, sex category female, speaking the language of English, not living in Quebec, the default income class at low level of income, does not believe in religions, and is a minority other than the White.).
+
+$\hat \beta_1$ represents the relationship between the age of the respondent and the log odds of voting for the parties. For every one-unit increase in age (typically one year), there is an expected $\beta_1$ change in the log odds of voting for the parties, assuming all other variables are held constant.
+
+$\hat \beta_2$ quantifies the average difference in the log odds of voting for the parties between two sex groups (e.g., male and female), controlling for other factors in the model. It shows how sex influences the likelihood of voting for the candidate or party.
+
+$\hat \beta_3$, this coefficient measures the average difference in log odds of voting for the parties between respondents who speak French and English when other predictors stay the same. It reflects how changes in language proficiency between English and French can affect the voting behavior of a respondent, with other factors being equal.
+
+$\hat\beta_4$ represents the average difference of being in the western inland provinces (Alberta, Manitoba, Saskatchewan) or not on the log odds of voting for the candidate or party while holding other predictors constant. This could reflect regional differences in voting preferences, with all other variables held constant.
+
+For$\hat \beta_5$, This coefficient measures the average difference of log odds of voting between the respondent who possesses a low and medium income level. Similarly, $\beta_6$ measures the average difference of log odds of voting between the respondent who possesses a low and high income level when other predictors stay the same. They indicate how changes in income level impact the log odds of voting for the candidate or party. Both coefficients capture the relationship between economic status and voting behavior, controlling for other variables in the model.
+
+$\hat \beta_7$ assesses the average difference in the log odds of voting for the parties between the respondents who are atheists or possess religious beliefs with the other predictors fixed. This factor might capture how the difference between a religious believer and a non-religious person on voting preferences.
+
+Finally, $\hat\beta_8$ measures the average difference in the log odds of voting for the parties if a respondent is identified as a minority member compared to a non-minority one. This could reflect how membership in certain demographics or ethnic minorities influences voting patterns compared to the majority component of White people in the population of Canadian citizens (Statistics Canada, 2022).
+```{r, echo = FALSE, results = 'asis'}
 knitr::kable(summary2$coefficients, col.names = c("Estimates", "SE", "Test statistics", "p-value"), caption = "Table x.Summary Logistic Regression Model for Conservative", align = "cccc", digits = 4)
 # Model Results (to Report in Results section)
 # summary(model)
 # OR
 # broom::tidy(model)
 ```
+$\hat p_c$ represents the probability of voting for the Conservative Party and $\hat p_l$ represents the probability of voting for the Liberal Party. 
+
+$\hat \beta_0=$ is the intercept of the model. It represents the log odds of voting for the candidate or party when all the predictor variables are at their baseline level (which means that the respondent is aged at 0 years, sex category female, speaking the language of English, not living in Quebec, the default income class at low level of income, does not believe in religions, and is a minority other than the White.).
+
+$\hat \beta_1$ represents the relationship between the age of the respondent and the log odds of voting for the parties. For every one-unit increase in age (typically one year), there is an expected $\beta_1$ change in the log odds of voting for the parties, assuming all other variables are held constant.
+
+$\hat \beta_2$ quantifies the average difference in the log odds of voting for the parties between two sex groups (e.g., male and female), controlling for other factors in the model. It shows how sex influences the likelihood of voting for the candidate or party.
+
+$\hat \beta_3$, this coefficient measures the average difference in log odds of voting for the parties between respondents who speak French and English when other predictors stay the same. It reflects how changes in language proficiency between English and French can affect the voting behavior of a respondent, with other factors being equal.
+
+$\hat\beta_4$ represents the average difference of being in the western inland provinces (Alberta, Manitoba, Saskatchewan) or not on the log odds of voting for the candidate or party while holding other predictors constant. This could reflect regional differences in voting preferences, with all other variables held constant.
+
+For$\hat \beta_5$, This coefficient measures the average difference of log odds of voting between the respondent who possesses a low and medium income level. Similarly, $\beta_6$ measures the average difference of log odds of voting between the respondent who possesses a low and high income level when other predictors stay the same. They indicate how changes in income level impact the log odds of voting for the candidate or party. Both coefficients capture the relationship between economic status and voting behavior, controlling for other variables in the model.
+
+$\hat \beta_7$ assesses the average difference in the log odds of voting for the parties between the respondents who are atheists or possess religious beliefs with the other predictors fixed. This factor might capture how the difference between a religious believer and a non-religious person on voting preferences.
+
+Finally, $\hat\beta_8$ measures the average difference in the log odds of voting for the parties if a respondent is identified as a minority member compared to a non-minority one. This could reflect how membership in certain demographics or ethnic minorities influences voting patterns compared to the majority component of White people in the population of Canadian citizens (Statistics Canada, 2022).
+
+
+
 **Tablex** shows that .
 
 
