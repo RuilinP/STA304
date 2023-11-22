@@ -223,18 +223,22 @@ survey_data1$income <- factor(survey_data1$income, levels = c("Low", "Medium", "
 census_data1$income <- factor(census_data1$income, levels = c("Low", "Medium", "High"))
 # Use this to create some plots. Should probably describe both the sample and population.
 survey_age <- survey_data1 %>% ggplot(aes(x = age)) + geom_histogram(fill = "blue", color = "black", bins = 18) + theme_classic()+
-  labs(x = "Age of the people that participated in the election", y = "Frequency", title = "Histogram of the age of the election participants")
+  labs(x = "Age of the people that participated in the election", y = "Frequency", title = "Histogram of the age\n of the election participants")+
+  theme(plot.title = element_text(size = 14, hjust = 0.5)) 
 
 census_age <- census_data1 %>% ggplot(aes(x = age)) + geom_histogram(fill = "blue", color = "black", bins = 18) + theme_classic()+
-  labs(x = "Age of the people that participated in the election", y = "Frequency", title = "Histogram of the age of the election participants")
+  labs(x = "Age of the people that participated in the election", y = "Frequency", title = "Histogram of the age\n of the election participants")+
+  theme(plot.title = element_text(size = 14, hjust = 0.5))
 
 survey_income <- survey_data1 %>% ggplot(aes(x = income, fill = income)) + 
   geom_bar() + theme_classic() +
-  labs(x = "Income level of the household", y = "Frequency", title = "Histogram of the level of the income (survey)")
+  labs(x = "Income level of the household", y = "Frequency", title = "Histogram of the level\n of the income (survey)")+
+  theme(plot.title = element_text(size = 14, hjust = 0.5))
 
 census_income <- census_data1 %>% ggplot(aes(x = income, fill = income)) + 
   geom_bar() + theme_classic() +
-  labs(x = "Income level of the household", y = "Frequency", title = "Histogram of of the level of the income (census")
+  labs(x = "Income level of the household", y = "Frequency", title = "Histogram of of the level\n of the income (census)")+
+  theme(plot.title = element_text(size = 14, hjust = 0.5))
 
 survey_sex_count <- table(survey_data1$sex)
 
@@ -353,10 +357,10 @@ $$+0.356 x_{incomeHigh}+0.734 x_{religion}-0.180 x_{minority}$$
 ```{r, echo = TRUE}
 
 # Creating the Model Summary
-model1 <- glm(vote_liberal ~ age + gender + language + west + income + religion + minority, data=survey_data1, family = "binomial")
+model1 <- glm(vote_liberal ~ age + sex + language + west + income + religion + minority, data=survey_data1, family = "binomial")
 
 
-model2 <- glm(vote_conservative ~ age + gender + language + west + income + religion + minority, data=survey_data1, family = "binomial")
+model2 <- glm(vote_conservative ~ age + sex + language + west + income + religion + minority, data=survey_data1, family = "binomial")
 
 summary1<-summary(model1)
 summary2<-summary(model2)
