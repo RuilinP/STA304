@@ -342,7 +342,8 @@ We will subsequently weight each proportion estimate within each cell by the res
 
 
 ## 4. Results 
-1. The following are the logistic regression model results (coefficients rounded to 3 decimals).
+## 4.1 Logistic Model Results
+The following are the logistic regression model results (coefficients rounded to 3 decimals).
 For Liberal$$ log(\frac{p_l}{1-p_l}) = -2.267+0.010 x_{age}-0.227x_{sex}-0.485 x_{French}-0.867 x_{west}+0.811 x_{incomeMedium}$$
 $$+0.643x_{incomeHigh}+0.152x_{religion}-0.036x_{minority}$$
 According to the liberal model
@@ -350,13 +351,13 @@ For Conservative$$ log(\frac{p_c}{1-p_c}) = -3.358+0.017x_{age}+0.327x_{sex}-0.6
 $$+0.356 x_{incomeHigh}+0.734 x_{religion}-0.180 x_{minority}$$
 
 
-```{r, echo = TRUE}
+```{r, echo = FALSE}
 
 # Creating the Model Summary
-model1 <- glm(vote_liberal ~ age + gender + language + west + income + religion + minority, data=survey_data1, family = "binomial")
+model1 <- glm(vote_liberal ~ age + sex + language + west + income + religion + minority, data=survey_data1, family = "binomial")
 
 
-model2 <- glm(vote_conservative ~ age + gender + language + west + income + religion + minority, data=survey_data1, family = "binomial")
+model2 <- glm(vote_conservative ~ age + sex + language + west + income + religion + minority, data=survey_data1, family = "binomial")
 
 summary1<-summary(model1)
 summary2<-summary(model2)
@@ -370,10 +371,10 @@ knitr::kable(summary2$coefficients, col.names = c("Estimates", "SE", "Test stati
 # OR
 # broom::tidy(model)
 ```
-**Tablex** shows that .
+**Tablex** shows the summary statistics of the both logistic regressions, which includes the estimated coefficients (slopes) of the logistic regression models, the corresponding standard errors, test statistics and p-values for the coefficients t-tests. Using a significance level of 0.05, we can see that p-values for the coefficient estimate of numerical variable age and dummy variables: sex of Male or not, Language of French or not, living in Western inland provinces (Alberta, Manitoba, Saskatchewan) or not, income class at Medium or not, income class at High or not, possess a religion or not, identified as a minority or not. Among these predictors, we can see that the age, language speaking and religion identification can form a significant relationship with the voting decision of voters (whether or not they will vote the Conservative and the Liberal) because their p-values are smaller than the 0.05 significant level cutoff. 
 
 
-
+## 4.2 Post-stratification Results
 ```{r, echo = FALSE, warning = FALSE}
 
 # Here I will perform the post-stratification calculation for Liberal
