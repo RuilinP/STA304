@@ -1,7 +1,7 @@
 ---
 title: "A2"
 subtitle: "STA304 - Fall 2023 -Assignment 2"
-author: "Ruilin Peng"
+author: "Group 120:Ruilin Peng, Yiwei(Johnson) Guo"
 date: "11/7/2023"
 output:
   pdf_document: default
@@ -164,6 +164,21 @@ census_data1 <- census_data %>%
 <Remember, you may want to use multiple datasets here, if you do end up using multiple data sets, or merging the data, be sure to describe this in the cleaning process and be sure to discuss important aspects of all the data that you used.>
 
 <Include a description of the important variables.> 
+
+Response Variable
+vote_
+
+Independent Variables
+age: This variable represents the age of the observations. It is a numerical variable.
+
+gender: This variable represents the gender of the observations
+
+language:
+
+
+
+
+
 
 ```{r, echo=FALSE}
 library(knitr)
