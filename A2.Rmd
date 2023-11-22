@@ -37,14 +37,19 @@ Free and fair elections are considered as important features contributing a heal
 
 ## 1.3 Terminology
 
-**Liberal Party**:The Liberal party leans on progressive policies and social transformation, and the Liberal encourages free-market competition in economics, diversity of minorities, and inclusion of immigrants. 
+The 45th Canadian federal election will be held on or before October 20, 2025. This date is determined by the Canada Elections Act (*Parliament of Canada*, 2006). There are currently 337 members in office in the 44th Parliament. Both Liberal Party and Conservative Party have 275 members (158 and 117 respectively), and they are the two major Canadian parties(*Members of Parliament*, 2023).
 
-**Conservative Party**: As opposed to the Liberal, the Conservative prefers traditional and preservative rules, imposes more government regulation on economics, and disagrees with social activism (*Canada Guide*, 2023). 
+The Liberal Party is the oldest active federal political party in Canada and has dominated federal politics for the majority of Canadian history (*Liberal Party*, 2019). The party espouses liberal principles and is generally central to center-left. Its main competitor, the Conservative Party, is right-leaned. Liberal Party is currently leaded by Justin Trudeau who is the prime minister of Canada since 2015. Signature policies and legislation of the Liberal Party include universal health care, pension plan, bilingualism, gun control, related charters and acts that legalize same-sex marriage and cannabis usage, and expanding access to abortion (Liberal Party of Canada. n.d.).
+
+The Conservative Party is one of the major political parties in Canada, known for its center-right political orientation. Its platform typically includes a commitment to fiscal responsibility, free-market principles, and a focus on individual liberties. The party has traditionally attracted support from a broad coalition of conservative voters, including those with socially or economic conservative values. The party is currently leaded by Pierre Poilievre since 2022. Its signature policies involves reducing governmental debt, lowering taxes, eliminating the long-gun registry (Dippel, 2016). 
+
+The Liberal party leans on progressive policies and social transformation, and the Liberal encourages free-market competition in economics, diversity of minorities, and inclusion of immigrants. As opposed to the Liberal, the Conservative prefers traditional and preservative rules, imposes more government regulation on economics, and disagrees with social activism (*Canada Guide*, 2023).
+
+Canada includes five distinct regions: The Atlantic Provinces (New Brunswick, Newfoundland and Labrador, Nova Scotia, and Prince Edward Island), Central Canada (Ontario and Quebec), The Prairie Provinces (Manitoba, Saskatchewan and Alberta), The West Coast (British Columbia), and The Northern Territories (Nunavut, Northwest Territories, and Yukon Territories) (*Government of Canada*, 2022). In order to easier present the data, adjustments have been applied to the categories of five regions. The Prairie Provinces have renamed into west regions.
 
 ## 1.4 Hypothesis
 
 As the 45th Canadian Election is approaching, the competition between “Liberal” and “Conservative” is kicked off again. The Liberal and the Conservative parties dominate the political system of Canada and the show plays between these parties. Moreover, if we look at the recent 20 years of popular vote percentages, the Liberal Party almost beats the Conservative Party for each election with an outstanding difference (*Simon Fraser University*, 2021). Therefore, we hypothesize that the Liberal party is still going to win the election and it is exciting to see if there is any chance that the Conservative will probably present a surprise.
-
 
 The goal of this study is to predict which political party of Canada is going to win the most popular votes in the 2025 Canadian Election based on the information of the previous 2021 Canadian Election. This study matches the survey data collected from the 2021 CES (Canadian Election Study) online survey with the census data collected from the Canada GSS (General Social Survey) and predicts the voting decision of respondents in the next 2025 Election in a logistic regression model based on demographic variables of respondents which include age, sex (male/female), language (English/French), income class (Low, Medium and High), the religious or atheist, and the races (the white or the other minorities). (*Stephenson et al.*, 2021). To enhance the representatives of the population, we apply the stratification method that divides the survey respondents into strata by different variables and conclude the estimated voting probability for both the Liberal and the Conservative to infer the possible outcomes in the 2025 Election. 
 
@@ -480,9 +485,13 @@ knitr::kable(table, col.names = c("Liberal", "Conservative"), caption = "Table x
 
 4. OpenAI. (2023). *ChatGPT (September 13 version) [Large language model]*. [https://chat.openai.com/chat](https://chat.openai.com/chat) (Last Accessed: September 13, 2023)
 
-Canada Guide. (2023). *Canadian Political Parties*. https://thecanadaguide.com/government/political-parties/ (Last Accessed: November 11, 2023)
+Members of Parliament. (2023). *Current Members*. [https://www.ourcommons.ca/Members/en]
+
+Parliament of Canada. (2006). *Amendment to Canada Elections Act*. [https://www.parl.ca/]
 
 Simon Fraser University. (2021). *Canadian Election Results by Party 1867 to 2021*. https://www.sfu.ca/~aheard/elections/1867-present.html (Last Accessed: November 11, 2023)
+
+Statistics Canada. (2022). *Chapter 6: Political participation, civic engagement and caregiving among youth in Canada.* [https://www150.statcan.gc.ca/n1/pub/42-28-0001/2021001/article/00006-eng.htm]
 
 Statistics Canada. (October, 2022). *The Canadian census-A rich portrait of the
 country's religious and ethnocultural diversity*. Statistics Canada. https://www150.statcan.gc.ca/n1/daily-quotidien/221026/dq221026b-eng.htm (Last Accessed: November 12, 2023)
@@ -491,7 +500,7 @@ Stephenson, Laura B., Allison Harell, Daniel Rubenson and Peter John Loewen. (20
 
 Uppal, S. & LaRochelle-Côté S. (February, 2012). *Factors associated with voting*. Statistics Canada. https://www150.statcan.gc.ca/n1/en/pub/75-001-x/2012001/article/11629-eng.pdf?st=nuV9FTRH (Last Accessed: November 12, 2023)
 
-Tossutti, L. & Elections Canada. (2007). *La participation électorale des membres des communautés ethnoculturelles*. Élections Canada.
+Tossutti, L. & Elections Canada. (2007). *La participation électorale des membres des communautés ethnoculturelles*. Élections Canada
 
 \newpage
 
