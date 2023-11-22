@@ -127,7 +127,7 @@ survey_data1 <-
   mutate(age = cps21_age,
          vote_conservative = ifelse(cps21_votechoice==2, 1, 0),
          vote_liberal = ifelse(cps21_votechoice==1, 1, 0),
-         gender = case_when(cps21_genderid == 1 ~ "Male",  # This place should change the name of "gender" to "sex"
+         gender = case_when(cps21_genderid == 1 ~ "Male",  
                             cps21_genderid == 2 ~ "Female"),
          language = case_when(UserLanguage == "FR-CA" ~ "FR",
                               UserLanguage == "EN" ~ "EN"),
@@ -140,7 +140,8 @@ survey_data1 <-
                             cps21_income_cat >= 4 & cps21_income_cat <= 7 ~ "Medium",
                             cps21_income_cat > 7 ~ "High"),
   ) %>% 
-  select(age, vote_liberal,vote_conservative, gender, language, west, religion,minority, income) %>% 
+  rename(sex = gender) %>% 
+  select(age, vote_liberal,vote_conservative, sex, language, west, religion,minority, income) %>% 
   filter(age >= 18) %>%
   na.omit()    # This might not be the correct thing to do. 
 
@@ -156,7 +157,6 @@ census_data1 <- census_data %>%
                             TRUE ~ "High"),
          religion = ifelse(religion_has_affiliation == "No religious affiliation",0,1),
          minority = ifelse(vis_minority == "Not a visible minority",0,1))%>% 
-  rename(gender = sex, )%>%
   select(age, gender, language, west, income, religion, minority)%>%
   filter(age >= 18) %>%
   na.omit()
