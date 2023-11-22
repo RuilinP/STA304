@@ -348,18 +348,6 @@ $$+0.643x_{incomeHigh}+0.152x_{religion}-0.036x_{minority}$$
 $$ log(\frac{p_c}{1-p_c}) = -3.358+0.017x_{age}+0.327x_{sex}-0.637 x_{French}+0.799 x_{west}+0.646 x_{incomeMedium}$$
 $$+0.356 x_{incomeHigh}+0.734 x_{religion}-0.180 x_{minority}$$
 
-```{r, include=FALSE}
-
-# Creating the Model
-model <- lm(vote_liberal ~ age, data=survey_data1)
-
-# Model Results (to Report in Results section)
-# summary(model)
-# OR
-# broom::tidy(model)
-```
-
-
 ```{r, echo = FALSE, warning = FALSE}
 
 # Here I will perform the post-stratification calculation for Liberal
