@@ -169,19 +169,24 @@ census_data1 <- census_data %>%
 <Include a description of the important variables.> 
 
 Response Variable
-vote_
+vote_conservative:
+
+vote_liberal:
 
 Independent Variables
 age: This variable represents the age of the observations. It is a numerical variable.
 
 sex: This variable represents the sex of the observations
 
-language:
+language: A categorical variable indicating the primary language of individuals, with categories "FR" for French and "EN" for English.
 
+west: A binary variable indicating whether an individual is from Western provinces (Manitoba, Saskatchewan, Alberta) or not.
 
+income: A categorical variable categorizing individuals into "Low", "Medium", and "High" income groups based on their income category.
 
+religion: A binary variable indicating whether individuals have a religious affiliation or not.
 
-
+minority: A binary variable indicating whether individuals are part of a visible minority or not.
 
 ```{r, echo=FALSE, include = FALSE}
 library(knitr)
@@ -272,7 +277,7 @@ $$ log(\frac{p_c}{1-p_c}) = \beta_0+\beta_1 x_{age}+\beta_2 x_{sex}+\beta_3 x_{F
 $$+\beta6 x_{incomeHigh}+\beta7 x_{religion}+\beta8 x_{minority}$$
 
 $$ log(\frac{p_l}{1-p_l}) = \beta_0+\beta_1 x_{age}+\beta_2 x_{sex}+\beta_3 x_{French}+\beta_4 x_{west}+\beta5 x_{incomeMedium}$$
-$$+\beta6 x_{incomeHigh}+\beta6 x_{religion}+\beta7 x_{minority}$$
+$$+\beta6 x_{incomeHigh}+\beta7 x_{religion}+\beta8 x_{minority}$$
 
 $p_c$ represents the probability of voting for the Conservative Party and $p_l$ represents the probability of voting for the Liberal Party. 
 The $log(\frac{p_l}{1-p_l})$ and $log(\frac{p_c}{1-p_c})$ are the log odds in both models.
@@ -295,7 +300,7 @@ Finally, $\beta_8$ measures the average difference in the log odds of voting for
 
 
 
-```{r, include = FALSE}
+```{r, include=FALSE}
 
 # Creating the Model
 model1 <- glm(vote_liberal ~ age + sex + language + west + income + religion + minority, data=survey_data1, family = "binomial")
