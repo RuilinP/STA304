@@ -399,7 +399,7 @@ result_liberal <- census_data_counts %>%
 
 ```
 
-```{r}
+```{r, echo = FALSE, results = 'asis'}
 # Here I will perform the post-stratification calculation for Conservative
 census_data_counts <- census_data1 %>% group_by(age, sex, language, west, income, religion, minority) %>% 
   summarise(N=n())
