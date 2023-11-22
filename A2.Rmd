@@ -4,7 +4,8 @@ subtitle: "STA304 - Fall 2023 -Assignment 2"
 author: "Group 120:Ruilin Peng, Yiwei(Johnson) Guo"
 date: "11/7/2023"
 output:
-  pdf_document: default
+  pdf_document: 
+    latex_engine: xelatex
 ---
 
 
@@ -43,6 +44,7 @@ Free and fair elections are considered as important features contributing a heal
 ## 1.4 Hypothesis
 
 As the 45th Canadian Election is approaching, the competition between “Liberal” and “Conservative” is kicked off again. The Liberal and the Conservative parties dominate the political system of Canada and the show plays between these parties. Moreover, if we look at the recent 20 years of popular vote percentages, the Liberal Party almost beats the Conservative Party for each election with an outstanding difference (*Simon Fraser University*, 2021). Therefore, we hypothesize that the Liberal party is still going to win the election and it is exciting to see if there is any chance that the Conservative will probably present a surprise.
+
 
 The goal of this study is to predict which political party of Canada is going to win the most popular votes in the 2025 Canadian Election based on the information of the previous 2021 Canadian Election. This study matches the survey data collected from the 2021 CES (Canadian Election Study) online survey with the census data collected from the Canada GSS (General Social Survey) and predicts the voting decision of respondents in the next 2025 Election in a logistic regression model based on demographic variables of respondents which include age, sex (male/female), language (English/French), income class (Low, Medium and High), the religious or atheist, and the races (the white or the other minorities). (*Stephenson et al.*, 2021). To enhance the representatives of the population, we apply the stratification method that divides the survey respondents into strata by different variables and conclude the estimated voting probability for both the Liberal and the Conservative to infer the possible outcomes in the 2025 Election. 
 
