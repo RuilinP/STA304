@@ -156,7 +156,7 @@ census_data1 <- census_data %>%
                             TRUE ~ "High"),
          religion = ifelse(religion_has_affiliation == "No religious affiliation",0,1),
          minority = ifelse(vis_minority == "Not a visible minority",0,1))%>% 
-  select(age, gender, language, west, income, religion, minority)%>%
+  select(age, sex, language, west, income, religion, minority)%>%
   filter(age >= 18) %>%
   na.omit()
 
