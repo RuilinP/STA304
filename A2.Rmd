@@ -14,7 +14,7 @@ output:
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 library(openintro)
 library(tidyverse)
-
+library(kableExtra)
 ```
 
 ## 1. Introduction
@@ -206,7 +206,7 @@ library(knitr)
 summary_table_liberal <- survey_data1 %>% select(vote_liberal) %>% summarize(prop.Liberal = mean(vote_liberal))
 summary_table_conservative <- survey_data1 %>% select(vote_conservative) %>% summarize(prop.Conservative = mean(vote_conservative))
 vote_table <- tibble(summary_table_liberal, summary_table_conservative)
-knitr::kable(vote_table, caption = "Table 1.Statistics about the proportions of Yes votes for the Liberal and the Conservative in Survey data", align = "cccc", digits = 4)
+knitr::kable(vote_table, caption = "Statistics about the proportions of Yes votes for the Liberal and the Conservative in Survey data", align = "cccc", digits = 4)%>% kable_styling(latex_options = "HOLD_position")
 ```
 Table 1 shows that 
 
@@ -221,7 +221,7 @@ summary_sur_age <- survey_data1 %>% summarise(
                                   IQR = Q3 - Q1,
                                   mean = mean(age), 
                                   sd = sd(age)) 
-knitr::kable(summary_sur_age, caption = "Statistics about the ages of voters in 2021 election survey data", align = "cccc", digits = 2)
+knitr::kable(summary_sur_age, caption = "Statistics about the ages of voters in 2021 election survey data", align = "cccc", digits = 2)%>% kable_styling(latex_options = "HOLD_position")
 
 summary_cen_age <- census_data1 %>% summarise(
                                   min = min(age),
@@ -232,7 +232,7 @@ summary_cen_age <- census_data1 %>% summarise(
                                   IQR = Q3 - Q1,
                                   mean = mean(age), 
                                   sd = sd(age))
-knitr::kable(summary_cen_age, caption = "Statistics about the ages of voters in 2021 election census data", align = "cccc", digits = 2)
+knitr::kable(summary_cen_age, caption = "Statistics about the ages of voters in 2021 election census data", align = "cccc", digits = 2)%>% kable_styling(latex_options = "HOLD_position")
 
 
 ```
@@ -244,7 +244,7 @@ num_cen_sex = length(census_data1$sex)
 summary_survey_sex <- survey_data1 %>% select(sex) %>% group_by(sex) %>% summarise(num.surveySex = n(), prop.surveySex = n()/(554+261))
 summary_census_sex <- census_data1 %>% select(sex) %>% group_by (sex) %>% summarise(num.censusSex = n(), prop.censusSex = n()/num_cen_sex)
 
-knitr::kable(list(summary_survey_sex, summary_census_sex), caption = "Statistics about the frequency and proportion of male and female voters in 2021 election survey and cenus data", align = "cccc", digits = 2)
+knitr::kable(list(summary_survey_sex, summary_census_sex), caption = "Statistics about the frequency and proportion of male and female voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
 ```
 Table 4 shows
 
@@ -254,7 +254,7 @@ num_sur_language = length(survey_data1$language)
 summary_survey_language <- survey_data1 %>% select(language) %>% group_by(language) %>% summarise(num.surveyLanguage = n(), prop.surveyLanguage = n()/num_sur_language)
 summary_census_language <- census_data1 %>% select(language) %>% group_by (language) %>% summarise(num.censusLanguage = n(), prop.censusLanguage = n()/num_cen_language)
 
-knitr::kable(list(summary_survey_language, summary_census_language), position = c("left", "right"), caption = "Statistics about the frequency and proportion of French and English speaking voters in 2021 election survey and cenus data", align = "cccc", digits = 2)
+knitr::kable(list(summary_survey_language, summary_census_language), position = c("left", "right"), caption = "Statistics about the frequency and proportion of French and English speaking voters in 2021 election survey and cenus data", align = "cccc", digits = 2)%>% kable_styling(latex_options = "HOLD_position")
 ```
 Table 5 shows
 
