@@ -314,7 +314,7 @@ survey_data1$income <- factor(survey_data1$income, levels = c("Low", "Medium", "
 census_data1$income <- factor(census_data1$income, levels = c("Low", "Medium", "High"))
 # Use this to create some plots. Should probably describe both the sample and population.
 survey_age <- survey_data1 %>% ggplot(aes(x = age)) + geom_histogram(fill = "blue", color = "black", bins = 18) + theme_classic()+
-  labs(x = "Age of the people that participated\n in the election", y = "Frequency", title = "Histogram of the age of the\n election participants from survey")+
+  labs(x = "Age of the people that participated\n in the election", y = "Frequency", title = "Histogram of the age of the\n election participants from\n survey",caption = "Graph 1")+
   theme(plot.title = element_text(size = 14, hjust = 0.5)) 
 
 census_age <- census_data1 %>% ggplot(aes(x = age)) + geom_histogram(fill = "blue", color = "black", bins = 18) + theme_classic()+
@@ -413,7 +413,7 @@ We will subsequently weight each proportion estimate within each cell by the res
 ## 4.1 Result of Logistic Regression Models
 
 The following are the logistic regression model results (coefficients rounded to 3 decimals).
-For Liberal$$ log(\frac{\hat{p_l}}{1-\hat{p_l}}) = -2.580+0.017 x_{age}+0.030{sex}-0.938 x_{French}-1.115 x_{west}+0.822 x_{incomeMedium}$$
+For Liberal$$ log(\frac{\hat{p_l}}{1-\hat{p_l}}) = -2.580+0.017 x_{age}+0.030x_{sex}-0.938 x_{French}-1.115 x_{west}+0.822 x_{incomeMedium}$$
 $$+0.504x_{incomeHigh}+0.362x_{religion}-0.590x_{minority}$$
 According to the liberal model
 For Conservative$$ log(\frac{\hat{p_c}}{1-\hat{p_c}}) = -3.024+0.007x_{age}-0.368x_{sex}-1.102 x_{French}+1.105 x_{west}+0.512 x_{incomeMedium}$$
@@ -430,13 +430,24 @@ model2 <- glm(vote_conservative ~ age + sex + language + west + income + religio
 
 summary1<-summary(model1)
 summary2<-summary(model2)
+formatted_summary1 <- summary1$coefficients
+formatted_summary1[, 1:4] <- sprintf("%.3f", summary1$coefficients[, 1:4])
 
+formatted_summary2 <- summary2$coefficients
+formatted_summary2[, 1:4] <- sprintf("%.3f", summary2$coefficients[, 1:4])
 
-knitr::kable(summary1$coefficients, col.names = c("Estimates", "SE", "Test statistics", "p-value"), caption = "Summary of Logistic Regression Model for Liberal", align = "cccc", digits = 4)%>% kable_styling(latex_options = "HOLD_position")
+# Create the knitted table with formatted coefficients
+knitr::kable(
+  formatted_summary1,
+  col.names = c("Estimates", "SE", "Test statistics", "p-value"),
+  caption = "Summary of Logistic Regression Model for Liberal",
+  align = "cccc"
+) %>%
+  kable_styling(latex_options = "HOLD_position")
 ```
 
 ```{r, echo = FALSE, results = 'asis'}
-knitr::kable(summary2$coefficients, col.names = c("Estimates", "SE", "Test statistics", "p-value"), caption = "Summary Logistic Regression Model for Conservative", align = "cccc", digits = 4)%>% kable_styling(latex_options = "HOLD_position")
+knitr::kable(formatted_summary2, col.names = c("Estimates", "SE", "Test statistics", "p-value"), caption = "Summary Logistic Regression Model for Conservative", align = "cccc", digits = 4)%>% kable_styling(latex_options = "HOLD_position")
 # Model Results (to Report in Results section)
 # summary(model)
 # OR
