@@ -258,12 +258,16 @@ knitr::kable(list(summary_survey_language, summary_census_language), position = 
 ```
 Table 5 shows
 ```{r, echo=FALSE, results = 'asis'}
+replace_values <- function(x) {
+  ifelse(x == 0, "No", "Yes")
+}
 #format in a table will look nicer
 num_cen_west = length(census_data1$west)
 summary_survey_west <- survey_data1 %>% select(west) %>% group_by(west) %>% summarise(num.surveyWest = n(), prop.surveyWest = n()/(554+261))
 summary_census_west <- census_data1 %>% select(west) %>% group_by (west) %>% summarise(num.censusWest = n(), prop.censusWest = n()/num_cen_west)
 
-knitr::kable(list(summary_survey_west, summary_census_west), caption = "Statistics about the frequency and proportion of west and non-west voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
+knitr::kable(list(mutate(summary_survey_west, west = replace_values(west)),
+  mutate(summary_census_west, west = replace_values(west))), caption = "Statistics about the frequency and proportion of west and non-west voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
 ```
 
 ```{r, echo=FALSE, results = 'asis'}
@@ -280,7 +284,8 @@ num_cen_religion = length(census_data1$religion)
 summary_survey_religion <- survey_data1 %>% select(religion) %>% group_by(religion) %>% summarise(num.surveyReligion = n(), prop.surveyReligion = n()/(554+261))
 summary_census_religion <- census_data1 %>% select(religion) %>% group_by (religion) %>% summarise(num.censusReligion = n(), prop.censusReligion = n()/num_cen_religion)
 
-knitr::kable(list(summary_survey_religion, summary_census_religion), caption = "Statistics about the frequency and proportion of religious and non-religious voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
+knitr::kable(list(mutate(summary_survey_religion, religion = replace_values(religion)),
+  mutate(summary_census_religion, religion = replace_values(religion))), caption = "Statistics about the frequency and proportion of religious and non-religious voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
 ```
 
 ```{r, echo=FALSE, results = 'asis'}
@@ -289,7 +294,8 @@ num_cen_minority = length(census_data1$minority)
 summary_survey_minority <- survey_data1 %>% select(minority) %>% group_by(minority) %>% summarise(num.surveyMinority = n(), prop.surveyMinority = n()/(554+261))
 summary_census_minority <- census_data1 %>% select(minority) %>% group_by (minority) %>% summarise(num.censusMinority = n(), prop.censusMinority = n()/num_cen_minority)
 
-knitr::kable(list(summary_survey_minority, summary_census_minority), caption = "Statistics about the frequency and proportion of minority and non-minority voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
+knitr::kable(list(mutate(summary_survey_minority, minority = replace_values(minority)),
+  mutate(summary_census_minority, minority = replace_values(minority))), caption = "Statistics about the frequency and proportion of minority and non-minority voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
 ```
 
 
@@ -454,9 +460,11 @@ summary1<-summary(model1)
 summary2<-summary(model2)
 
 
-knitr::kable(summary1$coefficients, col.names = c("Estimates", "SE", "Test statistics", "p-value"), caption = "Table x.Summary of Logistic Regression Model for Liberal", align = "cccc", digits = 4)
+knitr::kable(summary1$coefficients, col.names = c("Estimates", "SE", "Test statistics", "p-value"), caption = "Summary of Logistic Regression Model for Liberal", align = "cccc", digits = 4)%>% kable_styling(latex_options = "HOLD_position")
+```
 
-knitr::kable(summary2$coefficients, col.names = c("Estimates", "SE", "Test statistics", "p-value"), caption = "Table x.Summary Logistic Regression Model for Conservative", align = "cccc", digits = 4)
+```{r, echo = FALSE, results = 'asis'}
+knitr::kable(summary2$coefficients, col.names = c("Estimates", "SE", "Test statistics", "p-value"), caption = "Summary Logistic Regression Model for Conservative", align = "cccc", digits = 4)%>% kable_styling(latex_options = "HOLD_position")
 # Model Results (to Report in Results section)
 # summary(model)
 # OR
@@ -506,7 +514,7 @@ result_conservative <- census_data_counts %>%
 
 table <- tibble(result_liberal, result_conservative)
 
-knitr::kable(table, col.names = c("Liberal", "Conservative"), caption = "Table x.Estimated probability of voting for the Parties", align = "cccc", digits = 4)
+knitr::kable(table, col.names = c("Liberal", "Conservative"), caption = "Estimated probability of voting for the Parties", align = "cccc", digits = 4)%>% kable_styling(latex_options = "HOLD_position")
 ```
 ## 4.2 Result of post-stratifications
 
