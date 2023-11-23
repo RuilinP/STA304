@@ -157,8 +157,8 @@ census_data1 <- census_data %>%
                               language_home == "English" ~ "EN"),
          west = case_when(province == "Manitoba"|province == "Saskatchewan" | province == "Alberta" ~ 1,
                             TRUE ~ 0),
-         income = case_when(income_respondent %in% c("Less than $25,000", "$25,000 to $49,999") ~ "Low",
-                            income_respondent %in% c("$50,000 to $74,999", "$75,000 to $99,999", "$100,000 to $ 124,999") ~ "Medium",
+         income = case_when(income_family %in% c("Less than $25,000", "$25,000 to $49,999") ~ "Low",
+                            income_family %in% c("$50,000 to $74,999", "$75,000 to $99,999", "$100,000 to $ 124,999") ~ "Medium",
                             
                             TRUE ~ "High"),
          religion = ifelse(religion_has_affiliation == "No religious affiliation",0,1),
@@ -236,7 +236,8 @@ Table2 & 3 show that
 ```{r, echo=FALSE, results = 'asis'}
 #format in a table will look nicer
 num_cen_sex = length(census_data1$sex)
-summary_survey_sex <- survey_data1 %>% select(sex) %>% group_by(sex) %>% summarise(num.surveySex = n(), prop.surveySex = n()/(554+261))
+num_sur_sex = length(survey_data1$sex)
+summary_survey_sex <- survey_data1 %>% select(sex) %>% group_by(sex) %>% summarise(num.surveySex = n(), prop.surveySex = n()/num_sur_sex)
 summary_census_sex <- census_data1 %>% select(sex) %>% group_by (sex) %>% summarise(num.censusSex = n(), prop.censusSex = n()/num_cen_sex)
 
 knitr::kable(list(summary_survey_sex, summary_census_sex), caption = "Statistics about the frequency and proportion of male and female voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
@@ -258,7 +259,8 @@ replace_values <- function(x) {
 }
 #format in a table will look nicer
 num_cen_west = length(census_data1$west)
-summary_survey_west <- survey_data1 %>% select(west) %>% group_by(west) %>% summarise(num.surveyWest = n(), prop.surveyWest = n()/(554+261))
+num_sur_west = length(survey_data1$west)
+summary_survey_west <- survey_data1 %>% select(west) %>% group_by(west) %>% summarise(num.surveyWest = n(), prop.surveyWest = n()/num_sur_west)
 summary_census_west <- census_data1 %>% select(west) %>% group_by (west) %>% summarise(num.censusWest = n(), prop.censusWest = n()/num_cen_west)
 
 knitr::kable(list(mutate(summary_survey_west, west = replace_values(west)),
@@ -268,15 +270,27 @@ knitr::kable(list(mutate(summary_survey_west, west = replace_values(west)),
 ```{r, echo=FALSE, results = 'asis'}
 #format in a table will look nicer
 num_cen_income = length(census_data1$income)
-summary_survey_income <- survey_data1 %>% select(income) %>% group_by(income) %>% summarise(num.surveyIncome = n(), prop.surveyIncome = n()/(554+261))
+num_sur_income = length(survey_data1$income)
+summary_survey_income <- survey_data1 %>% select(income) %>% group_by(income) %>% summarise(num.surveyIncome = n(), prop.surveyIncome = n()/num_sur_income)
 summary_census_income <- census_data1 %>% select(income) %>% group_by (income) %>% summarise(num.censusIncome = n(), prop.censusIncome = n()/num_cen_income)
+
+income_levels <- c("Low", "Medium", "High")
+
+summary_survey_income <- summary_survey_income %>%
+  mutate(income = factor(income, levels = income_levels)) %>%
+  arrange(income)
+
+summary_census_income <- summary_census_income %>%
+  mutate(income = factor(income, levels = income_levels)) %>%
+  arrange(income)
 
 knitr::kable(list(summary_survey_income, summary_census_income), caption = "Statistics about the frequency and proportion of high, medium, low income voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
 ```
 ```{r, echo=FALSE, results = 'asis'}
 #format in a table will look nicer
 num_cen_religion = length(census_data1$religion)
-summary_survey_religion <- survey_data1 %>% select(religion) %>% group_by(religion) %>% summarise(num.surveyReligion = n(), prop.surveyReligion = n()/(554+261))
+num_sur_religion = length(survey_data1$religion)
+summary_survey_religion <- survey_data1 %>% select(religion) %>% group_by(religion) %>% summarise(num.surveyReligion = n(), prop.surveyReligion = n()/num_sur_religion)
 summary_census_religion <- census_data1 %>% select(religion) %>% group_by (religion) %>% summarise(num.censusReligion = n(), prop.censusReligion = n()/num_cen_religion)
 
 knitr::kable(list(mutate(summary_survey_religion, religion = replace_values(religion)),
@@ -286,7 +300,8 @@ knitr::kable(list(mutate(summary_survey_religion, religion = replace_values(reli
 ```{r, echo=FALSE, results = 'asis'}
 #format in a table will look nicer
 num_cen_minority = length(census_data1$minority)
-summary_survey_minority <- survey_data1 %>% select(minority) %>% group_by(minority) %>% summarise(num.surveyMinority = n(), prop.surveyMinority = n()/(554+261))
+num_sur_minority = length(survey_data1$minority)
+summary_survey_minority <- survey_data1 %>% select(minority) %>% group_by(minority) %>% summarise(num.surveyMinority = n(), prop.surveyMinority = n()/num_sur_minority)
 summary_census_minority <- census_data1 %>% select(minority) %>% group_by (minority) %>% summarise(num.censusMinority = n(), prop.censusMinority = n()/num_cen_minority)
 
 knitr::kable(list(mutate(summary_survey_minority, minority = replace_values(minority)),
@@ -374,28 +389,6 @@ Finally, $\beta_8$ measures the average difference in the log odds of voting for
 
 
 
-```{r, include = FALSE}
-
-# Creating the Model
-model1 <- glm(vote_liberal ~ age + sex + language + west + income + religion + minority, data=survey_data1, family = "binomial")
-
-
-model2 <- glm(vote_conservative ~ age + sex + language + west + income + religion + minority, data=survey_data1, family = "binomial")
-
-summary(model1)
-summary(model2)
-
-#predict(model1,type = "response")
-
-# Model Results (to Report in Results section)
-# summary(model)
-# OR
-# broom::tidy(model)
-
-### Don't show the results/output here...
-
-```
-
 ## 3.3 Post-Stratification 
 
 Post-stratification is a method to ensure that the results can accurately represent different groups within a population. It involves adjusting the weights for each estimated parameter within specific post strata based on their corresponding weights in the census population size. 
@@ -420,11 +413,11 @@ We will subsequently weight each proportion estimate within each cell by the res
 ## 4.1 Result of Logistic Regression Models
 
 The following are the logistic regression model results (coefficients rounded to 3 decimals).
-For Liberal$$ log(\frac{\hat{p_l}}{1-\hat{p_l}}) = -2.267+0.010 x_{age}-0.227x_{sex}-0.485 x_{French}-0.867 x_{west}+0.811 x_{incomeMedium}$$
-$$+0.643x_{incomeHigh}+0.152x_{religion}-0.036x_{minority}$$
+For Liberal$$ log(\frac{\hat{p_l}}{1-\hat{p_l}}) = -2.580+0.017 x_{age}+0.030{sex}-0.938 x_{French}-1.115 x_{west}+0.822 x_{incomeMedium}$$
+$$+0.504x_{incomeHigh}+0.362x_{religion}-0.590x_{minority}$$
 According to the liberal model
-For Conservative$$ log(\frac{\hat{p_c}}{1-\hat{p_c}}) = -3.358+0.017x_{age}+0.327x_{sex}-0.637 x_{French}+0.799 x_{west}+0.646 x_{incomeMedium}$$
-$$+0.356 x_{incomeHigh}+0.734 x_{religion}-0.180 x_{minority}$$
+For Conservative$$ log(\frac{\hat{p_c}}{1-\hat{p_c}}) = -3.024+0.007x_{age}-0.368x_{sex}-1.102 x_{French}+1.105 x_{west}+0.512 x_{incomeMedium}$$
+$$+1.509 x_{incomeHigh}+1.221 x_{religion}+0.030 x_{minority}$$
 where $\hat{p_c}$ and $\hat{p_l}$ are the estimated probability of voting to the Conservative and Liberal Party.
 
 ```{r, echo = FALSE, results = 'asis'}
