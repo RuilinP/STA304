@@ -55,14 +55,13 @@ The goal of this study is to predict which political party of Canada is going to
 ## 2. Data
 
 ## 2.1 Data description
-<Type here a paragraph introducing the data, its context and as much info about the data collection process that you know.>
 
-**Survey Data**
+**Survey Data**  
 The sample survey data in this study was collected during the 2021 federal election campaign period and intended to gather the opinions of Canadian citizens and permanent residents aged 18 or older about election votes. 
 
 The survey consists of the campaign period part and the post-election period part. The collection process started on August 7th, 2021, and ended on October 4th, 2021. To demonstrate, the campaign period survey data was collected on an online sample of 20,968 respondents of the Canadian general population at the Leger Opinion panel. The sampling process included three waves of panel in a modified rolling-cross section. In this case, the survey data of three waves were merged into a whole sample at the end, but the respondents of the survey were randomly selected in three different periods of time. (Stephenson et al., 2021).
 
-**Census Data**
+**Census Data**  
 The census data in this study is the 2020 General Social Survey, which provides detailed information of social trends for addressing interested social issues and improving living-conditions of Canadians, and it is released by September 2021. In addition, data was collected by both computer-based phone calls and electronic questionnaires through mail links from Statistics Canada offices in different regions from August of 2020 to February of 2021. According to the descriptive statistics, the overall response rate was 40.3%, and a total of 20,602 observations were collected. Moreover, the stratified sampling method was applied where each response was assigned to a province level (a stratum). Then, a simple random sampling (SRS) was conducted in each stratum (Statistics Canada, 2020).
 
 
@@ -146,7 +145,7 @@ survey_data1 <-
          minority = ifelse(cps21_vismin_9 == 1, 0, 1), # white people or other minorities
          income = case_when(cps21_income_cat < 4 ~ "Low",
                             cps21_income_cat >= 4 & cps21_income_cat <= 7 ~ "Medium",
-                            cps21_income_cat > 7 ~ "High"),
+                            cps21_income_cat > 7& cps21_income_cat <= 8 ~ "High"),
   ) %>% 
   select(age, vote_liberal,vote_conservative, sex, language, west, religion,minority, income) %>% 
   filter(age >= 18) %>%
@@ -172,18 +171,14 @@ census_data1 <- census_data %>%
 
 ## 2.3 Data summary
 
-<Remember, you may want to use multiple datasets here, if you do end up using multiple data sets, or merging the data, be sure to describe this in the cleaning process and be sure to discuss important aspects of all the data that you used.>
-
-<Include a description of the important variables.> 
-
 The variables described in this section applied to both the CES survey data and GSS census data because we matched the variables in both datasets in the Data Cleaning section.
 
-**Response Variables**
+**Response Variables**  
 vote of conservative: The binary variable that whether the voter will vote for the Conservative Party in the 2025th election.
 
 vote of liberal:  The binary variable that whether the voter will vote for the Liberal Party in the 2025th election.
 
-**Independent Variables**
+**Independent Variables**  
 age: This variable represents the age of the observations. It is a numerical variable.
 
 sex: This variable represents the sex of the observations
@@ -299,39 +294,16 @@ knitr::kable(list(mutate(summary_survey_minority, minority = replace_values(mino
 ```
 
 
-
-```{r, echo=FALSE}
-#repeat the table summary as above.
-summary_table_west <- table(survey_data1$west)
-kable(summary_table_west)
-
-summary_table_income <- table(survey_data1$income)
-kable(summary_table_income)
-
-summary_table_religion <- table(survey_data1$religion)
-kable(summary_table_income)
-
-summary_table_minority <- table(survey_data1$minority)
-kable(summary_table_income)
-
-
-```
-Text 
-
-
-
-<Include a description of the numerical summaries. Remember you can use `r ` to use inline R code.>
-
 ```{r, echo = FALSE, warning=FALSE}
 survey_data1$income <- factor(survey_data1$income, levels = c("Low", "Medium", "High"))
 census_data1$income <- factor(census_data1$income, levels = c("Low", "Medium", "High"))
 # Use this to create some plots. Should probably describe both the sample and population.
 survey_age <- survey_data1 %>% ggplot(aes(x = age)) + geom_histogram(fill = "blue", color = "black", bins = 18) + theme_classic()+
-  labs(x = "Age of the people that participated in the election", y = "Frequency", title = "Histogram of the age\n of the election participants")+
+  labs(x = "Age of the people that participated\n in the election", y = "Frequency", title = "Histogram of the age of the\n election participants from survey")+
   theme(plot.title = element_text(size = 14, hjust = 0.5)) 
 
 census_age <- census_data1 %>% ggplot(aes(x = age)) + geom_histogram(fill = "blue", color = "black", bins = 18) + theme_classic()+
-  labs(x = "Age of the people that participated in the election", y = "Frequency", title = "Histogram of the age\n of the election participants")+
+  labs(x = "Age of the people that participated\n in the election", y = "Frequency", title = "Histogram of the age of the\n election participants from census")+
   theme(plot.title = element_text(size = 14, hjust = 0.5))
 
 survey_income <- survey_data1 %>% ggplot(aes(x = income, fill = income)) + 
@@ -362,7 +334,14 @@ par(mfrow = c(1, 1))
 
 ## 3.1 Model selection and rationale 
 
-Our study applies the logistic regression model to estimate the probability of voting of each voter for the Liberal Party and Conservative Party. Then, we use the post-stratification which divides the survey data in terms of the variables common in the census data and the survey, and yields the estimated overall probability of voting for the Liberal Party and Conservative Party respectively. In the end, we compare the estimated voting probability between the two parties to decide which one is going to win the election (i.e. the party has the higher estimated probability). In our model, to ensure the qualification of voting, we only keep the respondents who are at least 18 years old. In order to remove the influence of missing data, we delete the observations (record of respondents) which contain missing values of variables.
+Our study will apply the logistic regression model to estimate the probability of voting of both the Liberal Party and Conservative Party. Logistic regression is used for investigating the relationship between a binary outcome and independent variables. The outcome is categorical and represents two classes, coded as 0 and 1. The outcomes of interest, in our case, are whether voting for the Liberal Party or not and whether voting for the Conservative Party or not. In this case, 0 represents not voting for the Party, while 1 represents voting for that.
+
+The model follows $$ log(\frac{p}{1-p}) = \beta_0 + \beta_1x_1 + \beta_2x_2 + ... + \beta_kx_ki $$
+
+The model outcome is the log of odds where the p is the probability of the event of interest occurring, and those coefficients reflect the change in log odds. 
+
+Then, we will use the post-stratification which divides the survey data in terms of the variables common in the census data and the survey, and yields the estimated overall probability of voting for the Liberal Party and Conservative Party respectively. In the end, we compare the estimated voting probability between the two parties to decide which one is going to win the election (i.e. the party has the higher estimated probability). In our model, to ensure the qualification of voting, we only keep the respondents who are at least 18 years old. In order to remove the influence of missing data, we delete the observations (record of respondents) which contain missing values of variables.
+
 
 ## 3.2 Model Specifics
 <Here you can describe your regression model>
