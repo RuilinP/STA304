@@ -78,7 +78,26 @@ census_data <- read_csv("gss_clean.csv")
 
 ## 2.2 Data cleaning process
 
-<Type here a summary of the cleaning process (**only add in stuff beyond my original gss_cleaning.R code**). You only need to describe additional cleaning that you and your group did.> ] You will need to describe the cleaning you do to the survey data as well. 
+Data cleaning was conducted on both survey and census datasets to enhance their suitability for analysis. Variables from both sources were aligned, allowing for the extrapolation of survey findings to the broader census population.  
+
+Initially, the survey dataset was filtered to include only Canadian citizens, excluding all Permanent Residents. Additionally, we filtered out respondents under 18 years old, as only Canadian citizens above 18 have the right to vote.  
+
+In the census dataset, age was already a present variable and was rounded for consistency.  
+
+Regarding gender, the survey dataset included an "Other" option, but this was minimally selected. Given its negligible proportion and lack of impact on key variables' distribution, this category was excluded from the dataset. The survey's gender data and the census's sex data were thus streamlined to include only "Male" and "Female" options, with the term 'sex' in the census data being renamed to 'gender' for uniformity.  
+
+Both the survey and census datasets included information on respondents' current province of residence. Considering Canada's composition of 10 provinces and 3 territories, we streamlined the data based on geographic and demographic considerations to determine whether they are in the west. As mentioned earlier, we divided the country into five distinct regions . In the codebook, the western region initially included Manitoba, Saskatchewan, Alberta, and British Columbia, but we rearranged it to contain only the Prairie Provinces. It's important to note that there were no responses from the Northern Territories (Nunavut, Northwest Territories, and Yukon Territories).  
+
+In both survey and census datasets, respondents provided information on their primary language. We matched the census's 'language_home' data with the survey's 'UserLanguage', as it likely represents the respondent's first language or the language they are most proficient in.  
+
+Regarding income, we aligned the census's 'income_family' data with the survey's household income data, as both represent household income. Households earning less than $49,999 were classified as low income, those earning $50,000 to $124,999 as median income, and those earning above $125,000 as high income.  
+
+Considering Canada's diverse immigrant population, respondents were simply classified as having or not having a religious affiliation, without specifying particular beliefs. Responses of 'Don't Know' were ignored.  
+
+Regarding visible minorities, we differentiated between 'Not a visible minority' and 'visible minority', disregarding 'Don’t Know' responses.  
+
+Finally, after the initial data cleaning process, respondents with missing values were excluded for clarity and accuracy. This step was necessary as incomplete responses could be due to various factors, such as issues in reaching respondents or the survey's design causing discomfort. Missing values could introduce anomalies, potentially reducing prediction accuracy. Although adjustments could have been made with more resources, omitting these respondents was considered the most appropriate approach for this study.
+
 
 
 ```{r, include = FALSE}
