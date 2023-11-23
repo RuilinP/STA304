@@ -257,6 +257,42 @@ summary_census_language <- census_data1 %>% select(language) %>% group_by (langu
 knitr::kable(list(summary_survey_language, summary_census_language), position = c("left", "right"), caption = "Statistics about the frequency and proportion of French and English speaking voters in 2021 election survey and cenus data", align = "cccc", digits = 2)%>% kable_styling(latex_options = "HOLD_position")
 ```
 Table 5 shows
+```{r, echo=FALSE, results = 'asis'}
+#format in a table will look nicer
+num_cen_west = length(census_data1$west)
+summary_survey_west <- survey_data1 %>% select(west) %>% group_by(west) %>% summarise(num.surveyWest = n(), prop.surveyWest = n()/(554+261))
+summary_census_west <- census_data1 %>% select(west) %>% group_by (west) %>% summarise(num.censusWest = n(), prop.censusWest = n()/num_cen_west)
+
+knitr::kable(list(summary_survey_west, summary_census_west), caption = "Statistics about the frequency and proportion of west and non-west voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
+```
+
+```{r, echo=FALSE, results = 'asis'}
+#format in a table will look nicer
+num_cen_income = length(census_data1$income)
+summary_survey_income <- survey_data1 %>% select(income) %>% group_by(income) %>% summarise(num.surveyIncome = n(), prop.surveyIncome = n()/(554+261))
+summary_census_income <- census_data1 %>% select(income) %>% group_by (income) %>% summarise(num.censusIncome = n(), prop.censusIncome = n()/num_cen_income)
+
+knitr::kable(list(summary_survey_income, summary_census_income), caption = "Statistics about the frequency and proportion of high, medium, low income voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
+```
+```{r, echo=FALSE, results = 'asis'}
+#format in a table will look nicer
+num_cen_religion = length(census_data1$religion)
+summary_survey_religion <- survey_data1 %>% select(religion) %>% group_by(religion) %>% summarise(num.surveyReligion = n(), prop.surveyReligion = n()/(554+261))
+summary_census_religion <- census_data1 %>% select(religion) %>% group_by (religion) %>% summarise(num.censusReligion = n(), prop.censusReligion = n()/num_cen_religion)
+
+knitr::kable(list(summary_survey_religion, summary_census_religion), caption = "Statistics about the frequency and proportion of religious and non-religious voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
+```
+
+```{r, echo=FALSE, results = 'asis'}
+#format in a table will look nicer
+num_cen_minority = length(census_data1$minority)
+summary_survey_minority <- survey_data1 %>% select(minority) %>% group_by(minority) %>% summarise(num.surveyMinority = n(), prop.surveyMinority = n()/(554+261))
+summary_census_minority <- census_data1 %>% select(minority) %>% group_by (minority) %>% summarise(num.censusMinority = n(), prop.censusMinority = n()/num_cen_minority)
+
+knitr::kable(list(summary_survey_minority, summary_census_minority), caption = "Statistics about the frequency and proportion of minority and non-minority voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
+```
+
+
 
 ```{r, echo=FALSE}
 #repeat the table summary as above.
