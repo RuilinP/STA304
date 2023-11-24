@@ -90,7 +90,8 @@ Both the survey and census datasets included information on respondents' current
 
 In both survey and census datasets, respondents provided information on their primary language. We matched the census's 'language_home' data with the survey's 'UserLanguage', as it likely represents the respondent's first language or the language they are most proficient in.  
 
-Regarding income, we aligned the census's 'income_family' data with the survey's household income data, as both represent household income. Households earning less than $49,999 were classified as low income, those earning $50,000 to $124,999 as median income, and those earning above $125,000 as high income.  
+Regarding income, we aligned the census's 'income_family' data with the survey's household income data, as both represent household income. Households earning less than $49,999 were classified as low income, those earning $50,000 to $124,999 as median income, and those earning above $125,000 as high income.(Springfield Financial, 2023).  
+
 
 Considering Canada's diverse immigrant population, respondents were simply classified as having or not having a religious affiliation, without specifying particular beliefs. Responses of 'Don't Know' were ignored.  
 
@@ -250,7 +251,7 @@ knitr::kable(summary_cen_age, caption = "Statistics about the ages of voters in 
 
 
 ```
-Table2 & 3 show that the distribution of age from survey and census are slightly different. The mean age from the census is 53.59, yet that from survey is 47. Median age from census is 56 yet it is 46 in the survey. This indicates that in census, 50% of the people are elder than 56 while people from survey are generally younger. In census, a Q3 of 68 also indicates that that 25% of the population is elder than 68 years old and the number is 63 in survey. However, standard deviation is similar, with 17.21 in census and 18.81 in survey, which indicates the variations of both data are similar.
+Table2 & 3 show that the distribution of age from survey and census are slightly different. The mean age from the census is 53.59, yet that from survey is 47. Median age from census is 56 yet it is 46 in the survey. This indicates that in census, 50% of the people are elder than 56 while people from survey are generally younger. In census, a Q3 of 68 also indicates that 25% of the population is elder than 68 years old and in survey,there is 25% of the population is elder than 63 years old . However, standard deviation is similar, with 17.21 in census and 18.81 in survey, which indicates the variations of both data are similar.
 
 ```{r, echo=FALSE, results = 'asis'}
 #format in a table will look nicer
@@ -648,7 +649,7 @@ Tossutti, L. & Elections Canada. (2007). *La participation électorale des memb
 
 Uppal, S. & LaRochelle-Côté S. (February, 2012). *Factors associated with voting*. Statistics Canada. https://www150.statcan.gc.ca/n1/en/pub/75-001-x/2012001/article/11629-eng.pdf?st=nuV9FTRH (Last Accessed: November 12, 2023)
 
-
+Middle-Class Income In Canada by Province. (2023, October 12). Www.springfinancial.ca. https://www.springfinancial.ca/blog/lifestyle/middle-class-income-in-canada-by-province
 \newpage
 
 ## Appendix
