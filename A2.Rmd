@@ -21,11 +21,11 @@ library(kableExtra)
 
 ## 1.1 The research question
 
-What will be the predicted outcome for the party that receives the highest-amount votes in the upcoming election 2025 between Conservative Party and Liberal Party?
+What will be the predicted outcome for the party that receives the highest amount of votes in the upcoming election 2025 between the Conservative Party and the Liberal Party?
 
 ## 1.2 Importance of the research
 
-Free and fair elections are considered as important features contributing to a healthy democracy. Fairness of the election could be ensured as citizens can vote to reflect their own wills without political interference. These conditions can contribute to a durable democracy in Canada and also improve internal political efficacy of Canada (*Elections Canada*, 2023). The choice of who will form the government and which party's policies will guide the government and legislation. These appointments and policies can influence various aspects of society, including the economy, public health initiatives, and environmental sustainability. The analysis of election outcome helps encourage citizens to track the political process and promote their participation (*Statistics Canada*, 2022). Political parties and candidates can learn about competitors' voting tendency and priorities and concerns of voters so adjusting their electoral strategies.
+Free and fair elections are considered important features contributing to a healthy democracy. Fairness of the election could be ensured as citizens can vote to reflect their wills without political interference. These conditions can contribute to a durable democracy in Canada and also improve the internal political efficacy of Canada (*Elections Canada*, 2023). The choice of who will form the government and which party's policies will guide the government and legislation. These appointments and policies can influence various aspects of society, including the economy, public health initiatives, and environmental sustainability. The analysis of election outcomes helps encourage citizens to track the political process and promote their participation (*Statistics Canada*, 2022). Political parties and candidates can learn about competitors' voting tendencies and concerns of voters so adjusting their electoral strategies.
 
 Importantly, our analysis provides a demonstration of the relationship between the selected variables and the binary outcomes of voting decisions (vote or not vote) to see how the change of variables influences the change of probability change in vote. In this case, the result of the analysis can be an essential reference for future study of Canadian elections, and representatives of parties may set up relevant rules and benefits to increase their political reputation and construct campaign strategies according to the favorable factors considered by respondents. Furthermore, the government may refine relevant policy in terms of the races, employment, income, and other socioeconomic data presented in this study. 
 
@@ -33,15 +33,15 @@ Importantly, our analysis provides a demonstration of the relationship between t
 
 ## 1.3 Terminology
 
-The 45th Canadian federal election will be held on or before October 20, 2025. This date is determined by the Canada Elections Act (Parliament of Canada, 2006). There are currently 337 members in office in the 44th Parliament. Both Liberal Party and Conservative Party have 275 members (158 and 117 respectively), and they are the two major Canadian parties(Members of Parliament, 2023).
+The 45th Canadian federal election will be held on or before October 20, 2025. This date is determined by the Canada Elections Act (Parliament of Canada, 2006). There are currently 337 members in office in the 44th Parliament. Both the Liberal Party and Conservative Party have 275 members (158 and 117 respectively), and they are the two major Canadian parties(Members of Parliament, 2023).
 
-The Liberal Party is the oldest active federal political party in Canada and has dominated federal politics for the majority of Canadian history (Liberal Party, 2019). The party espouses liberal principles and is generally central to center-left. Its main competitor, the Conservative Party, is right-leaned. Liberal Party is currently led by Justin Trudeau who has been the prime minister of Canada since 2015. Signature policies and legislation of the Liberal Party include universal health care, pension plan, bilingualism, gun control, related charters and acts that legalize same-sex marriage and cannabis usage, and expanding access to abortion (Liberal Party of Canada. n.d.).
+The Liberal Party is the oldest active federal political party in Canada and has dominated federal politics for the majority of Canadian history (Liberal Party, 2019). The party espouses liberal principles and is generally central to center-left. Its main competitor, the Conservative Party, is right-leaned. Liberal Party is currently led by Justin Trudeau who has been the prime minister of Canada since 2015. Signature policies and legislation of the Liberal Party include universal health care, pension plans, bilingualism, gun control, related charters and acts that legalize same-sex marriage and cannabis usage, and expanding access to abortion (Liberal Party of Canada. n.d.).
 
-The Conservative Party is one of the major political parties in Canada, known for its center-right political orientation. Its platform typically includes a commitment to fiscal responsibility, free-market principles, and a focus on individual liberties. The party has traditionally attracted support from a broad coalition of conservative voters, including those with social or economic conservative values. The party is currently led by Pierre Poilievre since 2022. Its signature policies involve reducing government debt, lowering taxes, eliminating the long-gun registry (Dippel, 2016). 
+The Conservative Party is one of the major political parties in Canada, known for its center-right political orientation. Its platform typically includes a commitment to fiscal responsibility, free-market principles, and a focus on individual liberties. The party has traditionally attracted support from a broad coalition of conservative voters, including those with social or economic conservative values. The party is currently led by Pierre Poilievre since 2022. Its signature policies involve reducing government debt, lowering taxes, and eliminating the long-gun registry (Dippel, 2016). 
 
 The Liberal party leans on progressive policies and social transformation, and the Liberal encourages free-market competition in economics, diversity of minorities, and inclusion of immigrants. As opposed to the Liberal, the Conservative prefers traditional and preservative rules, imposes more government regulation on economics, and disagrees with social activism (Canada Guide, 2023).
 
-Canada includes five distinct regions: The Atlantic Provinces (New Brunswick, Newfoundland and Labrador, Nova Scotia, and Prince Edward Island), Central Canada (Ontario and Quebec), The Prairie Provinces (Manitoba, Saskatchewan and Alberta), The West Coast (British Columbia), and The Northern Territories (Nunavut, Northwest Territories, and Yukon Territories) (Government of Canada, 2022). In order to more easily present the data, adjustments have been applied to the categories of five regions. The Prairie Provinces have been renamed into western regions.
+Canada includes five distinct regions: The Atlantic Provinces (New Brunswick, Newfoundland and Labrador, Nova Scotia, and Prince Edward Island), Central Canada (Ontario and Quebec), The Prairie Provinces (Manitoba, Saskatchewan and Alberta), The West Coast (British Columbia), and The Northern Territories (Nunavut, Northwest Territories, and Yukon Territories) (Government of Canada, 2022). To more easily present the data, adjustments have been applied to the categories of five regions, and the Prairie Provinces have been renamed into western regions. 
 
 ## 1.4 Hypothesis
 
@@ -394,16 +394,20 @@ From the pie charts of Graph 3, there exists a slightly higher proportion of Fem
 
 Our study will apply the logistic regression model to estimate the probability of voting of both the Liberal Party and Conservative Party. Logistic regression is used for investigating the relationship between a binary outcome and independent variables. The outcome is categorical and represents two classes, coded as 0 and 1. The outcomes of interest, in our case, are whether voting for the Liberal Party or not and whether voting for the Conservative Party or not. In this case, 0 represents not voting for the Party, while 1 represents voting for that.
 
-The model follows $$ log(\frac{p}{1-p}) = \beta_0 + \beta_1x_1 + \beta_2x_2 + ... + \beta_kx_ki $$
+The model follows $$ log(\frac{p}{1-p}) = \beta_0 + \beta_1x_1 + \beta_2x_2 + ... + \beta_kx_ki $$  
 
 The model outcome is the log of odds where the p is the probability of the event of interest occurring, and those coefficients reflect the change in log odds. 
+Based on factors that influence individuals’ voting reported by Statistics Canada, we chose variables listed as the following: age, sex, language, living in the particular western regions, overall household income, religion status, and minority identity (2012). In 2011, the voting rate among the 18-24 age group was about 50%. The elderly, by contrast, are more likely to vote with the 70% rate from the 45-54 age group. Turnout increased to 82% among the 65-74 age group (Statistics Canada, 2012). Rutgers University reported that there are generally about 7.4 million more registered female voters in the US than registered male voters (2023). Meanwhile, the female group is usually more left-leaning compared to male group, so females tend to vote less for the Conservative Party. 
+
+Regions are able to  influence voting decisions, the Prairie Provinces such as Saskatchewan and Alberta, or western regions in this case,  tend to vote for the Conservative Party (Keller, 2021). People with religious beliefs and Canadian French speakers are more likely to support the Conservative Party as well (Grenier, 2017; Keller, 2021).
+
+Economic well-being also is positively related to voting participation. People with higher household income are more likely to vote for the right-leaning party (McMaster University, 2023). Research also showed that immigrants from Central/South America or East Asia tend to vote less for the election (Statistics Canada, 2012).   
 
 Then, we will use the post-stratification which divides the survey data in terms of the variables common in the census data and the survey, and yields the estimated overall probability of voting for the Liberal Party and Conservative Party respectively. In the end, we compare the estimated voting probability between the two parties to decide which one is going to win the election (i.e. the party has the higher estimated probability). In our model, to ensure the qualification of voting, we only keep the respondents who are at least 18 years old. In order to remove the influence of missing data, we delete the observations (record of respondents) which contain missing values of variables.
 
 
 ## 3.2 Model Specifics
-<Here you can describe your regression model>
-Our study creates two logistic regression models to predict the proportion of voters who will vote for the Liberal Party and the Conservative Party. Some assumptions are made before constructing our logistic regression models: The voting outcome of respondents is binary, that is, the respondents either vote for the party or not, and the selected categorical variables are independent in both the logistic models built for the Liberal and the Conservative. We select the following models because the variables are matched-with similar proportions of each outcome- in both the census and the survey data, as shown in the tables of Data Summary section (Table 2, 3, 4, 5, 8). In addition, a previous study by Statistics Canada proposes that economic status, belief, and personal inborn identities such as sex, language, and race are the dominant factors that potentially influence the intention of voting, so we select the following variables as predictors to investigate the probability of each voter to vote (Uppal, S.& LaRochelle-Côté S., 2012). In the logistic regression models for both parties, we use the same variables as predictors.
+Our study creates two logistic regression models to predict the proportion of voters who will vote for the Liberal Party and the Conservative Party. Some assumptions are made before constructing our logistic regression models: The voting outcome of respondents is binary, that is, the respondents either vote for the party or not, and the selected categorical variables are independent in both the logistic models built for the Liberal and the Conservative. We select the following models because the variables are matched-with similar proportions of each outcome- in both the census and the survey data, as shown in the tables of Data Summary section (Table 2, 3, 4, 5, 8). In addition, a previous study by Statistics Canada proposes that economic status, belief, and personal inborn identities such as sex, language, and race are the dominant factors that potentially influence the intention of voting, so we select the following variables as predictors to investigate the probability of each voter to vote (Uppal, S.& LaRochelle-Côté S., 2012). In the logistic regression models for both parties, we use the same variables as predictors.  
 
 $$ log(\frac{p_c}{1-p_c}) = \beta_0+\beta_1 x_{age}+\beta_2 x_{sex}+\beta_3 x_{French}+\beta_4 x_{west}+\beta_5 x_{incomeMedium}$$
 $$+\beta_6 x_{incomeHigh}+\beta_7 x_{religion}+\beta_8 x_{minority}$$
@@ -434,19 +438,22 @@ Finally, $\beta_8$ measures the average difference in the log odds of voting for
 
 ## 3.3 Post-Stratification 
 
-Post-stratification is a method to ensure that the results can accurately represent different groups within a population. It involves adjusting the weights for each estimated parameter within specific post strata based on their corresponding weights in the census population size. 
+Post-stratification is a method to ensure that the results can accurately represent different groups within a population. It involves adjusting the weights for each estimated parameter within specific post strata based on their corresponding weights in the census population size (Open AI, 2023). 
 
-In order to estimate the proportion of voters who will vote for ... we will perform a post-stratification analysis by applying the following formula:
+In order to estimate the proportion of voters who will vote for the Liberal Party and the Conservative Party we will perform two post-stratification analyses by applying the following formula:
 
 $$
 \hat{y}^{P S}=\frac{\sum N_{j} \widehat{y}_{j}}{\sum N_{j}}
 $$
 
 
-$\hat{y}$ is the estimate in each cell, and $N_j$ is the population size of the $j^{th}$ cell based on demographics. \
-The estimated ($\hat{y}$) is $\hat{p}$ that refer to the proportion of voting for... Post-stratification will conduct logistic regression in each cell and use the logistic model to estimate the $\hat{p}$ within each cell. 
-We firstly will create cells based on different ages, sex, and working status. Using the model described in the previous sub-section, we will estimate the proportion of voters in each cell. _Since there are 2 categories in sex, ? in region, ? in education, and ? in religion, we will have ? cells for each age.\
-We will subsequently weight each proportion estimate within each cell by the respective population size of that cell and will then sum those values and divide that by the entire population size. 
+According to the equation above, $\hat{y}$ is the estimate in each cell, and $N_j$ is the population size of the $j^{th}$ cell based on demographic variables of age, biological sex, language speaking, whether or not living in the particular western provinces, classes of overall household income, religion status and minority identity because we assume that different levels or values of these variables can represent different groups of eligible voters in the Canadian population and the variables are all matched both in the survey data and the census data.  
+
+Moreover, the estimate ($\hat{y}$) is $\hat{p}$ that refers to the proportion of voting for the Party. Our goal is to predict the probabilities of popular votes ($\hat{y}^{P S}$) for the Liberal Party and the Conservative Party.  
+
+Post-stratification will conduct logistic regression in each cell and use the logistic model to estimate the $\hat{p}$ within each cell. We will create cells based on different age, sex, region, religion, income, language,  and minority. Using the logistic regression models described previously, we will estimate the proportion of voters in each cell to be $\hat{p}$. Since there are 2 categories in sex, 2 in western regions, 2 in religion, 3 in income, 2 in language, and 2 in minority, we will have 96 cells for each age group. We will subsequently weight each proportion estimate within each cell by the respective population size of that cell and will then sum those values and divide that by the entire population size, which gives us the estimated probabilities $\hat{y}^{P S}$ of vote for the parties. 
+\newpage
+
 
 
 
@@ -461,7 +468,26 @@ $$+0.504x_{incomeHigh}+0.362x_{religion}-0.590x_{minority}$$
 According to the liberal model
 For Conservative$$ log(\frac{\hat{p_c}}{1-\hat{p_c}}) = -3.024+0.007x_{age}-0.368x_{sex}-1.102 x_{French}+1.105 x_{west}+0.512 x_{incomeMedium}$$
 $$+1.509 x_{incomeHigh}+1.221 x_{religion}+0.030 x_{minority}$$
-where $\hat{p_c}$ and $\hat{p_l}$ are the estimated probability of voting to the Conservative and Liberal Party.
+where $\hat{p_c}$ and $\hat{p_l}$ are the estimated probability of voting to the Conservative and Liberal Party.  
+
+The following section compares and interprets the coefficients of the same predictors in different models.  
+
+-$\hat{\beta_0}$ is the estimated intercept of the models. It represents the log odds of voting for the candidate or party when all the predictor variables are at their baseline level is -2.580 for the Liberal and -3.024 for the Conservative (which means that the respondent is aged at 0 years, sex category female, speaking the language of English, not living in the western inland provinces (Alberta, Manitoba, Saskatchewan), the default income class at the low level of income, does not believe in religions, and is a minority other than the White.).  
+
+-$\hat{\beta_1}$ represents the relationship between the age of the respondent and the log odds of voting for the parties. For every one-unit increase in age (typically one year), there is an expected 0.017 unit increase in the log odds of voting for the Liberal and 0.007 unit of change for the Conservative, assuming all other variables are held constant. We may infer that although the increase in age may increase the probability of voting, the change is similar for both parties.  
+
+-$\hat{\beta_2}$ quantifies the average difference in the log odds of voting for the parties between two sex groups (e.g., male and female), controlling for other factors in the model. As we can see that the average difference on log odd between the two sex groups in the Liberal is positive at 0.030 but negative at -0.368 for the Conservative, we may expect that males are more likely to vote for the Liberal party and less likely to vote for the Conservative party.  
+
+-For $\hat{\beta_3}$, this coefficient measures the average difference in log odds of voting for the parties between respondents who speak French and English when other predictors stay the same. The average difference is -0.939 for the Liberal and -1.102 for the Conservative, so French speakers may vote for the Liberal with more likelihood but it seems neither of the two parties will receive more popular votes from French speakers. This is perhaps due to the fact that a sufficient number of voters who use French as their home language are likely to vote for the local party Bloc Québécois (Canada Guide, 2023).   
+
+-$\hat{\beta_4}$ represents the average difference of being in the western inland provinces (Alberta, Manitoba, Saskatchewan) or not on the log odds of voting is -1.115 for the Liberal but 1.105 for the Conservative while holding other predictors constant. The distinct signs of estimated coefficients imply that voters in the specific western provinces are not likely to vote for the Liberal and vote for the Conservative instead, which contrasts with the other eastern provinces that may contribute more votes to the Liberal.  
+
+-For$\hat{\beta_5}$, this coefficient measures the average difference of log odds of voting between the respondent who possesses a low and medium household income level, which are both positive for the Liberal at 0.822 and the Conservative at 0.512. Similarly, $\hat{\beta_6}$ measures the average difference of log odds of voting between the respondent who possesses a low and high household income level when other predictors stay the same, which are both positive for the Liberal at 0.504 and the Conservative at 1.509. We can see that the medium and high-income classes people have a higher probability of voting for the election than the ones with low income. In addition, voters with higher income are more likely to vote for the Conservative than the Liberal with a substantiated difference compared to the medium income class where the change of average differences is not obvious between the Liberal and the Conservative.  
+
+-$\hat{\beta_7}$ shows that the voters with religion are more likely to vote for both parties. Furthermore, the Conservative Party will have a higher probability of being voted by the religious voters since the average difference of log odd between atheists and theists is 1.221 for the Conservative which is higher than the Liberal Party at 0.362.  
+
+-Finally, $\hat{beta_8}$ measures the average difference in the log odds of voting for the parties if a respondent is identified as a minority member compared to a non-minority one. The different signs show that minority people are more likely to vote for the Conservative Party and less likely to vote for the Liberal Party since the average difference of log odd is positive at 0.030, but it is negative at -0.590.  
+
 
 ```{r, echo = FALSE, results = 'asis'}
 
@@ -499,8 +525,7 @@ knitr::kable(formatted_summary2, col.names = c("Estimates", "SE", "Test statisti
 ```
 
 
-**Tablex** shows the summary statistics of the logistic regression for the Conservative, which includes the estimated coefficients (slopes) of the logistic regression models, the corresponding standard errors, test statistics and p-values for the coefficients t-tests. Using a significance level of 0.05, we can see that p-values for the coefficient estimate of numerical variable age and dummy variables: sex of Male or not, Language of French or not, living in Western inland provinces (Alberta, Manitoba, Saskatchewan) or not, income class at Medium or not, income class at High or not, possess a religion or not, identified as a minority or not. Among these predictors, we can see that the coefficients of age, language speaking and religion identification can form a significant relationship with the voting decision of voters (whether or not they will vote the Conservative and the Liberal) because their p-values are smaller than the 0.05 significant level cutoff.
-Similarly, **Tablex** shows the summary statistics of the logistic regression for the Liberal, and we can see that the coefficients of language speaking, living in Western inland provinces (Alberta, Manitoba, Saskatchewan) or not, income class at Medium or not, income class at High or not, and possess religion or not are significant with the voting decision.
+Table 11. shows the summary statistics of the logistic regression for the Conservative, which includes the estimated coefficients (slopes) of the logistic regression models, the corresponding standard errors, test statistics, and p-values for the coefficient t-tests. The t-tests help us to determine whether there exists a significant linear relationship between the voting decisions of voters and their demographic variables. Using a significance level of 0.05, we can see that p-values for the coefficient estimate of numerical variable age and dummy variables: sex of Male or not, Language of French or not, living in Western inland provinces (Alberta, Manitoba, Saskatchewan) or not, income class at Medium or not, income class at High or not, possess a religion or not, identified as a minority or not. Among these predictors, the western inland provinces’ identification and religious identification can form a significant relationship with the voting decision of voters because their p-values are smaller than the 0.05 significant level cutoff.  Similarly, Table 10. shows the summary statistics of the logistic regression for the Liberals, and we can see that merely the coefficient of income class at Medium or not is significant with the voting decision.  
 
 
 
@@ -548,6 +573,9 @@ knitr::kable(table, col.names = c("Liberal", "Conservative"), caption = "Estimat
 ```
 
 
+From Table 12., we use post-stratification to predict the overall weighted probability of popular votes for the Liberal Party and the Conservative Party. The table demonstrates that the Conservative Party is going to win the Liberal Party in the next election because the estimated turnout for the Conservative Party is 0.255 which is slightly larger than the estimated turnout of the Liberal Party at 0.2278.  From the statistics perspective of this research,  the result of logistic regression models has shown that males vote less for the Conservative Party than females, whereas females are the dominant voting population in the election because Graph 3. in the data summary indicates a higher proportion of females than males in both the survey data of elections and the census data of the general social survey. From the perspective of economics and society, Canada is calming down from the inflation period and is expected to enter the economic slowdown period in 2025. The relatively high unemployment and decrease in productivity may trigger people’s attitude toward saving rather than spending, so the economic market will change from an active state to a relatively smooth one. Therefore, the public wish a less progressive government to regulate society, and the Conservative Party will be a more suitable candidate (Aiello, November 2023).
+
+\newpage
 
 
 
@@ -555,13 +583,12 @@ knitr::kable(table, col.names = c("Liberal", "Conservative"), caption = "Estimat
 
 
 ## 5 Conclusion
-<Here you should give a summary of the Hypotheses, Methods and Results>
-
 
 ## 5.1 Key Results and Big Picture
-<Highlight Key Results.>
+Our goal of this research is to predict the probability of winning between the Liberal and the Conservative Party in the 2025 Canadian Federal Election. Specifically, we hypothesize that there is a relationship between the probability of voting for parties and the demographic variables including age, sex, region, religion, income, language, and minority, and the turnover of the Liberal Party is higher than the Conservative Party, but the result illustrates that the turnout of Conservative is estimated to be 25.5% which is slightly greater than the turnout of Liberal that is estimated to be 22.78%. This result broke the stereotype that the Liberal Party is always sitting on the political throne.
 
-<Talk about big picture.>
+In methodology, we use logistic regression models to predict the proportion of voting for Conservatives and Liberals as this response variable is binary and apply post-stratification on the model to estimate this proportion to get a more representative result for the census.
+
 
 ## 5.2 Weaknesses
 
@@ -579,7 +606,6 @@ For the future step, We will consider removing variables with non-significant p-
 
 We modified classifications of variables to present data easier. In the future, we can classify cells more specifically in order to make more generalized and precious estimates of the outcomes of interest. We can also collect relative data from the Northern Territories to reduce the non-response bias. 
 
-<End with a concluding paragraph to wrap up the report.>
 
 
 
@@ -589,24 +615,19 @@ We modified classifications of variables to present data easier. In the future, 
 
 ## Bibliography
 
-1. Grolemund, G. (2014, July 16) *Introduction to R Markdown*. RStudio. [https://rmarkdown.rstudio.com/articles_intro.html](https://rmarkdown.rstudio.com/articles_intro.html). (Last Accessed: April 4, 1991) 
+Aiello, R. (2023, November 16). Trudeau’s Liberals trailing Poilievre’s conservatives in power index: Nanos. CTVNews. https://www.ctvnews.ca/politics/trudeau-s-liberals-trailing-poilievre-s-conservatives-in-power-index-nanos-1.6648263
 
-2.  RStudio Team. (2020). *RStudio: Integrated Development for R*. RStudio, PBC, Boston, MA URL [http://www.rstudio.com/](http://www.rstudio.com/).
-
-3.  Allaire, J.J., et. el. *References: Introduction to R Markdown*. RStudio. [https://rmarkdown.rstudio.com/docs/](https://rmarkdown.rstudio.com/docs/). (Last Accessed: April 4, 1991) 
-
-4. OpenAI. (2023). *ChatGPT (September 13 version) [Large language model]*. [https://chat.openai.com/chat](https://chat.openai.com/chat) (Last Accessed: September 13, 2023)
-
-Liberal Party of Canada. (n.d.). *2021 Platform*. [https://liberal.ca/our-platform/]
+Allaire, J.J., et. el. *References: Introduction to R Markdown*. RStudio. [https://rmarkdown.rstudio.com/docs/](https://rmarkdown.rstudio.com/docs/). (Last Accessed: April 4, 1991)
 
 Canada Guide. (2023). *Canadian Political Parties*. [https://thecanadaguide.com/government/political-parties/] (Last Accessed: November 11, 2023)
 
-Center for American Women and Politics (CAWP). (2023). *Gender Differences in Voter Turnout* New Brunswick, NJ: Center for American Women and Politics, Eagleton Institute of Politics, Rutgers University-New Brunswick. [https://cawp.rutgers.edu/facts/voters/gender-differences-voter-turnout] (Accessed November 22, 2023)
-
-Coward, H., & Slater, P., & Chagnon, R. (2022). Religion. In The Canadian Encyclopedia. Retrieved from https://www.thecanadianencyclopedia.ca/en/article/religion
-
 Canada, E. (n.d.). Facts about voter registration, citizenship and voter ID. – Elections Canada. https://www.elections.ca/content.aspx?section=med&dir=c76%2Fcitizen&document=index&lang=e
 
+Center for American Women and Politics (CAWP). (2023). *Gender Differences in Voter Turnout* New Brunswick, NJ: Center for American Women and Politics, Eagleton Institute of Politics, Rutgers University-New Brunswick. [https://cawp.rutgers.edu/facts/voters/gender-differences-voter-turnout] (Accessed November 22, 2023)
+
+Country's religious and ethnocultural diversity. *Statistics Canada* https://www150.statcan.gc.ca/n1/daily-quotidien/221026/dq221026b-eng.htm (Last Accessed: November 12, 2023)  
+
+Coward, H., & Slater, P., & Chagnon, R. (2022). Religion. In The Canadian Encyclopedia. Retrieved from https://www.thecanadianencyclopedia.ca/en/article/religion
 
 Dippel S. (2016). *As Stephen Harper leaves politics, record shows mixed results for Calgary*. CBC. [https://www.cbc.ca/news/canada/calgary/harper-resigns-mp-calgary-analysis-1.3734081]
 
@@ -614,11 +635,15 @@ Elections Canada. (2023). *The electoral system of Canada*. [https://www.electio
 
 Erickson, L., & O’Neill, B. (2002). The Gender Gap and the Changing Woman Voter in Canada. International Political Science Review / Revue Internationale de Science Politique, 23(4), 373–392. http://www.jstor.org/stable/1601539
 
-Grenier E. (2017). *French a major advantage for Conservative leadership contenders*. CBC. [https://www.cbc.ca/news/politics/grenier-conservative-leadership-french-1.3940956] (Accessed November 22, 2023)
-
 Government of Canada, (2022). *Provinces and territories - Intergovernmental Affairs*. [https://www.canada.ca/en/intergovernmental-affairs/services/provinces-territories.html]
 
+Grenier E. (2017). *French a major advantage for Conservative leadership contenders*. CBC. [https://www.cbc.ca/news/politics/grenier-conservative-leadership-french-1.3940956] (Accessed November 22, 2023)
+
+Grolemund, G. (2014, July 16) *Introduction to R Markdown*. RStudio. [https://rmarkdown.rstudio.com/articles_intro.html](https://rmarkdown.rstudio.com/articles_intro.html). (Last Accessed: April 4, 1991)
+
 Keller, J. (2021). *How Canada voted: A look at how the parties, the regions and the issues shaped our next government*. The Globe and Mail. [https://www.theglobeandmail.com/politics/article-takeaways-about-who-voted-and-the-issues-and-tensions-that-helped/]
+
+Liberal Party of Canada. (n.d.). *2021 Platform*. [https://liberal.ca/our-platform/]
 
 Liberal Party. (2019). *The Canadian Encyclopedia*. [https://www.thecanadianencyclopedia.ca/en/article/liberal-party]
 
@@ -626,39 +651,57 @@ McMaster University. (2023). *Analysis: Educated voters in Canada tend to vote f
 
 Members of Parliament. (2023). *Current Members*. [https://www.ourcommons.ca/Members/en]
 
+OpenAI. (2023). *ChatGPT (September 13 version) [Large language model]*. [https://chat.openai.com/chat](https://chat.openai.com/chat) (Last Accessed: September 13, 2023)
+
 Parliament of Canada. (2006). *Amendment to Canada Elections Act*. [https://www.parl.ca/]
+
+RStudio Team. (2020). *RStudio: Integrated Development for R*. RStudio, PBC, Boston, MA URL [http://www.rstudio.com/](http://www.rstudio.com/).
 
 Simon Fraser University. (2021). *Canadian Election Results by Party 1867 to 2021*. https://www.sfu.ca/~aheard/elections/1867-present.html (Last Accessed: November 11, 2023)
 
-Statistics Canada. (2022). Chapter 6: Political participation, civic engagement and caregiving among youth in Canada. *Statistics Canada*. [https://www150.statcan.gc.ca/n1/pub/42-28-0001/2021001/article/00006-eng.htm] (Last Accessed: November 20, 2023)
-
 Statistics Canada. (2012). *Factors associated with voting*. https://www150.statcan.gc.ca/n1/pub/75-001-x/2012001/article/11629-eng.htm#a4 (Last Accessed: November 12, 2023)
-
-Statistics Canada. (October, 2022). The Canadian census-A rich portrait of the
-country's religious and ethnocultural diversity. *Statistics Canada* https://www150.statcan.gc.ca/n1/daily-quotidien/221026/dq221026b-eng.htm (Last Accessed: November 12, 2023)
 
 Statistics Canada. (2020). *General Social Survey - Social Identity (SI): Detailed information for 2020 (Cycle 35)*. [https://www23.statcan.gc.ca/imdb/p2SV.pl?Function=getSurvey&SDDS=5024] (Last Accessed: November 20, 2023)
 
 Statistics Canada. (2021). *Visible minority of person*. [https://www23.statcan.gc.ca/imdb/p3Var.pl?Function=DECI&Id=257515]
 
+Statistics Canada. (2022). Chapter 6: Political participation, civic engagement and caregiving among youth in Canada. *Statistics Canada*. [https://www150.statcan.gc.ca/n1/pub/42-28-0001/2021001/article/00006-eng.htm] (Last Accessed: November 20, 2023)
+
+Statistics Canada. (October, 2022). The Canadian census-A rich portrait of the
+
 Stephenson, Laura B., Allison Harell, Daniel Rubenson and Peter John Loewen. (2021). *The 2021 Canadian Election Study*. Consortium on Electoral Democracy. [dataset]
 
 The Globe and Mail. (n.d.). Motley Fool Press Releases & Markets News. https://www.theglobeandmail.com/investing/markets/markets-news/Motley%20Fool/19986251/does-your-income-make-you-upper-class-middle-class-or-lower-class/
- 
+
 Tossutti, L. & Elections Canada. (2007). *La participation électorale des membres des communautés ethnoculturelles*. Élections Canada
 
 Uppal, S. & LaRochelle-Côté S. (February, 2012). *Factors associated with voting*. Statistics Canada. https://www150.statcan.gc.ca/n1/en/pub/75-001-x/2012001/article/11629-eng.pdf?st=nuV9FTRH (Last Accessed: November 12, 2023)
 
-Middle-Class Income In Canada by Province. (2023, October 12). Www.springfinancial.ca. https://www.springfinancial.ca/blog/lifestyle/middle-class-income-in-canada-by-province
+
 \newpage
 
-## Appendix
+## Appendix  
 
 ## Generative AI Statement
 
-Here is where you can explain your usage of Generative AI tool(s). Be sure to reference it. For instance, including something like: 
 
-I used the following generative artificial intelligence (AI) tool: Bing AI Version 2.0 for Chrome [4]. I used the tool only in the Results section of this assignment and I gave it the following prompt of `What should I eat for breakfast?` and it gave me a list of 10 breakfast items which I then asked it to: `Please only list breakfast items that do not include eggs`. I then chose my 3 favourite items from the produced list and included those in the Results section.
+We used the following generative artificial intelligence (AI) tool: Chat GPT3.5 (Open AI, 2023). I used the tool only in the Method section of this assignment and I gave it the following prompt of `what is the definition of post-stratification` and it gave me the explanations of post-stratification. 
+
+`Post-stratification is a statistical technique used in survey sampling and analysis. It involves the division of a population into groups or strata based on certain characteristics after the data has been collected. This technique is used to improve the precision of estimates by ensuring that the sample reflects the known population characteristics more accurately.`
+
+`Here's how it generally works:`
+
+`Initial Data Collection: Surveys or data collection exercises are conducted without considering specific stratifications. This initial dataset might not completely represent the population's various characteristics.`
+
+`Stratification: After collecting the data, it is sorted or divided into subgroups or strata based on certain variables such as age, gender, income, or any other relevant characteristic.`
+
+`Analysis and Weighting: Each stratum is then analyzed separately. Statistical weights are often applied to adjust for differences in the population sizes of the strata. This weighting helps in making estimates more accurate by giving appropriate importance to each subgroup according to its representation in the population.`
+
+`Estimation: Finally, estimates or inferences are made by combining the results from all strata according to the population distribution.`
+
+`Post-stratification is particularly useful when the initial sampling methods do not ensure a balanced representation of certain characteristics within the sample. By dividing the data into strata after collection and adjusting the analysis accordingly, it helps improve the accuracy and representativeness of the findings, especially when dealing with diverse or unevenly distributed populations.`
+
+Then I paraphrase the explanations of post-stratification into section 3.3 of Methods.
 
 
 ### Supplementary Materials
