@@ -103,6 +103,8 @@ Regarding visible minorities, we differentiated between 'Not a visible minority'
 
 Finally, after the initial data-cleaning process, respondents with missing values were excluded for clarity and accuracy. This step was necessary as incomplete responses could be due to various factors, such as issues in reaching respondents or the survey's design causing discomfort. Missing values could introduce anomalies, potentially reducing prediction accuracy. Although adjustments could have been made with more resources, omitting these respondents was considered the most appropriate approach for this study.
 
+To glimpse the cleaned version of census data and survey data, please refer to Table 13 and Table 14 in the Appendix.
+
 
 ```{r, include = FALSE}
 
@@ -705,7 +707,15 @@ We used the following generative artificial intelligence (AI) tool: Chat GPT3.5 
 
 Then we paraphrased the explanations of post-stratification into section 3.3 of Methods.
 
-## Supplementary Materials  
+## Supplementary Materials 
+
+The following tables show the glimpse of cleaned survey and census data.
+```{r, echo = FALSE, warning=FALSE}
+glimpse_survey <- survey_data1[1:30, 1:9]
+glimpse_census <- census_data1[1:30, 1:7]
+knitr::kable(glimpse_survey,caption = "Glimpse of Survey Data")%>% kable_styling(latex_options = "HOLD_position")
+knitr::kable(glimpse_census, caption = "Glimpse of Census Data")%>% kable_styling(latex_options = "HOLD_position")
+```
 
 ```{r, echo = FALSE, warning=FALSE}
 # Survey data plot
