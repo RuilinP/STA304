@@ -222,7 +222,7 @@ summary_table_conservative <- survey_data1 %>% select(vote_conservative) %>% sum
 vote_table <- tibble(summary_table_liberal, summary_table_conservative)
 knitr::kable(vote_table, caption = "Statistics about the proportions of Yes votes for the Liberal and the Conservative in Survey data", align = "cccc", digits = 4)%>% kable_styling(latex_options = "HOLD_position")
 ```
-Table 1 shows that 
+Table 1 shows that from survey result, the proportions of respondents indicating their favor for Liberal party versus for Conservative are similar with less than 0.01 difference.
 
 ```{r, echo=FALSE, results = 'asis'}
 #Table2 age summary
@@ -250,7 +250,7 @@ knitr::kable(summary_cen_age, caption = "Statistics about the ages of voters in 
 
 
 ```
-Table2 & 3 show that
+Table2 & 3 show that the distribution of age from survey and census are slightly different. The mean age from the census is 53.59, yet that from survey is 47. Median age from census is 56 yet it is 46 in the survey. However, standard deviation is similar, with 17.21 in census and 18.81 in survey.
 
 ```{r, echo=FALSE, results = 'asis'}
 #format in a table will look nicer
@@ -261,7 +261,7 @@ summary_census_sex <- census_data1 %>% select(sex) %>% group_by (sex) %>% summar
 
 knitr::kable(list(summary_survey_sex, summary_census_sex), caption = "Statistics about the frequency and proportion of male and female voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
 ```
-Table 4 shows
+Table 4 shows that there exists a slightly higher proportion of Female individuals in survey compared to census
 
 ```{r, echo=FALSE, results = 'asis'}
 num_cen_language = length(census_data1$language)
@@ -271,7 +271,7 @@ summary_census_language <- census_data1 %>% select(language) %>% group_by (langu
 
 knitr::kable(list(summary_survey_language, summary_census_language), position = c("left", "right"), caption = "Statistics about the frequency and proportion of French and English speaking voters in 2021 election survey and cenus data", align = "cccc", digits = 2)%>% kable_styling(latex_options = "HOLD_position")
 ```
-Table 5 shows
+Table 5 shows that the proportion of English speaker versus French speaker is similar across survey and census data with 0.71 versus 0.8 for English speaker and 0.29 versus 0.2 for French speaker. 
 ```{r, echo=FALSE, results = 'asis'}
 replace_values <- function(x) {
   ifelse(x == 0, "No", "Yes")
@@ -285,7 +285,7 @@ summary_census_west <- census_data1 %>% select(west) %>% group_by (west) %>% sum
 knitr::kable(list(mutate(summary_survey_west, west = replace_values(west)),
   mutate(summary_census_west, west = replace_values(west))), caption = "Statistics about the frequency and proportion of west and non-west voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
 ```
-
+Table 6 also shows that the proportion of resident living in west part of the country versus east resident is similar across survey or census data with 0.84 versus 0.81 for east resident and 0.16 versus 1.19 for west resident. 
 ```{r, echo=FALSE, results = 'asis'}
 #format in a table will look nicer
 num_cen_income = length(census_data1$income)
@@ -305,6 +305,7 @@ summary_census_income <- summary_census_income %>%
 
 knitr::kable(list(summary_survey_income, summary_census_income), caption = "Statistics about the frequency and proportion of high, medium, low income voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
 ```
+From table 7, we can observe that distributions of income from survey and census slightly differ. Specifically, the data of census consist of higher proportion of high-income individuals yet less proportion of low-income individual.
 ```{r, echo=FALSE, results = 'asis'}
 #format in a table will look nicer
 num_cen_religion = length(census_data1$religion)
@@ -315,7 +316,7 @@ summary_census_religion <- census_data1 %>% select(religion) %>% group_by (relig
 knitr::kable(list(mutate(summary_survey_religion, religion = replace_values(religion)),
   mutate(summary_census_religion, religion = replace_values(religion))), caption = "Statistics about the frequency and proportion of religious and non-religious voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
 ```
-
+Table 8 also shows that the proportion of religious individuals versus non-religious individuals is similar across survey or census data with 0.71 versus 0.8 for religious and 0.2 versus 0.29 for non-religious. 
 ```{r, echo=FALSE, results = 'asis'}
 #format in a table will look nicer
 num_cen_minority = length(census_data1$minority)
@@ -326,7 +327,7 @@ summary_census_minority <- census_data1 %>% select(minority) %>% group_by (minor
 knitr::kable(list(mutate(summary_survey_minority, minority = replace_values(minority)),
   mutate(summary_census_minority, minority = replace_values(minority))), caption = "Statistics about the frequency and proportion of minority and non-minority voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
 ```
-
+From table 9, we can observe difference between proportions of minority and non-minority between survey and census. The census has a higher proportion of non-minority while lower proportion of minority respondents. 
 
 ```{r, echo = FALSE, warning=FALSE}
 survey_data1$income <- factor(survey_data1$income, levels = c("Low", "Medium", "High"))
@@ -366,7 +367,16 @@ combined_income_plots <- survey_income + census_income +
 
 # Arrange the combined plots
 combined_age_plots 
+```
+
+From graph 1, we can observe that the distribution of age in survey is relatively uniform with no outliers while the distribution of the census is approximately symmetrically  distributed with major mode around 60s and 80s and minor mode around late 30s which represent elder and middle aged.
+
+```{r, echo = FALSE, warning=FALSE}
 combined_income_plots
+```
+From Graph 2, we can observe from the barplots that distributions of survey and census slightly differ. Specifically, the data of census consist of more individuals of medium income while in the survey, we can observe a mode of low income group. 
+\newpage
+```{r, echo = FALSE, warning=FALSE}
 par(mfrow = c(1, 2))
 pie(survey_sex_count, main = "Sex Distribution in Survey", col = rainbow(length(survey_sex_count)))
 main_title <- "Graph 3: Sex Distributions: Survey\n vs Census"
@@ -375,6 +385,7 @@ pie(census_sex_count, main = "Sex Distribution in Census", col = rainbow(length(
 mtext(main_title, side = 1, line = 1, cex = 1)
 par(mfrow = c(1, 1))
 ```
+From the pie charts of Graph 3, there exists a slightly higher proportion of Female individuals in survey compared to census.  
 
 ## 3. Methods
 
@@ -542,19 +553,37 @@ knitr::kable(table, col.names = c("Liberal", "Conservative"), caption = "Estimat
 
 
 
-## 5. Conclusions
-
+## 5 Conclusion
 <Here you should give a summary of the Hypotheses, Methods and Results>
 
+
+## 5.1 Key Results and Big Picture
 <Highlight Key Results.>
 
 <Talk about big picture.>
 
-<Comment on any Weaknesses.>
+## 5.2 Weaknesses
 
-<Comment on Future Work/Next Steps>
+The model our team performed cannot involve all variables that affect the election outcome, such as education level which can affect individual voting decisions. McMaster University reported that educated individuals tend to vote for the left-leaning parties (2023).  
+
+One weakness was made as we modified categories of chosen variables. The BC  province was excluded which it’s used to involve in western regions of the Survey Data. We also merged indigenous groups into visible minorities. For the independent variable of gender, we adjusted into sex and removed observations with “other” options. Those modifications can potentially increase bias and reduce the model predictions, outputting in-stable predicted election outcomes. Missing data from the Northern Territories could result in the non-response bias and decrease the model precision. 
+
+Confounding factors may also exist which affect both variables and the predicted outcomes. The social status of current candidates may be a confounding factor since they often have an advantage in reputation, experience, and resources, which could affect their popularity and election results. Economic factors such as unemployment, inflation, and GDP growth can be confounders as well. Changes in economic conditions can affect public criticism toward candidates and related election outcomes.
+
+In addition, some p-values of included variable coefficients are not statistically significant. Therefore, we cannot fully explain that those variables are associated with the outcome of voting probability.
+
+## 5.3 Future works and Wrap up
+
+For the future step, We will consider removing variables with non-significant p-values from the model. This simplifies the model and may improve its overall performance. We will evaluate and add other variables to identify the fitted model for predicting the probability of voting with an inclusion of confounding adjustment. 
+
+We modified classifications of variables to present data easier. In the future, we can classify cells more specifically in order to make more generalized and precious estimates of the outcomes of interest. We can also collect relative data from the Northern Territories to reduce the non-response bias. 
 
 <End with a concluding paragraph to wrap up the report.>
+
+
+
+\newpage
+
 
 
 ## Bibliography
@@ -569,15 +598,30 @@ knitr::kable(table, col.names = c("Liberal", "Conservative"), caption = "Estimat
 
 Liberal Party of Canada. (n.d.). *2021 Platform*. [https://liberal.ca/our-platform/]
 
-Canada Guide. (2023). *Canadian Political Parties*. https://thecanadaguide.com/government/political-parties/ (Last Accessed: November 11, 2023)
+Canada Guide. (2023). *Canadian Political Parties*. [https://thecanadaguide.com/government/political-parties/] (Last Accessed: November 11, 2023)
+
+Center for American Women and Politics (CAWP). (2023). *Gender Differences in Voter Turnout* New Brunswick, NJ: Center for American Women and Politics, Eagleton Institute of Politics, Rutgers University-New Brunswick. [https://cawp.rutgers.edu/facts/voters/gender-differences-voter-turnout] (Accessed November 22, 2023)
+
+Coward, H., & Slater, P., & Chagnon, R. (2022). Religion. In The Canadian Encyclopedia. Retrieved from https://www.thecanadianencyclopedia.ca/en/article/religion
+
+Canada, E. (n.d.). Facts about voter registration, citizenship and voter ID. – Elections Canada. https://www.elections.ca/content.aspx?section=med&dir=c76%2Fcitizen&document=index&lang=e
+
 
 Dippel S. (2016). *As Stephen Harper leaves politics, record shows mixed results for Calgary*. CBC. [https://www.cbc.ca/news/canada/calgary/harper-resigns-mp-calgary-analysis-1.3734081]
 
 Elections Canada. (2023). *The electoral system of Canada*. [https://www.elections.ca/content.aspx?section=res&dir=ces&document=part2&lang=e]
 
+Erickson, L., & O’Neill, B. (2002). The Gender Gap and the Changing Woman Voter in Canada. International Political Science Review / Revue Internationale de Science Politique, 23(4), 373–392. http://www.jstor.org/stable/1601539
+
+Grenier E. (2017). *French a major advantage for Conservative leadership contenders*. CBC. [https://www.cbc.ca/news/politics/grenier-conservative-leadership-french-1.3940956] (Accessed November 22, 2023)
+
 Government of Canada, (2022). *Provinces and territories - Intergovernmental Affairs*. [https://www.canada.ca/en/intergovernmental-affairs/services/provinces-territories.html]
 
+Keller, J. (2021). *How Canada voted: A look at how the parties, the regions and the issues shaped our next government*. The Globe and Mail. [https://www.theglobeandmail.com/politics/article-takeaways-about-who-voted-and-the-issues-and-tensions-that-helped/]
+
 Liberal Party. (2019). *The Canadian Encyclopedia*. [https://www.thecanadianencyclopedia.ca/en/article/liberal-party]
+
+McMaster University. (2023). *Analysis: Educated voters in Canada tend to vote for left-leaning parties while richer voters go right*. McMaster University. [https://brighterworld.mcmaster.ca/articles/analysis-educated-voters-in-canada-tend-to-vote-for-left-leaning-parties-while-richer-voters-go-right/]
 
 Members of Parliament. (2023). *Current Members*. [https://www.ourcommons.ca/Members/en]
 
@@ -585,18 +629,25 @@ Parliament of Canada. (2006). *Amendment to Canada Elections Act*. [https://www.
 
 Simon Fraser University. (2021). *Canadian Election Results by Party 1867 to 2021*. https://www.sfu.ca/~aheard/elections/1867-present.html (Last Accessed: November 11, 2023)
 
-Statistics Canada. (2022). Chapter 6: Political participation, civic engagement and caregiving among youth in Canada. *Statistics Canada* [https://www150.statcan.gc.ca/n1/pub/42-28-0001/2021001/article/00006-eng.htm] (Last Accessed: November 20, 2023)
+Statistics Canada. (2022). Chapter 6: Political participation, civic engagement and caregiving among youth in Canada. *Statistics Canada*. [https://www150.statcan.gc.ca/n1/pub/42-28-0001/2021001/article/00006-eng.htm] (Last Accessed: November 20, 2023)
+
+Statistics Canada. (2012). *Factors associated with voting*. https://www150.statcan.gc.ca/n1/pub/75-001-x/2012001/article/11629-eng.htm#a4 (Last Accessed: November 12, 2023)
 
 Statistics Canada. (October, 2022). The Canadian census-A rich portrait of the
 country's religious and ethnocultural diversity. *Statistics Canada* https://www150.statcan.gc.ca/n1/daily-quotidien/221026/dq221026b-eng.htm (Last Accessed: November 12, 2023)
 
-Statistics Canada. (2020). General Social Survey - Social Identity (SI): Detailed information for 2020 (Cycle 35). *Statistics Canada*.  https://www23.statcan.gc.ca/imdb/p2SV.pl?Function=getSurvey&SDDS=5024 (Last Accessed: November 20, 2023)
+Statistics Canada. (2020). *General Social Survey - Social Identity (SI): Detailed information for 2020 (Cycle 35)*. [https://www23.statcan.gc.ca/imdb/p2SV.pl?Function=getSurvey&SDDS=5024] (Last Accessed: November 20, 2023)
+
+Statistics Canada. (2021). *Visible minority of person*. [https://www23.statcan.gc.ca/imdb/p3Var.pl?Function=DECI&Id=257515]
 
 Stephenson, Laura B., Allison Harell, Daniel Rubenson and Peter John Loewen. (2021). *The 2021 Canadian Election Study*. Consortium on Electoral Democracy. [dataset]
 
+The Globe and Mail. (n.d.). Motley Fool Press Releases & Markets News. https://www.theglobeandmail.com/investing/markets/markets-news/Motley%20Fool/19986251/does-your-income-make-you-upper-class-middle-class-or-lower-class/
+ 
+Tossutti, L. & Elections Canada. (2007). *La participation électorale des membres des communautés ethnoculturelles*. Élections Canada
+
 Uppal, S. & LaRochelle-Côté S. (February, 2012). *Factors associated with voting*. Statistics Canada. https://www150.statcan.gc.ca/n1/en/pub/75-001-x/2012001/article/11629-eng.pdf?st=nuV9FTRH (Last Accessed: November 12, 2023)
 
-Tossutti, L. & Elections Canada. (2007). *La participation électorale des membres des communautés ethnoculturelles*. Élections Canada.
 
 \newpage
 
