@@ -361,7 +361,7 @@ library(gridExtra)
 library(patchwork)
 combined_age_plots <- survey_age + census_age +
   plot_annotation(
-    title = "Graph1: Age Distributions: Survey vs Census"
+    title = "Graph 1: Age Distributions: Survey vs Census"
   )
 
 combined_income_plots <- survey_income + census_income +
@@ -704,5 +704,36 @@ We used the following generative artificial intelligence (AI) tool: Chat GPT3.5 
 `Post-stratification is particularly useful when the initial sampling methods do not ensure a balanced representation of certain characteristics within the sample. By dividing the data into strata after collection and adjusting the analysis accordingly, it helps improve the accuracy and representativeness of the findings, especially when dealing with diverse or unevenly distributed populations.`
 
 Then we paraphrased the explanations of post-stratification into section 3.3 of Methods.
+
+## Supplementary Materials  
+
+```{r, echo = FALSE, warning=FALSE}
+# Survey data plot
+survey_west <- survey_data1 %>% ggplot(aes(x = west, fill = west)) + 
+  geom_bar(stat = "count", position = "identity") + 
+  coord_flip() +  # Flipping the coordinates to make the bars horizontal
+  theme_classic() +
+  labs(x = "Whether the people that participated\n in the election are from the western provinces", y = "Frequency", title = "Histogram of whether the election participants are in western provinces from survey") +
+  theme(plot.title = element_text(size = 14, hjust = 0.5)) +
+  scale_fill_manual(values = c("red", "blue"))  # Filling with red and blue colors
+
+# Census data plot
+census_west <- census_data1 %>% ggplot(aes(x = west, fill = west)) + 
+  geom_bar(stat = "count", position = "identity") + 
+  coord_flip() +  # Flipping the coordinates to make the bars horizontal
+  theme_classic() +
+  labs(x = "Whether the people that participated\n in the election are from the western provinces", y = "Frequency", title = "Histogram of the whether the election participants are in western provinces from census") +
+  theme(plot.title = element_text(size = 14, hjust = 0.5)) +
+  scale_fill_manual(values = c("red", "blue"))  # Filling with red and blue colors
+
+# Combining the plots
+combined_west_plots <- survey_west + census_west +
+  plot_annotation(
+    title = "Graph 4: Distributions of whether from western provinces: Survey vs Census"
+  )
+
+combined_west_plots
+
+```
 
 
