@@ -217,8 +217,8 @@ minority: A binary variable indicating whether individuals are part of a visible
 library(knitr)
 # Use this to calculate some summary measures. 
 #Table 1 vote summary
-summary_table_liberal <- survey_data1 %>% select(vote_liberal) %>% summarize(prop.Liberal = mean(vote_liberal))
-summary_table_conservative <- survey_data1 %>% select(vote_conservative) %>% summarize(prop.Conservative = mean(vote_conservative))
+summary_table_liberal <- survey_data1 %>% select(vote_liberal) %>% summarize(LiberalProportion = mean(vote_liberal))
+summary_table_conservative <- survey_data1 %>% select(vote_conservative) %>% summarize(ConservativeProportion = mean(vote_conservative))
 vote_table <- tibble(summary_table_liberal, summary_table_conservative)
 knitr::kable(vote_table, caption = "Statistics about the proportions of Yes votes for the Liberal and the Conservative in Survey data", align = "cccc", digits = 4)%>% kable_styling(latex_options = "HOLD_position")
 ```
@@ -250,14 +250,14 @@ knitr::kable(summary_cen_age, caption = "Statistics about the ages of voters in 
 
 
 ```
-Table2 & 3 show that the distribution of age from survey and census are slightly different. The mean age from the census is 53.59, yet that from survey is 47. Median age from census is 56 yet it is 46 in the survey. However, standard deviation is similar, with 17.21 in census and 18.81 in survey.
+Table2 & 3 show that the distribution of age from survey and census are slightly different. The mean age from the census is 53.59, yet that from survey is 47. Median age from census is 56 yet it is 46 in the survey. This indicates that in census, 50% of the people are elder than 56 while people from survey are generally younger. In census, a Q3 of 68 also indicates that that 25% of the population is elder than 68 years old and the number is 63 in survey. However, standard deviation is similar, with 17.21 in census and 18.81 in survey, which indicates the variations of both data are similar.
 
 ```{r, echo=FALSE, results = 'asis'}
 #format in a table will look nicer
 num_cen_sex = length(census_data1$sex)
 num_sur_sex = length(survey_data1$sex)
-summary_survey_sex <- survey_data1 %>% select(sex) %>% group_by(sex) %>% summarise(num.surveySex = n(), prop.surveySex = n()/num_sur_sex)
-summary_census_sex <- census_data1 %>% select(sex) %>% group_by (sex) %>% summarise(num.censusSex = n(), prop.censusSex = n()/num_cen_sex)
+summary_survey_sex <- survey_data1 %>% select(sex) %>% group_by(sex) %>% summarise(SurveySexNumber = n(), SurveySexProportion = n()/num_sur_sex)
+summary_census_sex <- census_data1 %>% select(sex) %>% group_by (sex) %>% summarise(CensusSexNumber = n(), CensusSexProportion = n()/num_cen_sex)
 
 knitr::kable(list(summary_survey_sex, summary_census_sex), caption = "Statistics about the frequency and proportion of male and female voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
 ```
@@ -266,8 +266,8 @@ Table 4 shows that there exists a slightly higher proportion of Female individua
 ```{r, echo=FALSE, results = 'asis'}
 num_cen_language = length(census_data1$language)
 num_sur_language = length(survey_data1$language)
-summary_survey_language <- survey_data1 %>% select(language) %>% group_by(language) %>% summarise(num.surveyLanguage = n(), prop.surveyLanguage = n()/num_sur_language)
-summary_census_language <- census_data1 %>% select(language) %>% group_by (language) %>% summarise(num.censusLanguage = n(), prop.censusLanguage = n()/num_cen_language)
+summary_survey_language <- survey_data1 %>% select(language) %>% group_by(language) %>% summarise(SurveyLanguageNumber = n(), SurveyLanguageProportion = n()/num_sur_language)
+summary_census_language <- census_data1 %>% select(language) %>% group_by (language) %>% summarise(CensusLanguageNumber = n(), CensusLanguageProportion = n()/num_cen_language)
 
 knitr::kable(list(summary_survey_language, summary_census_language), position = c("left", "right"), caption = "Statistics about the frequency and proportion of French and English speaking voters in 2021 election survey and cenus data", align = "cccc", digits = 2)%>% kable_styling(latex_options = "HOLD_position")
 ```
@@ -279,8 +279,8 @@ replace_values <- function(x) {
 #format in a table will look nicer
 num_cen_west = length(census_data1$west)
 num_sur_west = length(survey_data1$west)
-summary_survey_west <- survey_data1 %>% select(west) %>% group_by(west) %>% summarise(num.surveyWest = n(), prop.surveyWest = n()/num_sur_west)
-summary_census_west <- census_data1 %>% select(west) %>% group_by (west) %>% summarise(num.censusWest = n(), prop.censusWest = n()/num_cen_west)
+summary_survey_west <- survey_data1 %>% select(west) %>% group_by(west) %>% summarise(SurveyWestNumber = n(), SurveyWestProportion = n()/num_sur_west)
+summary_census_west <- census_data1 %>% select(west) %>% group_by (west) %>% summarise(CensusWestNumber = n(), CensusWestProportion = n()/num_cen_west)
 
 knitr::kable(list(mutate(summary_survey_west, west = replace_values(west)),
   mutate(summary_census_west, west = replace_values(west))), caption = "Statistics about the frequency and proportion of west and non-west voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
@@ -290,8 +290,8 @@ Table 6 also shows that the proportion of resident living in west part of the co
 #format in a table will look nicer
 num_cen_income = length(census_data1$income)
 num_sur_income = length(survey_data1$income)
-summary_survey_income <- survey_data1 %>% select(income) %>% group_by(income) %>% summarise(num.surveyIncome = n(), prop.surveyIncome = n()/num_sur_income)
-summary_census_income <- census_data1 %>% select(income) %>% group_by (income) %>% summarise(num.censusIncome = n(), prop.censusIncome = n()/num_cen_income)
+summary_survey_income <- survey_data1 %>% select(income) %>% group_by(income) %>% summarise(SurveyIncomeNumber = n(), SurveyIncomeProportion = n()/num_sur_income)
+summary_census_income <- census_data1 %>% select(income) %>% group_by (income) %>% summarise(CensusIncomeNumber = n(), CensusIncomeProportion = n()/num_cen_income)
 
 income_levels <- c("Low", "Medium", "High")
 
@@ -310,8 +310,8 @@ From table 7, we can observe that distributions of income from survey and census
 #format in a table will look nicer
 num_cen_religion = length(census_data1$religion)
 num_sur_religion = length(survey_data1$religion)
-summary_survey_religion <- survey_data1 %>% select(religion) %>% group_by(religion) %>% summarise(num.surveyReligion = n(), prop.surveyReligion = n()/num_sur_religion)
-summary_census_religion <- census_data1 %>% select(religion) %>% group_by (religion) %>% summarise(num.censusReligion = n(), prop.censusReligion = n()/num_cen_religion)
+summary_survey_religion <- survey_data1 %>% select(religion) %>% group_by(religion) %>% summarise(SurveyReligionNumber = n(), SurveyReligionProportion = n()/num_sur_religion)
+summary_census_religion <- census_data1 %>% select(religion) %>% group_by (religion) %>% summarise(CensusReligionNumber = n(), CensusReligionProportion = n()/num_cen_religion)
 
 knitr::kable(list(mutate(summary_survey_religion, religion = replace_values(religion)),
   mutate(summary_census_religion, religion = replace_values(religion))), caption = "Statistics about the frequency and proportion of religious and non-religious voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
@@ -321,8 +321,8 @@ Table 8 also shows that the proportion of religious individuals versus non-relig
 #format in a table will look nicer
 num_cen_minority = length(census_data1$minority)
 num_sur_minority = length(survey_data1$minority)
-summary_survey_minority <- survey_data1 %>% select(minority) %>% group_by(minority) %>% summarise(num.surveyMinority = n(), prop.surveyMinority = n()/num_sur_minority)
-summary_census_minority <- census_data1 %>% select(minority) %>% group_by (minority) %>% summarise(num.censusMinority = n(), prop.censusMinority = n()/num_cen_minority)
+summary_survey_minority <- survey_data1 %>% select(minority) %>% group_by(minority) %>% summarise(SurveyMinorityNumber = n(), SurveyMinorityProportion = n()/num_sur_minority)
+summary_census_minority <- census_data1 %>% select(minority) %>% group_by (minority) %>% summarise(CensusMinorityNumber = n(), CensusMinorityProportion = n()/num_cen_minority)
 
 knitr::kable(list(mutate(summary_survey_minority, minority = replace_values(minority)),
   mutate(summary_census_minority, minority = replace_values(minority))), caption = "Statistics about the frequency and proportion of minority and non-minority voters in 2021 election survey and cenus data", align = "cccc", digits = 2) %>% kable_styling(latex_options = "HOLD_position")
@@ -369,7 +369,7 @@ combined_income_plots <- survey_income + census_income +
 combined_age_plots 
 ```
 
-From graph 1, we can observe that the distribution of age in survey is relatively uniform with no outliers while the distribution of the census is approximately symmetrically  distributed with major mode around 60s and 80s and minor mode around late 30s which represent elder and middle aged.
+From graph 1, we can observe that the distribution of age in survey is relatively uniform with no outliers while the distribution of the census is approximately symmetrically  distributed with major mode around 60s and 80s and minor mode around late 30s which represent elder and middle aged.Also, the distribution of the census is slightly right-skewed which corresponds to our previous observation of slightly higher median than mean.
 
 ```{r, echo = FALSE, warning=FALSE}
 combined_income_plots
