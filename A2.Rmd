@@ -333,7 +333,7 @@ survey_data1$income <- factor(survey_data1$income, levels = c("Low", "Medium", "
 census_data1$income <- factor(census_data1$income, levels = c("Low", "Medium", "High"))
 # Use this to create some plots. Should probably describe both the sample and population.
 survey_age <- survey_data1 %>% ggplot(aes(x = age)) + geom_histogram(fill = "blue", color = "black", bins = 18) + theme_classic()+
-  labs(x = "Age of the people that participated\n in the election", y = "Frequency", title = "Histogram of the age of the\n election participants from\n survey",caption = "Graph 1")+
+  labs(x = "Age of the people that participated\n in the election", y = "Frequency", title = "Histogram of the age of the\n election participants from\n survey")+
   theme(plot.title = element_text(size = 14, hjust = 0.5)) 
 
 census_age <- census_data1 %>% ggplot(aes(x = age)) + geom_histogram(fill = "blue", color = "black", bins = 18) + theme_classic()+
@@ -354,13 +354,25 @@ survey_sex_count <- table(survey_data1$sex)
 
 library(gridExtra)
 library(patchwork)
-survey_age | census_age
-survey_income | census_income
+combined_age_plots <- survey_age + census_age +
+  plot_annotation(
+    title = "Graph1: Age Distributions: Survey vs Census"
+  )
+
+combined_income_plots <- survey_income + census_income +
+  plot_annotation(
+    title = "Graph 2: Income Distributions: Survey vs Census"
+  )
+
+# Arrange the combined plots
+combined_age_plots 
+combined_income_plots
 par(mfrow = c(1, 2))
 pie(survey_sex_count, main = "Sex Distribution in Survey", col = rainbow(length(survey_sex_count)))
-
+main_title <- "Graph 3: Sex Distributions: Survey\n vs Census"
 census_sex_count <- table(census_data1$sex)
 pie(census_sex_count, main = "Sex Distribution in Census", col = rainbow(length(census_sex_count)))
+mtext(main_title, side = 1, line = 1, cex = 1)
 par(mfrow = c(1, 1))
 ```
 
@@ -385,7 +397,7 @@ $$ log(\frac{p_c}{1-p_c}) = \beta_0+\beta_1 x_{age}+\beta_2 x_{sex}+\beta_3 x_{F
 $$+\beta_6 x_{incomeHigh}+\beta_7 x_{religion}+\beta_8 x_{minority}$$
 
 $$ log(\frac{p_l}{1-p_l}) = \beta_0+\beta_1 x_{age}+\beta_2 x_{sex}+\beta_3 x_{French}+\beta_4 x_{west}+\beta_5 x_{incomeMedium}$$
-$$+\beta_6 x_{incomeHigh}+\beta6 x_{religion}+\beta_7 x_{minority}$$
+$$+\beta_6 x_{incomeHigh}+\beta7 x_{religion}+\beta_8 x_{minority}$$
 
 $p_c$ represents the probability of voting for the Conservative Party and $p_l$ represents the probability of voting for the Liberal Party. 
 The $log(\frac{p_l}{1-p_l})$ and $log(\frac{p_c}{1-p_c})$ are the log odds in both models.
@@ -465,6 +477,7 @@ knitr::kable(
   kable_styling(latex_options = "HOLD_position")
 ```
 
+
 ```{r, echo = FALSE, results = 'asis'}
 knitr::kable(formatted_summary2, col.names = c("Estimates", "SE", "Test statistics", "p-value"), caption = "Summary Logistic Regression Model for Conservative", align = "cccc", digits = 4)%>% kable_styling(latex_options = "HOLD_position")
 # Model Results (to Report in Results section)
@@ -500,6 +513,9 @@ result_liberal <- census_data_counts %>%
 
 ```
 
+## 4.2 Result of post-stratifications
+
+
 ```{r, echo = FALSE, results = 'asis'}
 # Here I will perform the post-stratification calculation for Conservative
 census_data_counts <- census_data1 %>% group_by(age, sex, language, west, income, religion, minority) %>% 
@@ -518,27 +534,13 @@ table <- tibble(result_liberal, result_conservative)
 
 knitr::kable(table, col.names = c("Liberal", "Conservative"), caption = "Estimated probability of voting for the Parties", align = "cccc", digits = 4)%>% kable_styling(latex_options = "HOLD_position")
 ```
-## 4.2 Result of post-stratifications
-
-
-<Here you present your results. You may want to put them into a well formatted table. Be sure that there is some text describing the results.>
-
-
-<Note: Alternatively you can use the `knitr::kable` function to create a well formatted table from your code. See here: [https://rmarkdown.rstudio.com/lesson-7.html](https://rmarkdown.rstudio.com/lesson-7.html).>
 
 
 
-<Remember you can use `r ` to use inline R code.>
 
 
-```{r, include = FALSE}
-
-# Here you can include some relevant visualizations.
 
 
-```
-
-<Include an explanation/interpretation of the visualizations. Make sure to comment on the appropriateness of the assumptions/results.>
 
 ## 5. Conclusions
 
