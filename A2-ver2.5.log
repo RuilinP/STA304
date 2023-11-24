@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/Debian) (preloaded format=xelatex 2023.6.23)  24 NOV 2023 00:25
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/Debian) (preloaded format=xelatex 2023.6.23)  24 NOV 2023 00:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -500,6 +500,9 @@ Package: xurl 2020/01/24 v 0.09 modify URL breaks
 
 LaTeX Warning: Label `tab:unnamed-chunk-6' multiply defined.
 
+
+LaTeX Warning: Label `tab:unnamed-chunk-20' multiply defined.
+
 )
 \openout1 = `A2-ver2.5.aux'.
 
@@ -887,31 +890,30 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 
 ] [2] [3]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.0pt on input line 366.
+(Font)              scaled to size 7.0pt on input line 369.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 366.
+(Font)              scaled to size 5.0pt on input line 369.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.00092pt on input line 366.
+(Font)              scaled to size 10.00092pt on input line 369.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.00064pt on input line 366.
+(Font)              scaled to size 7.00064pt on input line 369.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00046pt on input line 366.
+(Font)              scaled to size 5.00046pt on input line 369.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 9.99893pt on input line 366.
+(Font)              scaled to size 9.99893pt on input line 369.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 6.99925pt on input line 366.
+(Font)              scaled to size 6.99925pt on input line 369.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 366.
-[4] [5]
+(Font)              scaled to size 4.99947pt on input line 369.
+[4] [5] [6]
 File: A2-ver2.5_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (type pd
 f)
 <use A2-ver2.5_files/figure-latex/unnamed-chunk-13-1.pdf>
-[6]
 File: A2-ver2.5_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (type pd
 f)
 <use A2-ver2.5_files/figure-latex/unnamed-chunk-14-1.pdf>
 
-Underfull \hbox (badness 10000) in paragraph at lines 607--612
+Underfull \hbox (badness 10000) in paragraph at lines 610--615
 [][]
  []
 
@@ -920,126 +922,127 @@ File: A2-ver2.5_files/figure-latex/unnamed-chunk-15-1.pdf Graphic file (type pd
 f)
 <use A2-ver2.5_files/figure-latex/unnamed-chunk-15-1.pdf>
 
-Underfull \hbox (badness 10000) in paragraph at lines 615--619
+Underfull \hbox (badness 10000) in paragraph at lines 618--622
 [][]
  []
 
 [9] [10] [11] [12] [13] [14] [15] [16] [17]
-Underfull \hbox (badness 10000) in paragraph at lines 1239--1240
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1243
 []\TU/lmtt/m/n/10 Post-stratification is a statistical technique used in survey
  sampling and analysis. It
  []
 
 
-Overfull \hbox (13.24498pt too wide) in paragraph at lines 1239--1240
+Overfull \hbox (13.24498pt too wide) in paragraph at lines 1242--1243
 \TU/lmtt/m/n/10 involves the division of a population into groups or strata bas
 ed on certain characteristics
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1239--1240
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1243
 \TU/lmtt/m/n/10 after the data has been collected. This technique is used to im
 prove the precision of
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1239--1240
+Underfull \hbox (badness 10000) in paragraph at lines 1242--1243
 \TU/lmtt/m/n/10 estimates by ensuring that the sample reflects the known popula
 tion characteristics more
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1243--1244
+Underfull \hbox (badness 10000) in paragraph at lines 1246--1247
 []\TU/lmtt/m/n/10 Initial Data Collection: Surveys or data collection exercises
  are conducted without
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1243--1244
+Underfull \hbox (badness 10000) in paragraph at lines 1246--1247
 \TU/lmtt/m/n/10 considering specific stratifications. This initial dataset migh
 t not completely represent
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1245--1246
+Underfull \hbox (badness 10000) in paragraph at lines 1248--1249
 []\TU/lmtt/m/n/10 Stratification: After collecting the data, it is sorted or di
 vided into subgroups or
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1245--1246
+Underfull \hbox (badness 10000) in paragraph at lines 1248--1249
 \TU/lmtt/m/n/10 strata based on certain variables such as age, gender, income, 
 or any other relevant
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1247--1248
+Underfull \hbox (badness 10000) in paragraph at lines 1250--1251
 []\TU/lmtt/m/n/10 Analysis and Weighting: Each stratum is then analyzed separat
 ely. Statistical weights
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1247--1248
+Underfull \hbox (badness 10000) in paragraph at lines 1250--1251
 \TU/lmtt/m/n/10 are often applied to adjust for differences in the population s
 izes of the strata. This
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1247--1248
+Underfull \hbox (badness 10000) in paragraph at lines 1250--1251
 \TU/lmtt/m/n/10 weighting helps in making estimates more accurate by giving app
 ropriate importance to
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1249--1250
+Underfull \hbox (badness 10000) in paragraph at lines 1252--1253
 []\TU/lmtt/m/n/10 Estimation: Finally, estimates or inferences are made by comb
 ining the results from all
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1251--1252
+Underfull \hbox (badness 10000) in paragraph at lines 1254--1255
 []\TU/lmtt/m/n/10 Post-stratification is particularly useful when the initial s
 ampling methods do not
  []
 
 
-Overfull \hbox (2.74498pt too wide) in paragraph at lines 1251--1252
+Overfull \hbox (2.74498pt too wide) in paragraph at lines 1254--1255
 \TU/lmtt/m/n/10 ensure a balanced representation of certain characteristics wit
 hin the sample. By dividing
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1251--1252
+Underfull \hbox (badness 10000) in paragraph at lines 1254--1255
 \TU/lmtt/m/n/10 the data into strata after collection and adjusting the analysi
 s accordingly, it helps
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1251--1252
+Underfull \hbox (badness 10000) in paragraph at lines 1254--1255
 \TU/lmtt/m/n/10 improve the accuracy and representativeness of the findings, es
 pecially when dealing with
  []
 
-File: A2-ver2.5_files/figure-latex/unnamed-chunk-20-1.pdf Graphic file (type pd
-f)
-<use A2-ver2.5_files/figure-latex/unnamed-chunk-20-1.pdf>
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1261.
 [18] [19]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1261.
+File: A2-ver2.5_files/figure-latex/unnamed-chunk-21-1.pdf Graphic file (type pd
+f)
+<use A2-ver2.5_files/figure-latex/unnamed-chunk-21-1.pdf>
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1408.
+[20] [21]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1408.
 (./A2-ver2.5.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1261.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1261.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1408.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1408.
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 19915 strings out of 481772
- 348290 string characters out of 5936451
- 810765 words of memory out of 5000000
- 36599 multiletter control sequences out of 15000+600000
+ 19916 strings out of 481772
+ 348312 string characters out of 5936451
+ 812811 words of memory out of 5000000
+ 36600 multiletter control sequences out of 15000+600000
  538863 words of font info for 74 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  59i,9n,115p,808b,419s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on A2-ver2.5.pdf (19 pages).
+Output written on A2-ver2.5.pdf (21 pages).

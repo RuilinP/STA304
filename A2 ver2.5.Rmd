@@ -723,16 +723,16 @@ survey_west <- survey_data1 %>% ggplot(aes(x = west, fill = west)) +
   geom_bar(stat = "count", position = "identity") + 
   coord_flip() +  # Flipping the coordinates to make the bars horizontal
   theme_classic() +
-  labs(x = "Whether the people that participated\n in the election are from the western provinces", y = "Frequency", title = "Histogram of whether the election participants are in western provinces from survey") +
+  labs(x = "Whether the people that participated\n in the election are from the western provinces", y = "Frequency", title = "Histogram of the whether the election\n participants are in western\n provinces from survey") +
   theme(plot.title = element_text(size = 14, hjust = 0.5)) +
-  scale_fill_manual(values = c("red", "blue"))  # Filling with red and blue colors
+  scale_fill_manual(values = c("red", "blue"))
 
 # Census data plot
 census_west <- census_data1 %>% ggplot(aes(x = west, fill = west)) + 
   geom_bar(stat = "count", position = "identity") + 
   coord_flip() +  # Flipping the coordinates to make the bars horizontal
   theme_classic() +
-  labs(x = "Whether the people that participated\n in the election are from the western provinces", y = "Frequency", title = "Histogram of the whether the election participants are in western provinces from census") +
+  labs(x = "Whether the people that participated\n in the election are from the western provinces", y = "Frequency", title = "Histogram of the whether the election\n participants are in western\n provinces from census") +
   theme(plot.title = element_text(size = 14, hjust = 0.5)) +
   scale_fill_manual(values = c("red", "blue"))  # Filling with red and blue colors
 
